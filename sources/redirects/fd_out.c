@@ -20,6 +20,7 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 {
 	char	**redirection;
 	char	*search;
+	char	*num_str;
 	int 	file_fd;
 	int		i;
 
@@ -27,11 +28,14 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 	i = -1;
 	while (++i < parser_data->index_redirect)
 	{
-		search = ht_search(parser_data->table_redirection, ft_itoa(i));
+		num_str = ft_itoa(i);
+		search = ht_search(parser_data->table_redirection, num_str);
 		redirection = ft_split(search, ' ');
 		//expander(redirection, parser_data->builtin_vars);
 		if (ft_strcmp(redirection[2], index_cmd) == 0)
             set_fd_out(redirection, &file_fd);
+		free(num_str);
+		ft_free_tab(redirection);
 	}
 	return (file_fd);
 }

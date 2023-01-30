@@ -23,6 +23,8 @@ int has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 				return (TRUE);
 			}
 		}
+		free(num_str);
+		ft_free_tab(redirection);
 	}
     return (FALSE);
 }
