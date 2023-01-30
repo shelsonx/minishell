@@ -32,13 +32,15 @@ static void	save_fd(t_data *data, int *fd_in, int *fd_out)
 	*fd_in = dup(STDIN_FILENO);
 	*fd_out = dup(STDOUT_FILENO);
 	dup2(data->fd_out, STDOUT_FILENO);
-	dup2(data->fd_in, STDIN_FILENO);
+    dup2(data->fd_in, STDIN_FILENO);
 }
 
 static void	restore_fd(t_data *data, int *fd_in, int *fd_out)
 {
-	close(data->fd_in);
-	close(data->fd_out);
+    if (data->fd_in != -1)
+	    close(data->fd_in);
+    if (data->fd_out != -1)
+	    close(data->fd_out);
 	dup2(*fd_in, STDIN_FILENO);
 	dup2(*fd_out, STDOUT_FILENO);
 }
@@ -72,6 +74,7 @@ int handler_builtins(t_data *data)
         free(data->parser_data->prompt->prompt_str);
         free(data->parser_data->prompt->pwd);
         rl_clear_history();
+        ft_free_fds(data->fds);
 		ft_exit(data->pipeline);
 	}
 	restore_fd(data, &fd_in, &fd_out);
