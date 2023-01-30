@@ -13,6 +13,7 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 	if (is_builtins(input_cmd))
 	{
 		free(input_cmd);
+		ft_free_fds(data->fds);
 		handler_builtins(data);
 		return ;
 	}

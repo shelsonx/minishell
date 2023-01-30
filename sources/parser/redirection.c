@@ -13,7 +13,6 @@ t_token redirection_op(t_parser *parser)
         parser->token_type = TK_LESS;
     else if (current_token.type == TK_DLESS)
         parser->token_type = TK_DLESS;
-    consume(parser);
     return (current_token);
 }
 
@@ -33,6 +32,7 @@ t_token redirection(t_parser *parser)
     tokens = ft_strdup("");
     current_token = redirection_op(parser);
     tokens = ft_strjoin(tokens, current_token.value);
+    consume(parser);
     current_token = cmd_word(parser);
     tokens = ft_strjoin(tokens, " ");
     tokens = ft_strjoin(tokens, current_token.value);

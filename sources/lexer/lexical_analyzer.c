@@ -9,7 +9,7 @@ void init_tokenizer(t_tokenizer *tokenizer) {
 
 t_token get_next_token(t_tokenizer *tokenizer)
 {
-    tokenizer->token.value = ft_strdup(tokenizer->characteres);
+    tokenizer->token.value = tokenizer->characteres;
     advance(tokenizer);
     return (tokenizer->token);
 }
