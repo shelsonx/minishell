@@ -18,24 +18,38 @@ t_token redirection_op(t_parser *parser)
 
 void    set_redirect(t_parser *parser, char *tokens)
 {
+    char    *tmp;
+
+    tmp = tokens;
     tokens = ft_strjoin(tokens, " ");
-    tokens = ft_strjoin(tokens, ft_itoa(parser->index));
-    ht_insert(parser->table_redirection, ft_itoa(parser->index_redirect), tokens);
+    free(tmp);
+    tmp = tokens;
+    tokens = ft_strjoin(tokens, get_input_cmd(parser->index));
+    free(tmp);
+    ht_insert(parser->table_redirection, get_input_cmd(parser->index_redirect), tokens);
     parser->index_redirect++;
+    free(tokens);
 }
 
 t_token redirection(t_parser *parser)
 {
     t_token current_token;
     char    *tokens;
+    char    *tmp;
 
     tokens = ft_strdup("");
     current_token = redirection_op(parser);
+    tmp = tokens;
     tokens = ft_strjoin(tokens, current_token.value);
+    free(tmp);
     consume(parser);
     current_token = cmd_word(parser);
+    tmp = tokens;
     tokens = ft_strjoin(tokens, " ");
+    free(tmp);
+    tmp = tokens;
     tokens = ft_strjoin(tokens, current_token.value);
+    free(tmp);
     if (ft_strcmp(tokens, "") != 0)
         set_redirect(parser, tokens);
     return (current_token);
