@@ -49,6 +49,8 @@ t_token redirection(t_parser *parser)
     free(tmp);
     tmp = tokens;
     tokens = ft_strjoin(tokens, current_token.value);
+    free(parser->current_token->value);
+    consume(parser);
     free(tmp);
     if (ft_strcmp(tokens, "") != 0)
         set_redirect(parser, tokens);

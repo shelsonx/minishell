@@ -6,7 +6,6 @@ t_token cmd_word(t_parser *parser)
 
     current_token = *parser->current_token;
     parser->token_type = TK_WORD;
-    consume(parser);
     return (current_token);
 }
 
@@ -25,6 +24,7 @@ static void check_word(t_parser *parser, t_token *current_token)
     {
         *current_token = cmd_word(parser);
         ft_add_back(&parser->commands, ft_new(parser->index, current_token->value));
+        consume(parser);
     }
 }
 
