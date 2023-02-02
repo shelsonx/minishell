@@ -52,6 +52,8 @@ int handler_builtins(t_data *data)
 	save_fd(data, &fd_in, &fd_out);
     if (ft_strcmp(data->pipeline[0],"cd") == 0)
 		ft_cd(data);
+    if (ft_strcmp(data->pipeline[0],"export") == 0)
+		ft_export(data->builtin_vars, data->pipeline);
 	if (ft_strcmp(data->pipeline[0],"pwd") == 0)
 		ft_pwd(data->builtin_vars);
 	if (ft_strcmp(data->pipeline[0],"echo") == 0)

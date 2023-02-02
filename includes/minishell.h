@@ -125,6 +125,7 @@ char    **get_builtins_names(void);
 int 	is_builtins(char *builtin_name);
 int 	handler_builtins(t_data *data);
 void	ft_cd (t_data *data);
+void    ft_export(t_builtin_vars *builtins, char **args);
 
 //UTILS BUILTINS
 int 	get_amount_builtins(t_parser *parser_data);

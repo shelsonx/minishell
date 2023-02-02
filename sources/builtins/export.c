@@ -1,8 +1,6 @@
 #include "../../includes/minishell.h"
 
-// cc ../builtins/env.c test_export.c ../utils/ht_functions.c ../utils/ht_utils.c ../utils/linkedlist_utils.c ../../libs/libft/libft.a 
-
-int is_valid_identifier(char *key);
+int is_valid_identifier_2(char *key);
 int check_if_is_equal(char *key);
 
 void print_export(t_builtin_vars *builtins)
@@ -137,7 +135,7 @@ char	ft_isunderscore(char c)
 		return (false);
 }
 
-int is_valid_identifier(char *args)
+int is_valid_identifier_2(char *args)
 {
     if (!ft_isunderscore(args[0]) && !ft_isalpha(args[0]))
     {
@@ -171,7 +169,7 @@ int check_if_is_equal(char *args) {
         return FALSE;
     }
 
-void ft_export_aux(t_builtin_vars *builtins, char **args)
+void    ft_export_aux(t_builtin_vars *builtins, char **args)
 {
     int i = 1;
     char **splitter_equals;
@@ -188,7 +186,7 @@ void ft_export_aux(t_builtin_vars *builtins, char **args)
         {
             if(!check_if_is_equal(args[i]))
             {
-                if(is_valid_identifier(args[i]))
+                if(is_valid_identifier_2(args[i]))
                     insert_args_in_export(builtins, args[i]);
             }
             else
@@ -196,12 +194,12 @@ void ft_export_aux(t_builtin_vars *builtins, char **args)
                 splitter_equals = ft_split(args[i], '=');
                 if(ft_strlen(args[i]) > 1)
                 {
-                    if(is_valid_identifier(splitter_equals[0]))
+                    if(is_valid_identifier_2(splitter_equals[0]))
                         insert_args_in_export(builtins, args[i]);
                 }
                 else
                 {
-                    if(is_valid_identifier(args[i]))
+                    if(is_valid_identifier_2(args[i]))
                         insert_args_in_export(builtins, args[i]);
                 }
             }
@@ -210,20 +208,8 @@ void ft_export_aux(t_builtin_vars *builtins, char **args)
     }
 }
 
-
-/*  int main(int argc, char **argv, char **envp)
- {
- 	t_builtin_vars builtins;
-     init_env(&builtins, envp);
-
-     ft_export_aux(&builtins, argv);
-     ft_env(&builtins);
-      delete_args_in_ht(&builtins, ft_itoa(builtins.size--)); 
-      (builtins.size)--; 
-      delete_args_in_ht(&builtins, ft_itoa(builtins.size--));
-      (builtins.size)--; 
-     print_export(&builtins);
- } */
-
-//
-//set_env = exist_key
+void    ft_export(t_builtin_vars *builtins, char **args)
+{
+    ft_export_aux(builtins, args);
+    print_export(builtins);
+}
