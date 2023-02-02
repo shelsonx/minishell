@@ -149,6 +149,7 @@ char	*get_exec_command(char *arg);
 
 //prompt
 void    prompt(char **envp);
+void    run(t_parser *parser_data);
 
 //utils pipes
 void	ft_free_fds(int **fds);

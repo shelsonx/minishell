@@ -14,7 +14,7 @@ void    error(t_parser *parser_data)
 {
     if (parser_data->tokenizer->token.type != TK_ERROR)
         ft_printf("syntax error near unexpected token `newline'\n");
-    prompt(get_env(parser_data->builtin_vars));
+    run(parser_data);
 }
 
 void    consume(t_parser *parser)
