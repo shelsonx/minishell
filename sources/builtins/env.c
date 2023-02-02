@@ -2,28 +2,22 @@
 
 char	*get_env_path(char *path, t_builtin_vars *builtin)
 {
-	char	*env_path;
-    char    *result_search;
-    char    *num_str;
+    char	*env_path;
+    t_node  *current;
     char    **splitted;
-	int		i;
 
-	i = 0;
-	while (i < builtin->size)
+    current = builtin->env2;
+	while (current)
 	{
-        num_str = ft_itoa(i);
-        result_search = ht_search(builtin->env, num_str);
-        splitted = ft_split(result_search, '=');
+        splitted = ft_split(current->value, '=');
         if (ft_strcmp(path, splitted[0]) == 0)
         {
             env_path = ft_strdup(splitted[1]);
             ft_free_tab(splitted);
-            free(num_str);
             return (env_path);
         }
         ft_free_tab(splitted);
-        free(num_str);
-		i++;
+		current = current->next;
 	}
     ft_free_tab(splitted);
     env_path = ft_strdup("");
@@ -32,50 +26,38 @@ char	*get_env_path(char *path, t_builtin_vars *builtin)
 
 void    init_env(t_builtin_vars *builtin_vars, char **envp)
 {
-
-    builtin_vars->env = create_table(500);
-    builtin_vars->size = 0;
-
-    char    *num_str;
-    while (envp[builtin_vars->size])
-    {
-        num_str = ft_itoa(builtin_vars->size);
-        ht_insert(builtin_vars->env, num_str, envp[builtin_vars->size]);
-        free(num_str);
-        builtin_vars->size++;
-    }
+    int i = -1;
+    builtin_vars->env2 = NULL;
+    while (envp[++i])
+        ft_add_back(&builtin_vars->env2, ft_new(i, envp[i]));
 }
 
 void ft_env(t_builtin_vars *builtin_vars)
 {
-    int i = 0;
-    char    *num_str;
-
-    while (i < builtin_vars->size)
-    {
-        num_str = ft_itoa(i);
-        printf("%s\n", ht_search(builtin_vars->env, num_str));
-        free(num_str);
-        i++;
-    } 
+    t_node *current = builtin_vars->env2;
+	while (current)
+	{
+		printf("%s\n", current->value);
+		current = current->next;
+	}
 }
 
 char    **get_env(t_builtin_vars *builtin_vars)
 {
-    int     i;
-    char    *num_str;
     char    **env;
+    t_node  *current;
+    int     i;
+    int     size;
 
-    i = 0;
-    env = calloc(builtin_vars->size + 1, sizeof (char *));
-
-    while (i < builtin_vars->size)
+    size = ft_size(builtin_vars->env2);
+    env = calloc(size + 1, sizeof (char *));
+    current = builtin_vars->env2;
+    i = -1;
+    while (++i < size)
     {
-        num_str = ft_itoa(i);
         env[i] = malloc(sizeof(char) * 2);
-        env[i] = ht_search(builtin_vars->env, num_str);
-        free(num_str);
-        i++;
+        env[i] = current->value;
+        current = current->next;
     }
     return (env); 
 }

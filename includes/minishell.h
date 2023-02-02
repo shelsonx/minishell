@@ -56,18 +56,20 @@ struct s_hashtable {
     int count;
 };
 
-typedef struct s_builtin_vars 
-{
-    int         size;
-    t_hashtable   *env;
-}   t_builtin_vars;
-
 typedef struct s_node
 {
 	int				index;
 	char			*value;
 	struct	s_node	*next;
 }	t_node;
+
+typedef struct s_builtin_vars 
+{
+    int         size;
+    t_hashtable   *env;
+	t_node		  *env2;
+}   t_builtin_vars;
+
 
 typedef struct s_prompt
 {
