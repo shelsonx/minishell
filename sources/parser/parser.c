@@ -1,5 +1,15 @@
 #include "../../includes/minishell.h"
 
+/* static int  peek(t_tokenizer *tokenizer)
+{
+    size_t  pos;
+
+    pos = tokenizer->pos + 1;
+    if (pos > ft_strlen(tokenizer->content))
+        return (TK_EOF);
+    return (-1);
+} */
+
 void    error(t_parser *parser_data)
 {
     if (parser_data->tokenizer->token.type != TK_ERROR)
