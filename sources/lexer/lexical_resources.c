@@ -107,6 +107,11 @@ void    tk_word(t_tokenizer *tokenizer)
             advance(tokenizer);
             if (is_valid_identifier(tokenizer, i+1))
             {
+                while (!ft_strchr(METACHARS, tokenizer->current_char))
+                {
+                    add_char(tokenizer);
+                    advance(tokenizer);
+                }
                 tokenizer->token.type = TK_ASSIGNMENT_WORD;
                 return ;
             }

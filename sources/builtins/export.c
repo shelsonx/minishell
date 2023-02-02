@@ -210,6 +210,8 @@ void    ft_export_aux(t_builtin_vars *builtins, char **args)
 
 void    ft_export(t_builtin_vars *builtins, char **args)
 {
-    ft_export_aux(builtins, args);
-    print_export(builtins);
+    if (ft_len_rows_tab(args) == 1)
+        print_export(builtins);
+    if (ft_len_rows_tab(args) > 1)
+        ft_export_aux(builtins, args);
 }
