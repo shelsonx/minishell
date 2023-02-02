@@ -3,6 +3,38 @@
 int is_valid_identifier_2(char *key);
 int check_if_is_equal(char *key);
 
+void ft_free_nodes_env(t_node **lst)
+{
+	t_node	*next;
+
+	if (!lst)
+		return ;
+	next = *lst;
+	while (next)
+	{
+		next = next->next;
+        if ((*lst)->value)
+            free((*lst)->value);
+		free(*lst);
+		*lst = next;
+	}
+	*lst = NULL;
+}
+
+t_node	*ft_new_env(int index, char	*value)
+{
+	t_node	*node;
+
+	node = (t_node *) malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->index = index;
+    node->value = ft_calloc(ft_strlen(value) + 1, sizeof(char));
+	ft_strcpy(node->value, value);
+	node->next = NULL;
+	return (node);
+}
+
 void print_export(t_builtin_vars *builtins)
 {
     char    **splitter_env;
@@ -26,20 +58,25 @@ void print_export(t_builtin_vars *builtins)
         }
         else
 		    printf("declare -x %s=\"%s\"\n", key, value);
+        ft_free_tab(splitter_env);
         current = current->next;
     } 
 }
 
-void insert_args_in_ht(t_builtin_vars *builtins, char *key, char *value)
+void add_env_path(t_builtin_vars *builtins, char *key, char *value)
 {   
-	ht_insert(builtins->env, key, value);
-    builtins->size++;
+	ft_add_back(&builtins->env2, ft_new_env(ft_atoi(key), value));
 }
 
 void delete_args_in_ht(t_builtin_vars *builtins, char *key)
 {   
 	ht_delete(builtins->env, key);
     builtins->size--;
+}
+
+void insert_args_in_export(t_builtin_vars *builtins, char *args)
+{
+    add_env_path(builtins, "1", args);
 }
 
 int key_exists(t_builtin_vars *builtins, char *args)
@@ -71,24 +108,21 @@ int key_exists(t_builtin_vars *builtins, char *args)
 
 int is_equal_values(t_builtin_vars *builtins, char *args)
 {
-    char **splitted_args; 
-    char **splitted_ht_search; 
-    char *num_str;
-    char *search;
-    int i;
+    char    **splitted_args; 
+    char    **splitted_ht_search; 
+    t_node  *current;
 
-    i = 0;
-    num_str = ft_strdup("");
-    while(i < builtins->size)
+    current = builtins->env2;
+    while(current)
     {
-        num_str = ft_itoa(i);
-        search = ht_search(builtins->env, num_str);
         splitted_args = ft_split(args, '=');
-        splitted_ht_search = ft_split(search, '=');
+        splitted_ht_search = ft_split(current->value, '=');
         if(ft_strcmp(splitted_args[0], splitted_ht_search[0]) == 0 &&  
             ft_strcmp(splitted_args[1], splitted_ht_search[1]) != 0)
             return TRUE;
-        i++;
+        current = current->next;
+        ft_free_tab(splitted_args);
+        ft_free_tab(splitted_ht_search);
     }
     return FALSE;
 }
@@ -115,15 +149,6 @@ int get_position_env(t_builtin_vars *builtins, char *args)
     }
     return -1;
 }
-
-void insert_args_in_export(t_builtin_vars *builtins, char *args)
-{
-    char *num_str;
-
-    num_str = ft_itoa(builtins->size);
-    insert_args_in_ht(builtins, num_str, args);
-}
-
 
 char	ft_isunderscore(char c)
 {
@@ -178,7 +203,7 @@ void    ft_export_aux(t_builtin_vars *builtins, char **args)
         {
             int position = get_position_env(builtins, args[i]);
             delete_args_in_ht(builtins, ft_itoa(position));
-            insert_args_in_ht(builtins, ft_itoa(position), args[i]);
+            add_env_path(builtins, ft_itoa(position), args[i]);
         }
         else
         {
@@ -200,6 +225,7 @@ void    ft_export_aux(t_builtin_vars *builtins, char **args)
                     if(is_valid_identifier_2(args[i]))
                         insert_args_in_export(builtins, args[i]);
                 }
+                ft_free_tab(splitter_equals);
             }
         }
         i++; 
