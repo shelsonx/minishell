@@ -5,30 +5,28 @@ int check_if_is_equal(char *key);
 
 void print_export(t_builtin_vars *builtins)
 {
-	int i = 0;
-    char *num_str;
-    char **splitter_env;
-    char *key;
-    char *value;
+    char    **splitter_env;
+    char    *key;
+    char    *value;
+    t_node  *current;
 
-     while (i < builtins->size)
+    current = builtins->env2;
+    while (current)
     {
-        num_str = ft_itoa(i);
-        splitter_env = ft_split(ht_search(builtins->env, num_str), '=');
+        splitter_env = ft_split(current->value, '=');
         key = splitter_env[0];
         value = splitter_env[1];
 
         if (!value)
         {
-        if(check_if_is_equal(ht_search(builtins->env, num_str)))
-            printf("declare -x %s\"\"\n", ht_search(builtins->env, num_str));
-        else
-            printf("declare -x %s\n", ht_search(builtins->env, num_str));
+            if(check_if_is_equal(current->value))
+                printf("declare -x %s\"\"\n", current->value);
+            else
+                printf("declare -x %s\n", current->value);
         }
         else
 		    printf("declare -x %s=\"%s\"\n", key, value);
-        free(num_str);
-        i++;
+        current = current->next;
     } 
 }
 
