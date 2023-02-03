@@ -3,38 +3,6 @@
 int is_valid_identifier_2(char *key);
 int check_if_is_equal(char *key);
 
-void ft_free_nodes_env(t_node **lst)
-{
-	t_node	*next;
-
-	if (!lst)
-		return ;
-	next = *lst;
-	while (next)
-	{
-		next = next->next;
-        if ((*lst)->value)
-            free((*lst)->value);
-		free(*lst);
-		*lst = next;
-	}
-	*lst = NULL;
-}
-
-t_node	*ft_new_env(int index, char	*value)
-{
-	t_node	*node;
-
-	node = (t_node *) malloc(sizeof(t_node));
-	if (!node)
-		return (NULL);
-	node->index = index;
-    node->value = ft_calloc(ft_strlen(value) + 1, sizeof(char));
-	ft_strcpy(node->value, value);
-	node->next = NULL;
-	return (node);
-}
-
 void print_export(t_builtin_vars *builtins)
 {
     char    **splitter_env;
@@ -179,18 +147,20 @@ int is_valid_identifier_2(char *args)
     return (TRUE);
 }
 
-int check_if_is_equal(char *args) {
+int check_if_is_equal(char *args)
+{
+
     int i = 0 ;
-        while(args[i])
-        {
-            if(args[i] == '=')
-                {
-                    return TRUE;
-                }
-            i++;
-        }
-        return FALSE;
+    while(args[i])
+    {
+        if(args[i] == '=')
+            {
+                return TRUE;
+            }
+        i++;
     }
+    return FALSE;
+}
 
 void    ft_export_aux(t_builtin_vars *builtins, char **args)
 {

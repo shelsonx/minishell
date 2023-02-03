@@ -127,9 +127,12 @@ char    **get_builtins_names(void);
 int 	is_builtins(char *builtin_name);
 int 	handler_builtins(t_data *data);
 void	ft_cd (t_data *data);
-void    ft_export(t_builtin_vars *builtins, char **args);
+void    ft_unset(t_builtin_vars *builtins, char **args);
 t_node	*ft_new_env(int index, char	*value);
 void 	ft_free_nodes_env(t_node **lst);
+
+//export
+void    ft_export(t_builtin_vars *builtins, char **args);
 
 //UTILS BUILTINS
 int 	get_amount_builtins(t_parser *parser_data);
