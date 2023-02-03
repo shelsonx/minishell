@@ -2,22 +2,39 @@
 
 // colocar nossas funções no lugar de getenv e setenv
 
-/* int ft_setenv(t_builtin_vars *builtins, char *args){
-    int position = get_position_env(builtins, args);
-    if (is_equal_values(builtins, args))
-    delete_args_in_ht(builtins, ft_itoa(position));
-    insert_args_in_ht(builtins, ft_itoa(position), args);
-    return (insert_args_in_ht(builtins, ft_itoa(position), args));
-} */
-
-size_t get_size (char **args)
+static void change_value(t_node *current, char **splitted, char *value)
 {
-    size_t i;
+    char    *tmp;
+    char    *tmp2;
 
-    i = 0;
-    while (args[i] != NULL)
-        i++;
-    return (i);
+    tmp = ft_strjoin(splitted[0], "=");
+    tmp2 = ft_strjoin(tmp, value);
+    free(current->value);
+    current->value = NULL;
+    current->value = ft_calloc(ft_strlen(tmp2) + 2, sizeof(char));
+    ft_strcpy(current->value, tmp2);
+    free(tmp);
+    free(tmp2);
+}
+
+void    ft_setenv(t_builtin_vars *builtins, char *name, char *value)
+{
+    char    **splitted;
+    t_node  *current;
+
+    current = builtins->env2;
+    while (current->next)
+    {
+        splitted = ft_split(current->value, '=');
+        if (ft_strcmp(name, splitted[0]) == 0)
+        {
+            change_value(current, splitted, value);
+            ft_free_tab(splitted);
+            return ;
+        }
+        ft_free_tab(splitted);
+        current = current->next;
+    }
 }
 
 static char *check_dots(char **args)
@@ -46,7 +63,7 @@ static char *validate_args(t_data *data)
     size_t size;
     char *dir_param;
 
-    size = get_size(data->pipeline);
+    size = ft_len_rows_tab(data->pipeline);
 
     if(size > 2)
         return NULL;
@@ -59,7 +76,6 @@ static char *validate_args(t_data *data)
     return dir_param;
 }
 
-// ver como gerenciar erros das builtins em geral
 void ft_cd (t_data *data)
 {
     char *new_directory;
@@ -74,13 +90,13 @@ void ft_cd (t_data *data)
     }
     if (chdir(new_directory))
     {
-        perror("minishell: ");
+        perror(new_directory);
         return;
     }
 
     oldpwd = get_env_path("PWD", data->builtin_vars);
-    
-    setenv("OLDPWD", oldpwd, 1); 
+    ft_setenv(data->builtin_vars, "OLDPWD", oldpwd); 
+    free(oldpwd);
     getcwd(pwd, 1024);
-    setenv("PWD", pwd, 1);
+    ft_setenv(data->builtin_vars, "PWD", pwd);
 }
