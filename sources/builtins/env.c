@@ -19,7 +19,6 @@ char	*get_env_path(char *path, t_builtin_vars *builtin)
         ft_free_tab(splitted);
 		current = current->next;
 	}
-    ft_free_tab(splitted);
     env_path = ft_strdup("");
 	return (env_path);
 }
