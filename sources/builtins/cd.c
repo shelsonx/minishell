@@ -91,6 +91,7 @@ void ft_cd (t_data *data)
     if (chdir(new_directory))
     {
         perror(new_directory);
+        free(new_directory);
         return;
     }
 
@@ -99,4 +100,5 @@ void ft_cd (t_data *data)
     free(oldpwd);
     getcwd(pwd, 1024);
     ft_setenv(data->builtin_vars, "PWD", pwd);
+    free(new_directory);
 }

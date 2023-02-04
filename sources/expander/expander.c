@@ -16,6 +16,7 @@ static void	parameter_expander(char **str, char *parameters, t_builtin_vars *bui
 		joinned = ft_strjoin("$", splitted[i]);
 		replaced = ft_replace_str(*str, joinned, env);
 		free(*str);
+		free(env);
 		*str = replaced;
 		free(joinned);
 	}

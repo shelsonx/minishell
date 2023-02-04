@@ -1,5 +1,23 @@
 #include "../../includes/minishell.h"
 
+char    *get_comparator(char *arg, int index)
+{
+    char    **splitted;
+    char    *result;
+
+    if (contains_equal(arg))
+    {
+        splitted = ft_split(arg, '=');
+        result = ft_calloc(ft_strlen(splitted[index]) + 2, sizeof(char));
+        strcpy(result, splitted[index]);
+        ft_free_tab(splitted);
+        return (result);
+    }
+    result = ft_calloc(ft_strlen(arg) + 2, sizeof(char));
+    strcpy(result, arg);
+    return (result);
+}
+
 void ft_free_nodes_env(t_node **lst)
 {
 	t_node	*next;

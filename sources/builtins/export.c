@@ -1,7 +1,8 @@
 #include "../../includes/minishell.h"
 
 int is_valid_identifier_2(char *key);
-int check_if_is_equal(char *key);
+int contains_equal(char *key);
+int env_exists(t_builtin_vars *builtins, char *args);
 
 void print_export(t_builtin_vars *builtins)
 {
@@ -19,7 +20,7 @@ void print_export(t_builtin_vars *builtins)
 
         if (!value)
         {
-            if(check_if_is_equal(current->value))
+            if(contains_equal(current->value))
                 printf("declare -x %s\"\"\n", current->value);
             else
                 printf("declare -x %s\n", current->value);
@@ -33,13 +34,11 @@ void print_export(t_builtin_vars *builtins)
 
 void add_env_path(t_builtin_vars *builtins, char *key, char *value)
 {   
+    if (env_exists(builtins, value))
+    {
+        return ;
+    }
 	ft_add_back(&builtins->env2, ft_new_env(ft_atoi(key), value));
-}
-
-void delete_args_in_ht(t_builtin_vars *builtins, char *key)
-{   
-	ht_delete(builtins->env, key);
-    builtins->size--;
 }
 
 void insert_args_in_export(t_builtin_vars *builtins, char *args)
@@ -47,34 +46,7 @@ void insert_args_in_export(t_builtin_vars *builtins, char *args)
     add_env_path(builtins, "1", args);
 }
 
-int key_exists(t_builtin_vars *builtins, char *args)
-{
-    char **splitted_args; 
-    char *num_str;
-    int i;
-
-    i = 0;
-    while(i < builtins->size)
-    {   
-        num_str = ft_itoa(i);
-        
-        if(check_if_is_equal(args))
-        {
-            splitted_args = ft_split(args, '=');
-
-            if(ft_strncmp(args, ht_search(builtins->env, num_str), ft_strlen(splitted_args[0])) == 0)
-                return TRUE;
-
-        } else{
-            if(ft_strcmp(args, ht_search(builtins->env, num_str)) == 0)
-                return TRUE;
-        }
-        i++;
-    }
-    return FALSE;
-}
-
-int is_equal_values(t_builtin_vars *builtins, char *args)
+int update_value(t_builtin_vars *builtins, char *args)
 {
     char    **splitted_args; 
     char    **splitted_ht_search; 
@@ -95,27 +67,18 @@ int is_equal_values(t_builtin_vars *builtins, char *args)
     return FALSE;
 }
 
-int get_position_env(t_builtin_vars *builtins, char *args)
-{   
-    char *num_str;
-    char *search;
-    char    **splitted;
-    int i;
+int env_exists(t_builtin_vars *builtins, char *args)
+{
+    t_node  *current;
 
-    i = 0;
-    while(i < builtins->size)
+    current = builtins->env2;
+    while(current)
     {
-        num_str = ft_itoa(i);
-        search = ht_search(builtins->env, num_str);
-        if (check_if_is_equal(args))
-        {
-            splitted = ft_split(args, '=');
-            if (ft_strncmp(search, args, ft_strlen(splitted[0])) == 0)
-                return (i);
-        }
-        i++;
+        if(ft_strcmp(current->value, args) == 0)
+            return TRUE;
+        current = current->next;
     }
-    return -1;
+    return FALSE;
 }
 
 char	ft_isunderscore(char c)
@@ -132,7 +95,8 @@ int is_valid_identifier_2(char *args)
     {
         printf("minishell: export: `%s': not a valid identifier\n", args);
         return (FALSE);
-    } else {
+    } 
+    else {
         int i = 0;
         while(args[i])
         {
@@ -147,7 +111,7 @@ int is_valid_identifier_2(char *args)
     return (TRUE);
 }
 
-int check_if_is_equal(char *args)
+int contains_equal(char *args)
 {
 
     int i = 0 ;
@@ -166,18 +130,19 @@ void    ft_export_aux(t_builtin_vars *builtins, char **args)
 {
     int i = 1;
     char **splitter_equals;
+    int position;
 
     while(args[i])
     {
-        if (is_equal_values(builtins, args[i]))
+        if (update_value(builtins, args[i]))
         {
-            int position = get_position_env(builtins, args[i]);
-            delete_args_in_ht(builtins, ft_itoa(position));
-            add_env_path(builtins, ft_itoa(position), args[i]);
+            position = get_position(builtins, args[i]);
+            del_pos(&builtins->env2, position);
+            add_env_path(builtins, "1", args[i]);
         }
         else
         {
-            if(!check_if_is_equal(args[i]))
+            if(!contains_equal(args[i]))
             {
                 if(is_valid_identifier_2(args[i]))
                     insert_args_in_export(builtins, args[i]);

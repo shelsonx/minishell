@@ -1,8 +1,9 @@
 #include "../../includes/minishell.h"
 
-static  int get_position(t_builtin_vars *builtins, char *arg)
+int get_position(t_builtin_vars *builtins, char *arg)
 {
-    char    **splitted;
+    char    *comp1;
+    char    *comp2;
     t_node  *current;
     int     position;
 
@@ -10,15 +11,18 @@ static  int get_position(t_builtin_vars *builtins, char *arg)
     current = builtins->env2;
     while (current->next)
     {
-        splitted = ft_split(current->value, '=');
-        if (ft_strcmp(arg, splitted[0]) == 0)
+        comp1 = get_comparator(arg, 0);
+        comp2 = get_comparator(current->value, 0);
+        if (ft_strcmp(comp1, comp2) == 0)
         {
-            ft_free_tab(splitted);
+            free(comp1);
+            free(comp2);
             return position;
         }
         current = current->next;
         position++;
-        ft_free_tab(splitted);
+        free(comp1);
+        free(comp2);
     }
     return (position);
 }
