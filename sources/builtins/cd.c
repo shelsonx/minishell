@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-// colocar nossas funções no lugar de getenv e setenv
 
 static void change_value(t_node *current, char **splitted, char *value)
 {

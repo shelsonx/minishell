@@ -15,11 +15,11 @@ void	error_command_msg(char **args, char *input_cmd)
 	}
 }
 
-int set_exec_command(char **exec_command, char *arg, char **paths, int i)
+int set_exec_command(char **exec_command, char *arg, char **paths, int i, t_builtin_vars *builtins)
 {
     if (ft_strncmp("./", arg, 2) == 0)
         *exec_command = ft_substr(arg, 2, ft_strlen(arg));
-    else if (!is_full_path(arg))
+    else if (!is_full_path(arg, builtins))
         *exec_command = join_path_command(paths[i], arg);
     else
         *exec_command = ft_strdup(arg);
@@ -32,18 +32,26 @@ int set_exec_command(char **exec_command, char *arg, char **paths, int i)
     return (FALSE);
 }
 
-int	get_exit_status(char *arg)
+int	get_exit_status(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
 	char	**paths;
+	char	*env_path;
 	int		i;
 
-	paths = get_paths_cmds(getenv("PATH"));
+	env_path = get_env_path("PATH", builtins);
+	if (ft_strcmp(env_path, "") == 0)
+	{
+		free(env_path);
+		return (127);
+	}
+	paths = get_paths_cmds(env_path);
+	free(env_path);
 	i = 0;
 	exec_command = NULL;
 	while (paths[i])
 	{
-		if (set_exec_command(&exec_command, arg, paths, i))
+		if (set_exec_command(&exec_command, arg, paths, i, builtins))
             return (0);
 		else
 		{
@@ -52,7 +60,7 @@ int	get_exit_status(char *arg)
 		}
 		i++;
 	}
-	set_exec_command(&exec_command, arg, paths, i-1);
+	set_exec_command(&exec_command, arg, paths, i-1, builtins);
 	ft_free_tab(paths);
 	if (access(exec_command, F_OK) == 0)
 	{
@@ -63,19 +71,22 @@ int	get_exit_status(char *arg)
 	return (127);
 }
 
-char	*get_exec_command(char *arg)
+char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
 	char	**paths;
+	char	*env_path;
 	int		i;
 
-	paths = get_paths_cmds(getenv("PATH"));
+	env_path = get_env_path("PATH", builtins);
+	paths = get_paths_cmds(env_path);
+	free(env_path);
 	i = 0;
 	while (paths[i])
 	{
 		if (ft_strncmp("./", arg, 2) == 0)
 			exec_command = ft_substr(arg, 2, ft_strlen(arg));
-		else if (!is_full_path(arg))
+		else if (!is_full_path(arg, builtins))
 			exec_command = join_path_command(paths[i], arg);
 		else
 			exec_command = ft_strdup(arg);

@@ -18,8 +18,8 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 	}
 	else
 	{
-		*data->exit_status = get_exit_status(input_cmd);
-		data->args = create_args(data->pipeline);
+		*data->exit_status = get_exit_status(input_cmd, data->builtin_vars);
+		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
 		if (data->args[0] == NULL)
@@ -47,7 +47,7 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 	}
 	else
 	{
-		data->args = create_args(data->pipeline);
+		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
 		if (data->args[0] == NULL)
@@ -95,7 +95,7 @@ void	exec_middles_commands(t_data *data, t_parser *parser_data, int total_cmds_m
 			handler_builtins(data);
 			return ;
 		}
-		data->args = create_args(data->pipeline);
+		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
 		if (data->args[0] == NULL)
@@ -123,8 +123,8 @@ void	exec_last_command(t_data *data, int fd_in, int fd_out)
 		handler_builtins(data);
 		return ;
 	}
-	*data->exit_status = get_exit_status(input_cmd);
-	data->args = create_args(data->pipeline);
+	*data->exit_status = get_exit_status(input_cmd, data->builtin_vars);
+	data->args = create_args(data->pipeline, data->builtin_vars);
 	error_command_msg(data->args, input_cmd);
 	free(input_cmd);
 	if (data->args[0] == NULL)

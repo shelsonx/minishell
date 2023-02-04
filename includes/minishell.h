@@ -160,8 +160,8 @@ char	*get_input_cmd(int position);
 
 //EXECUTE UTILS
 void	error_command_msg(char **args, char *input_cmd);
-int		get_exit_status(char *arg);
-char	*get_exec_command(char *arg);
+int		get_exit_status(char *arg, t_builtin_vars *builtins);
+char	*get_exec_command(char *arg, t_builtin_vars *builtins);
 
 //prompt
 void    prompt(char **envp);
@@ -174,8 +174,8 @@ void	ft_close_fds(int **fds);
 //paths
 char	**get_paths_cmds(char *env_path);
 char	*join_path_command(char *path, char *command);
-char 	**create_args(char **pipeline);
-int		is_full_path(char *arg);
+char 	**create_args(char **pipeline, t_builtin_vars *builtins);
+int		is_full_path(char *arg, t_builtin_vars *builtins);
 
 //children processes
 pid_t	create_child_process(void);
