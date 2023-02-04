@@ -50,16 +50,30 @@ int update_value(t_builtin_vars *builtins, char *args)
 {
     char    **splitted_args; 
     char    **splitted_ht_search; 
+    int     res2;
     t_node  *current;
 
     current = builtins->env2;
+    res2 = 0;
     while(current)
     {
+        if (!contains_equal(current->value) || !contains_equal(args))
+            return (FALSE);
         splitted_args = ft_split(args, '=');
         splitted_ht_search = ft_split(current->value, '=');
-        if(ft_strcmp(splitted_args[0], splitted_ht_search[0]) == 0 &&  
-            ft_strcmp(splitted_args[1], splitted_ht_search[1]) != 0)
+        int res1 = ft_strcmp(splitted_args[0], splitted_ht_search[0]);
+        if (splitted_args[1] && splitted_ht_search[1])
+            res2 = ft_strcmp(splitted_args[1], splitted_ht_search[1]);
+        else
+        {
+            res2 = ft_strcmp(splitted_args[1], splitted_ht_search[1]);
+        }
+        if(res1 == 0 && res2 != 0)
+        {
+            ft_free_tab(splitted_args);
+            ft_free_tab(splitted_ht_search);
             return TRUE;
+        }
         current = current->next;
         ft_free_tab(splitted_args);
         ft_free_tab(splitted_ht_search);
