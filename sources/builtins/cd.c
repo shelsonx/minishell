@@ -59,15 +59,19 @@ static char *check_dots(char **args)
 
 static char *validate_args(t_data *data)
 {
-    size_t size;
-    char *dir_param;
+    size_t  size;
+    char    *dir_param;
+    char    *env_path;
 
     size = ft_len_rows_tab(data->pipeline);
 
     if(size > 2)
         return NULL;
     else if (size == 1)
-        return get_env_path("HOME", data->builtin_vars); 
+    {
+        env_path = get_env_path("HOME", data->builtin_vars);
+        return (env_path);
+    }
     
     dir_param = check_dots(data->pipeline);
     if (dir_param == NULL)
@@ -93,11 +97,11 @@ void ft_cd (t_data *data)
         free(new_directory);
         return;
     }
-
     oldpwd = get_env_path("PWD", data->builtin_vars);
     ft_setenv(data->builtin_vars, "OLDPWD", oldpwd); 
     free(oldpwd);
     getcwd(pwd, 1024);
     ft_setenv(data->builtin_vars, "PWD", pwd);
-    free(new_directory);
+    if (ft_strcmp(new_directory, "HOME") == 0)
+        free(new_directory);
 }
