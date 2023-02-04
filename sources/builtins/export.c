@@ -49,32 +49,44 @@ void insert_args_in_export(t_builtin_vars *builtins, char *args)
 int update_value(t_builtin_vars *builtins, char *args)
 {
     char    **splitted_args; 
-    char    **splitted_ht_search; 
+    char    **splitted_ht_search;
+    char    *tmp1;
+    char    *tmp2;
+    int     res1;
     int     res2;
     t_node  *current;
 
+    tmp1 = NULL;
+    tmp2 = NULL;
     current = builtins->env2;
-    res2 = 0;
     while(current)
     {
-        if (!contains_equal(current->value) || !contains_equal(args))
-            return (FALSE);
         splitted_args = ft_split(args, '=');
         splitted_ht_search = ft_split(current->value, '=');
-        int res1 = ft_strcmp(splitted_args[0], splitted_ht_search[0]);
-        if (splitted_args[1] && splitted_ht_search[1])
-            res2 = ft_strcmp(splitted_args[1], splitted_ht_search[1]);
-        else
+        res1 = ft_strcmp(splitted_args[0], splitted_ht_search[0]);
+        if(res1 == 0)
         {
-            res2 = ft_strcmp(splitted_args[1], splitted_ht_search[1]);
-        }
-        if(res1 == 0 && res2 != 0)
-        {
-            ft_free_tab(splitted_args);
-            ft_free_tab(splitted_ht_search);
-            return TRUE;
+            if (splitted_args[1] == NULL)
+                tmp1 = ft_strdup("");
+            else
+                tmp1 = ft_strdup(splitted_args[1]);
+            if (splitted_ht_search[1] == NULL)
+                tmp2 = ft_strdup("");
+            else
+                tmp2 = ft_strdup(splitted_ht_search[1]);
+            res2 = ft_strcmp(tmp1, tmp2);
+            if (res2 != 0)
+            {
+                free(tmp1);
+                free(tmp2);
+                ft_free_tab(splitted_args);
+                ft_free_tab(splitted_ht_search);
+                return TRUE;
+            }
         }
         current = current->next;
+        free(tmp1);
+        free(tmp2);
         ft_free_tab(splitted_args);
         ft_free_tab(splitted_ht_search);
     }
@@ -84,13 +96,39 @@ int update_value(t_builtin_vars *builtins, char *args)
 int env_exists(t_builtin_vars *builtins, char *args)
 {
     t_node  *current;
+    char    *tmp1;
+    char    *tmp2;
 
     current = builtins->env2;
     while(current)
     {
-        if(ft_strcmp(current->value, args) == 0)
+        tmp1 = ft_strdup(current->value);
+        tmp2 = ft_strdup(args);
+        if (contains_equal(current->value))
+        {
+            free(tmp1);
+            tmp1 = ft_substr(current->value, 0, ft_strlen(current->value) -1);
+        }
+        if (contains_equal(args))
+        {
+            free(tmp2);
+            tmp2 = ft_substr(args, 0, ft_strlen(args) -1);
+            if (ft_strncmp(current->value, args, ft_strlen(current->value)) == 0)
+            {
+                free(current->value);
+                current->value = ft_calloc(ft_strlen(args) + 1, sizeof(char));
+                ft_strcpy(current->value, args);
+            }
+        }
+        if(ft_strcmp(tmp1, tmp2) == 0)
+        {
+            free(tmp1);
+            free(tmp2);
             return TRUE;
+        }
         current = current->next;
+        free(tmp1);
+        free(tmp2);
     }
     return FALSE;
 }
