@@ -94,7 +94,6 @@ void ft_cd (t_data *data)
     if (chdir(new_directory))
     {
         perror(new_directory);
-        free(new_directory);
         return;
     }
     oldpwd = get_env_path("PWD", data->builtin_vars);
