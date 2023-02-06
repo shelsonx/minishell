@@ -4,8 +4,8 @@ t_token *redirection_op(t_parser *parser)
 {
     t_token *current_token;
 
-    current_token = malloc(sizeof(t_token *));
-    current_token->value = ft_calloc(ft_strlen(parser->current_token->value) + 1, sizeof(char *));
+    current_token = malloc(sizeof(t_token));
+    current_token->value = ft_calloc(ft_strlen(parser->current_token->value) + 1, sizeof(char));
     current_token->type = parser->current_token->type;
     ft_strcpy(current_token->value, parser->current_token->value);
 
@@ -48,6 +48,12 @@ t_token *redirection(t_parser *parser)
     tmp = tokens;
     tokens = ft_strjoin(tokens, current_token->value);
     free(tmp);
+    free(current_token->value);
+    current_token->value = NULL;
+    free(current_token);
+    current_token = NULL;
+    free(parser->current_token->value);
+    parser->current_token->value = NULL;
     consume(parser);
     current_token = cmd_word(parser);
     tmp = tokens;
@@ -59,6 +65,8 @@ t_token *redirection(t_parser *parser)
     current_token->value = NULL;
     free(current_token);
     current_token = NULL;
+    free(parser->current_token->value);
+    parser->current_token->value = NULL;
     consume(parser);
     free(tmp);
     if (ft_strcmp(tokens, "") != 0)
