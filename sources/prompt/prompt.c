@@ -34,6 +34,18 @@ void    make_prompt_text(t_parser *parser_data)
     free(tmp);
 }
 
+void    free_signal(t_parser *parser)
+{
+    ft_free_nodes_env(&parser->builtin_vars->env2);
+    ft_free_nodes_env(&parser->commands);
+    free(parser->current_token);
+    free(parser->tokenizer);
+    free(parser->prompt->line);
+    free(parser->prompt->prompt_str);
+    free(parser->prompt->pwd);
+    rl_clear_history();
+}
+
 void    run(t_parser *parser_data)
 {
     while (true)
@@ -44,6 +56,7 @@ void    run(t_parser *parser_data)
         parser_data->prompt->line = readline(parser_data->prompt->prompt_str);
         if(parser_data->prompt->line == NULL) 
         {
+            free_signal(parser_data);
             exit(0);
         }
         add_history(parser_data->prompt->line);

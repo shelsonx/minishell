@@ -45,6 +45,22 @@ static void	restore_fd(t_data *data, int *fd_in, int *fd_out)
 	dup2(*fd_out, STDOUT_FILENO);
 }
 
+void    free_ft_exit(t_data *data)
+{
+    free_hashtable(data->parser_data->table_redirection);
+    ft_free_nodes_env(&data->builtin_vars->env2);
+    ft_free_nodes_env(&data->parser_data->commands);
+    free(data->parser_data->tokenizer->content);
+    free(data->parser_data->tokenizer->characteres);
+    free(data->parser_data->current_token);
+    free(data->parser_data->tokenizer);
+    free(data->parser_data->prompt->line);
+    free(data->parser_data->prompt->prompt_str);
+    free(data->parser_data->prompt->pwd);
+    rl_clear_history();
+    ft_free_fds(data->fds);
+}
+
 int handler_builtins(t_data *data)
 {
 	int	fd_in;
@@ -64,22 +80,7 @@ int handler_builtins(t_data *data)
 		ft_env(data->builtin_vars);
 	if (ft_strcmp(data->pipeline[0], "exit") == 0)
 	{
-		//exit_program(data);
-        free_hashtable(data->parser_data->table_redirection);
-        //free_hashtable(data->parser_data->builtin_vars->env);
-        ft_free_nodes_env(&data->builtin_vars->env2);
-        ft_free_nodes_env(&data->parser_data->commands);
-        free(data->parser_data->tokenizer->content);
-        free(data->parser_data->tokenizer->characteres);
-        //free(data->parser_data->tokenizer->token.value);
-        free(data->parser_data->current_token);
-        free(data->parser_data->tokenizer);
-
-        free(data->parser_data->prompt->line);
-        free(data->parser_data->prompt->prompt_str);
-        free(data->parser_data->prompt->pwd);
-        rl_clear_history();
-        ft_free_fds(data->fds);
+        free_ft_exit(data);
 		ft_exit(data->pipeline);
 	}
 	restore_fd(data, &fd_in, &fd_out);
