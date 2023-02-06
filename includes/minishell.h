@@ -253,6 +253,7 @@ void    consume(t_parser *parser);
 void    error(t_parser *parser_data);
 t_token *redirection(t_parser *parser);
 t_token *redirection_op(t_parser *parser);
+void    free_parser_error(t_parser *parser);
 
 
 //expander

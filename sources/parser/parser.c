@@ -1,14 +1,16 @@
 #include "../../includes/minishell.h"
 
-/* static int  peek(t_tokenizer *tokenizer)
+void    free_parser_error(t_parser *parser)
 {
-    size_t  pos;
-
-    pos = tokenizer->pos + 1;
-    if (pos > ft_strlen(tokenizer->content))
-        return (TK_EOF);
-    return (-1);
-} */
+    ft_free_nodes_env(&parser->commands);
+    free_hashtable(parser->table_redirection);
+    free(parser->tokenizer->content);
+    free(parser->tokenizer->characteres);
+    free(parser->prompt->line);
+    free(parser->prompt->prompt_str);
+    free(parser->prompt->pwd);
+    rl_clear_history();
+}
 
 void    error(t_parser *parser_data)
 {
@@ -43,7 +45,10 @@ t_token pipe_sequence(t_parser *parser)
         current_token = simple_command(parser);
     }
     if(parser->token_type == TK_PIPE)
+    {
+        free_parser_error(parser);
         error(parser);
+    }
     return (current_token);
 }
 

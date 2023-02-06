@@ -55,6 +55,12 @@ t_token *redirection(t_parser *parser)
     free(parser->current_token->value);
     parser->current_token->value = NULL;
     consume(parser);
+    if (parser->current_token->type != TK_WORD)
+    {
+        free(tokens);
+        free_parser_error(parser);
+        error(parser);
+    }
     current_token = cmd_word(parser);
     tmp = tokens;
     tokens = ft_strjoin(tokens, " ");
