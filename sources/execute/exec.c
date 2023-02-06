@@ -24,7 +24,6 @@ static	void exec_only_one_command(t_data *data, t_parser *parser_data)
 	remove_quotes(data->pipeline);
 	exec_one_command(data, get_fd_in(parser_data, index_cmd), 
 		get_fd_out(parser_data, index_cmd));
-	//ft_free_tab(data->pipeline);
 }
 
 static void exec_two_commands(t_data *data, t_parser *parser_data, int total_commands)
@@ -73,7 +72,6 @@ int	open_files(t_parser *parser_data)
 {
 	char *num_str;
 	char name[128];
-	//model to change itoa
 	ft_memset(name, 0, 128);
 	num_str = ft_itoa(0);
 	ft_strcpy(name, num_str);
@@ -91,6 +89,8 @@ int execute(t_parser *parser_data)
 	static int	exit_status;
 	int 		i;
 
+	data.fds = NULL;
+	data.pipeline = NULL;
 	data.exit_status = &exit_status;
 	data.builtin_vars = parser_data->builtin_vars;
 	data.parser_data = parser_data;

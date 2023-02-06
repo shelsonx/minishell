@@ -23,6 +23,8 @@ void	ft_close_fds(int **fds)
 {
 	int	i;
 
+	if (!fds)
+		return ;
 	i = 0;
 	while (fds[i])
 	{
