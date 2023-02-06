@@ -14,7 +14,7 @@ void    init_parser(t_parser *parser_data)
 
 void    free_prompt(t_parser *parser_data)
 {
-    ft_free_nodes(&parser_data->commands);
+    ft_free_nodes_env(&parser_data->commands);
     free_hashtable(parser_data->table_redirection);
     free(parser_data->prompt->line);
     free(parser_data->prompt->pwd);

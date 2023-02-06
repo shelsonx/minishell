@@ -6,7 +6,7 @@
 /*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 20:23:05 by progerio          #+#    #+#             */
-/*   Updated: 2023/01/30 11:39:37 by shelson          ###   ########.fr       */
+/*   Updated: 2023/02/06 08:20:05 by shelson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,15 @@ char	**get_pipeline(t_data *data, t_parser *parser_data, int index_cmd)
 
 	data->pipeline  = calloc(get_amount_parameters(parser_data, index_cmd) + 2, sizeof(char *));
 	current = parser_data->commands;
-	i = -1;
+	i = 0;
 	while (current)
 	{
 		if (current->index == index_cmd)
-			data->pipeline[++i] = current->value;
+		{
+			data->pipeline[i] = ft_calloc(ft_strlen(current->value) + 2, sizeof(char)); 
+			ft_strcpy(data->pipeline[i], current->value);
+			i++;
+		}
 		current = current->next;
 	}
 	return (data->pipeline);

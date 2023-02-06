@@ -247,13 +247,12 @@ int 	is_quote(char c);
 
 //parser
 void    parser(t_parser *parser);
-t_token cmd_word(t_parser *parser);
+t_token *cmd_word(t_parser *parser);
 t_token simple_command(t_parser *parser);
 void    consume(t_parser *parser);
 void    error(t_parser *parser_data);
-t_token redirection(t_parser *parser);
-t_token redirection(t_parser *parser);
-t_token redirection_op(t_parser *parser);
+t_token *redirection(t_parser *parser);
+t_token *redirection_op(t_parser *parser);
 
 
 //expander

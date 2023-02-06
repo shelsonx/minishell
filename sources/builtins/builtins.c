@@ -68,7 +68,7 @@ int handler_builtins(t_data *data)
         free_hashtable(data->parser_data->table_redirection);
         //free_hashtable(data->parser_data->builtin_vars->env);
         ft_free_nodes_env(&data->builtin_vars->env2);
-        ft_free_nodes(&data->parser_data->commands);
+        ft_free_nodes_env(&data->parser_data->commands);
         free(data->parser_data->tokenizer->content);
         free(data->parser_data->tokenizer->characteres);
         free(data->parser_data->tokenizer->token.value);
