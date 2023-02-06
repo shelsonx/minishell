@@ -27,6 +27,8 @@ static void check_word(t_parser *parser, t_token *current_token)
     {
         current_token = cmd_word(parser);
         ft_add_back(&parser->commands, ft_new_env(parser->index, current_token->value));
+        free(parser->current_token->value);
+        parser->current_token->value = NULL;
         consume(parser);
         free(current_token->value);
         current_token->value = NULL;

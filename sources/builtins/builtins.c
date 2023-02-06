@@ -71,7 +71,7 @@ int handler_builtins(t_data *data)
         ft_free_nodes_env(&data->parser_data->commands);
         free(data->parser_data->tokenizer->content);
         free(data->parser_data->tokenizer->characteres);
-        free(data->parser_data->tokenizer->token.value);
+        //free(data->parser_data->tokenizer->token.value);
         free(data->parser_data->current_token);
         free(data->parser_data->tokenizer);
 

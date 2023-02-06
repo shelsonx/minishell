@@ -24,6 +24,7 @@ static	void exec_only_one_command(t_data *data, t_parser *parser_data)
 	remove_quotes(data->pipeline);
 	exec_one_command(data, get_fd_in(parser_data, index_cmd), 
 		get_fd_out(parser_data, index_cmd));
+	//ft_free_tab(data->pipeline);
 }
 
 static void exec_two_commands(t_data *data, t_parser *parser_data, int total_commands)

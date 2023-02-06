@@ -47,7 +47,7 @@ void	ft_exit(char **declar)
 	declar_len = check_len(declar);
 	if (declar_len == 1)
 	{
-		free(declar);
+		ft_free_tab(declar);
 		exit(0);
 	}
 	else
@@ -58,7 +58,10 @@ void	ft_exit(char **declar)
 			error_msg("", 1);
 		value = ft_atoi(*(declar + 1));
 		if (value < MININT || value > MAXINT)
+		{
+			ft_free_tab(declar);
 			exit(0);
+		}
 		exit((unsigned char)value);
 	}
 }

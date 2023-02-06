@@ -37,6 +37,8 @@ t_token pipe_sequence(t_parser *parser)
     while (parser->current_token->type == TK_PIPE)
     {
         parser->token_type = TK_PIPE;
+        free(parser->current_token->value);
+        parser->current_token->value = NULL;
         consume(parser);
         current_token = simple_command(parser);
     }
