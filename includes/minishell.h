@@ -153,7 +153,7 @@ int		ft_echo(char **declar);
 
 int		check_len(char **declar);
 char 	check_str_nb(char *declar);
-void	error_msg(char *declar, int status);
+int		error_msg(char *declar, int status);
 void	ft_exit(char **declar);
 
 //execute
