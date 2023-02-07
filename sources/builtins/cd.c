@@ -61,10 +61,10 @@ static char *validate_args(t_data *data)
 {
     size_t  size;
     char    *dir_param;
+    char    *tmp;
     char    *env_path;
 
     size = ft_len_rows_tab(data->pipeline);
-
     if(size > 2)
         return NULL;
     else if (size == 1)
@@ -73,9 +73,20 @@ static char *validate_args(t_data *data)
         return (env_path);
     }
     
-    dir_param = check_dots(data->pipeline);
+    tmp = check_dots(data->pipeline);
+    if (tmp)
+    {
+
+        dir_param = ft_calloc(ft_strlen(tmp) + 1, sizeof(char));
+        ft_strcpy(dir_param, tmp);
+    }
+    else
+        dir_param = tmp;
     if (dir_param == NULL)
-        dir_param = data->pipeline[1];
+    {
+        dir_param = ft_calloc(ft_strlen(data->pipeline[1]) + 1, sizeof(char));
+        ft_strcpy(dir_param, data->pipeline[1]);
+    }
     return dir_param;
 }
 
@@ -94,6 +105,7 @@ void ft_cd (t_data *data)
     if (chdir(new_directory))
     {
         perror(new_directory);
+        free(new_directory);
         return;
     }
     oldpwd = get_env_path("PWD", data->builtin_vars);
@@ -101,6 +113,5 @@ void ft_cd (t_data *data)
     free(oldpwd);
     getcwd(pwd, 1024);
     ft_setenv(data->builtin_vars, "PWD", pwd);
-    if (ft_strcmp(new_directory, "HOME") == 0)
-        free(new_directory);
+    free(new_directory);
 }
