@@ -1,4 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/06 21:37:55 by shelson           #+#    #+#             */
+/*   Updated: 2023/02/06 21:39:37 by shelson          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
+
+static void free_redirection(t_token *current_token)
+{
+    free(current_token->value);
+    current_token->value = NULL;
+    free(current_token);
+    current_token = NULL;
+}
 
 t_token *redirection_op(t_parser *parser)
 {
@@ -8,7 +28,6 @@ t_token *redirection_op(t_parser *parser)
     current_token->value = ft_calloc(ft_strlen(parser->current_token->value) + 1, sizeof(char));
     current_token->type = parser->current_token->type;
     ft_strcpy(current_token->value, parser->current_token->value);
-
     if (current_token->type == TK_GREAT)
         parser->token_type = TK_GREAT;
     else if (current_token->type == TK_DGREAT)
@@ -35,23 +54,33 @@ void    set_redirect(t_parser *parser, char *tokens)
     free(tokens);
 }
 
+void    check_filename(t_token *current_token, t_parser *parser, char **tmp, char **tokens)
+{
+    current_token = cmd_word(parser);
+    *tmp = *tokens;
+    *tokens = ft_strjoin(*tokens, " ");
+    free(*tmp);
+    *tmp = *tokens;
+    *tokens = ft_strjoin(*tokens, current_token->value);
+    free_redirection(current_token);
+    free(parser->current_token->value);
+    parser->current_token->value = NULL;
+    consume(parser);
+    free(*tmp);
+}
+
 t_token *redirection(t_parser *parser)
 {
     t_token *current_token;
-
     char    *tokens;
     char    *tmp;
-
 
     tokens = ft_strdup("");
     current_token = redirection_op(parser);
     tmp = tokens;
     tokens = ft_strjoin(tokens, current_token->value);
     free(tmp);
-    free(current_token->value);
-    current_token->value = NULL;
-    free(current_token);
-    current_token = NULL;
+    free_redirection(current_token);
     free(parser->current_token->value);
     parser->current_token->value = NULL;
     consume(parser);
@@ -61,20 +90,7 @@ t_token *redirection(t_parser *parser)
         free_parser_error(parser);
         error(parser);
     }
-    current_token = cmd_word(parser);
-    tmp = tokens;
-    tokens = ft_strjoin(tokens, " ");
-    free(tmp);
-    tmp = tokens;
-    tokens = ft_strjoin(tokens, current_token->value);
-    free(current_token->value);
-    current_token->value = NULL;
-    free(current_token);
-    current_token = NULL;
-    free(parser->current_token->value);
-    parser->current_token->value = NULL;
-    consume(parser);
-    free(tmp);
+    check_filename(current_token, parser, &tmp, &tokens);
     if (ft_strcmp(tokens, "") != 0)
         set_redirect(parser, tokens);
     return (current_token);
