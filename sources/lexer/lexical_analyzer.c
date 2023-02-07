@@ -10,7 +10,6 @@ void init_tokenizer(t_tokenizer *tokenizer) {
 
 t_token get_next_token(t_tokenizer *tokenizer)
 {
-    //tokenizer->token.value = tokenizer->characteres;
     tokenizer->token.value = ft_calloc(ft_strlen(tokenizer->characteres) + 1, sizeof(char));
     ft_strcpy(tokenizer->token.value, tokenizer->characteres);
     advance(tokenizer);

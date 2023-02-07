@@ -1,23 +1,5 @@
 #include "../../includes/minishell.h"
 
- /*static t_htitem* linkedlist_remove(t_linkedlist* list) {
-    if (!list)
-        return NULL;
-    if (!list->next)
-        return NULL;
-    t_linkedlist* node = list->next;
-    t_linkedlist* temp = list;
-    temp->next = NULL;
-    list = node;
-    t_htitem* it = NULL;
-    ft_memcpy(temp->item, it, sizeof(t_htitem));
-    free(temp->item->key);
-    free(temp->item->value);
-    free(temp->item);
-    free(temp);
-    return it;
-}*/
-
 t_hashtable* create_table(int size) {
     t_hashtable* table = (t_hashtable*) malloc (sizeof(t_hashtable));
     table->size = size;
@@ -95,16 +77,3 @@ char* ht_search(t_hashtable* table, char* key) {
     }
     return NULL;
 }
-
-/*
-void print_search(t_hashtable* table, char* key) {
-    char* val;
-    if ((val = ht_search(table, key)) == NULL) {
-        printf("%s does not exist\n", key);
-        return;
-    }
-    else {
-        printf("Key:%s, Value:%s\n", key, val);
-    }
-}
-*/

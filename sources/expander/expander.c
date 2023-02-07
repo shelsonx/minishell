@@ -101,7 +101,6 @@ void    expander(t_data *data, t_builtin_vars *builtin_vars)
 
 	expander_special_parameter(data);
 	x = 0;
-	//parameters = ft_strdup("");
 	while (data->pipeline[x])
 	{
 		y = 0;
@@ -111,5 +110,4 @@ void    expander(t_data *data, t_builtin_vars *builtin_vars)
 		free(parameters);
 		x++;
 	}
-	//free(parameters);
 }

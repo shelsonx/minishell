@@ -128,6 +128,9 @@ int 	is_builtins(char *builtin_name);
 int 	handler_builtins(t_data *data);
 void	ft_cd (t_data *data);
 
+//builtins utils
+void    free_ft_exit(t_data *data);
+
 //UNSET
 void    ft_unset(t_builtin_vars *builtins, char **args);
 int 	get_position(t_builtin_vars *builtins, char *arg);

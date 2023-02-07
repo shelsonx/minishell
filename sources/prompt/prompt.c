@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-//-lreadline
-//--suppressions=readline.supp
-
 void    init_parser(t_parser *parser_data)
 {
     parser_data->tokenizer->content = ft_strdup(parser_data->prompt->line);
@@ -57,7 +54,7 @@ void    run(t_parser *parser_data)
         if(parser_data->prompt->line == NULL) 
         {
             free_signal(parser_data);
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
         add_history(parser_data->prompt->line);
         init_parser(parser_data);
