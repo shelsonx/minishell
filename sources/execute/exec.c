@@ -32,11 +32,15 @@ static void exec_two_commands(t_data *data, t_parser *parser_data, int total_com
 
 	index_cmd = get_input_cmd(0);
 	data->pipeline = get_pipeline(data, parser_data, 0);
+	expander(data, parser_data->builtin_vars);
+	remove_quotes(data->pipeline);
 	data->fds = create_pipes(1);
 	exec_first_command(data, 
 		get_fd_in(parser_data, index_cmd),
 		get_fd_out(parser_data, index_cmd));
 	data->pipeline = get_pipeline(data, parser_data, 1);
+	expander(data, parser_data->builtin_vars);
+	remove_quotes(data->pipeline);
 	index_cmd = get_input_cmd(1);
 	int fd_in = get_fd_in(parser_data, index_cmd);
 	if (fd_in == -1)
@@ -51,6 +55,8 @@ static void exec_serveral_commands(t_data *data, t_parser *parser_data, int tota
 	char	*index_cmd;
 
 	data->pipeline = get_pipeline(data, parser_data, 0);
+	expander(data, parser_data->builtin_vars);
+	remove_quotes(data->pipeline);
 	data->fds = create_pipes(total_commands -1);
 	index_cmd = get_input_cmd(0);
 	exec_first_command(data, 
@@ -60,6 +66,8 @@ static void exec_serveral_commands(t_data *data, t_parser *parser_data, int tota
 	ft_free_tab(data->pipeline);
 	data->pipeline = NULL;
 	data->pipeline = get_pipeline(data, parser_data, total_commands -1); 
+	expander(data, parser_data->builtin_vars);
+	remove_quotes(data->pipeline);
 	index_cmd = get_input_cmd(total_commands -1);
 	int fd_in = get_fd_in(parser_data, index_cmd);
 	if (fd_in == -1)

@@ -1,14 +1,22 @@
 #include "../../includes/minishell.h"
 
-char **create_args(char **pipeline, t_builtin_vars *builtins)
+char	**create_args(char **pipeline, t_builtin_vars *builtins)
 {
 	char	*exec_cmd;
 
 	exec_cmd = get_exec_command(pipeline[0], builtins);
-	free(pipeline[0]);
-	pipeline[0] = ft_calloc(ft_strlen(exec_cmd) + 1, sizeof(char));
-    ft_strcpy(pipeline[0], exec_cmd);
-	free(exec_cmd);
+	if (exec_cmd)
+	{
+		free(pipeline[0]);
+		pipeline[0] = ft_calloc(ft_strlen(exec_cmd) + 1, sizeof(char));
+		ft_strcpy(pipeline[0], exec_cmd);
+		free(exec_cmd);
+	}
+	else
+	{
+		free(pipeline[0]);
+		pipeline[0] = NULL;
+	}
 	return (pipeline);
 }
 
