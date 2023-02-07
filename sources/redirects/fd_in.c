@@ -23,6 +23,7 @@ static void set_here_doc(char **redirection, int *fd_in)
         perror("minishell: ");
     here_doc(fd, redirection[1]);
     *fd_in  = fd[0][0];
+    ft_free_fds(fd);
 }
 
 static void set_fds_in(t_parser *parser_data, int *fd_in, char *index_cmd, int i)

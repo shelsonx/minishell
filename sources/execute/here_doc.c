@@ -21,9 +21,11 @@ void	here_doc(int **fd, char *limiter)
 			free(line);
 			close(fd2);
 			close(fd[0][1]);
+			line = ft_get_next_line(fd2);
 			break ;
 		}
 		write(fd[0][1], line, ft_strlen(line));
 		free(line);
 	}
+	free(line);
 }
