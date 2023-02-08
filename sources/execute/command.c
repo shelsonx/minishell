@@ -88,7 +88,7 @@ void	exec_middles_commands(t_data *data, t_parser *parser_data, int total_cmds_m
 	{
 		set_fds(data, parser_data, i);
 		data->pipeline = get_pipeline(data, parser_data, i+1);
-		expander(data, parser_data->builtin_vars);
+		expander_fds(data->pipeline, parser_data->builtin_vars, data);
 		remove_quotes(data->pipeline);
 		input_cmd = ft_strdup(data->pipeline[0]);
 		if (is_builtins(input_cmd))
