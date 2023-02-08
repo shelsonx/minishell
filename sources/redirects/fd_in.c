@@ -35,7 +35,7 @@ static void set_fds_in(t_parser *parser_data, int *fd_in, char *index_cmd, int i
     num_str = ft_itoa(i);
     search = ht_search(parser_data->table_redirection, num_str);
     redirection = ft_split(search, ' ');
-    //expander(redirection, parser_data->builtin_vars);
+    expander_fds(redirection, parser_data->builtin_vars, parser_data->data);
     if (ft_strcmp(redirection[2], index_cmd) == 0)
     {
         if (strcmp(redirection[0], "<") == 0)

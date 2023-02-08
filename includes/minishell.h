@@ -86,6 +86,7 @@ typedef struct s_parser
 	int			token_type;
 	int			index_redirect;
 	int			index;
+	struct s_data		*data;
 	t_hashtable	*table_redirection;
 	t_builtin_vars *builtin_vars;
 	t_node			*commands;
@@ -260,8 +261,9 @@ void    free_parser_error(t_parser *parser);
 
 
 //expander
+void    expander_fds(char **args, t_builtin_vars *builtin_vars, t_data *data);
 void    expander(t_data *data, t_builtin_vars *builtin_vars);
- int expand_simple_quotes(char **args, t_builtin_vars *builtin_vars);
+int expand_simple_quotes(char **args, t_builtin_vars *builtin_vars);
 int expand_double_quotes(char **args, t_builtin_vars *builtin_vars);
 int contains_quotes(char **args, int quote);
 int get_amount_character(char **args, char character);

@@ -104,6 +104,7 @@ int execute(t_parser *parser_data)
 	data.parser_data = parser_data;
 	total_commands = parser_data->index;
 	total_builtins = get_amount_builtins(parser_data);
+	parser_data->data = &data;
 	if (total_commands == 0)
 		return open_files(parser_data);
 	if (total_commands == 1)
