@@ -13,7 +13,7 @@ int has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 		num_str = ft_itoa(i);
 		search = ht_search(parser_data->table_redirection, num_str);
     	redirection = ft_split(search, ' ');
-		expander_fds(redirection, parser_data->builtin_vars, parser_data->data);
+		expander(redirection, parser_data->builtin_vars, parser_data->data);
 		if (ft_strcmp(redirection[2], index_cmd) == 0)
 		{
 			if (strcmp(redirection[0], redirect) == 0)

@@ -51,7 +51,10 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
 		if (data->args[0] == NULL)
+		{
+			ft_free_tab(data->pipeline);
 			return ;
+		}
 		execute_child_process(data);
 		ft_free_tab(data->args);
 		data->args = NULL;
@@ -88,7 +91,7 @@ void	exec_middles_commands(t_data *data, t_parser *parser_data, int total_cmds_m
 	{
 		set_fds(data, parser_data, i);
 		data->pipeline = get_pipeline(data, parser_data, i+1);
-		expander_fds(data->pipeline, parser_data->builtin_vars, data);
+		expander(data->pipeline, parser_data->builtin_vars, data);
 		remove_quotes(data->pipeline);
 		input_cmd = ft_strdup(data->pipeline[0]);
 		if (is_builtins(input_cmd))

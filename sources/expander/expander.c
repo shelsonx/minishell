@@ -66,7 +66,7 @@ static char	*get_parameters(char **args, int *x, int *y)
 	return (parameters);
 }
 
-static void	expander_special_parameter(t_data *data)
+static void	expander_special_parameter(char **args, t_data *data)
 {
 	int		x;
 	int		y;
@@ -74,16 +74,16 @@ static void	expander_special_parameter(t_data *data)
 	char	*old_pipeline;
 
 	x = 0;
-	while (data->pipeline[x])
+	while (args[x])
 	{
 		y = 0;
-		while (data->pipeline[x][y])
+		while (args[x][y])
 		{
-			if (data->pipeline[x][y] == '$' && data->pipeline[x][y+1] == '?')
+			if (args[x][y] == '$' && args[x][y+1] == '?')
 			{
 				str_exit_status = ft_itoa(*data->exit_status);
-				old_pipeline = data->pipeline[x];
-				data->pipeline[x] = ft_replace_str(data->pipeline[x], "$?", str_exit_status);
+				old_pipeline = args[x];
+				args[x] = ft_replace_str(args[x], "$?", str_exit_status);
 				free(str_exit_status);
 				free(old_pipeline);
 			}
@@ -93,20 +93,20 @@ static void	expander_special_parameter(t_data *data)
 	}
 }
 
-void    expander(t_data *data, t_builtin_vars *builtin_vars)
+void    expander(char **args, t_builtin_vars *builtin_vars, t_data *data)
 {
 	int		x;
 	int		y;
 	char	*parameters;
 
-	expander_special_parameter(data);
+	expander_special_parameter(args, data);
 	x = 0;
-	while (data->pipeline[x])
+	while (args[x])
 	{
 		y = 0;
-		parameters = get_parameters(data->pipeline, &x, &y);
-		if (data->pipeline[x][0] != '\'')
-			parameter_expander(&data->pipeline[x], parameters, builtin_vars);
+		parameters = get_parameters(args, &x, &y);
+		if (args[x][0] != '\'')
+			parameter_expander(&args[x], parameters, builtin_vars);
 		free(parameters);
 		x++;
 	}

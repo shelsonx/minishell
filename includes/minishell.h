@@ -261,8 +261,7 @@ void    free_parser_error(t_parser *parser);
 
 
 //expander
-void    expander_fds(char **args, t_builtin_vars *builtin_vars, t_data *data);
-void    expander(t_data *data, t_builtin_vars *builtin_vars);
+void    expander(char **args, t_builtin_vars *builtin_vars, t_data *data);
 int expand_simple_quotes(char **args, t_builtin_vars *builtin_vars);
 int expand_double_quotes(char **args, t_builtin_vars *builtin_vars);
 int contains_quotes(char **args, int quote);
