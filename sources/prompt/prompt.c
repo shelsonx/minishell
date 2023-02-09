@@ -7,6 +7,7 @@ void    init_parser(t_parser *parser_data)
     parser_data->commands = NULL;
     parser_data->index_redirect = 0;
     parser_data->table_redirection = create_table(1000);
+    parser_data->token_type = -1;
 }
 
 void    free_prompt(t_parser *parser_data)

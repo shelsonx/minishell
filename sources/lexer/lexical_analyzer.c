@@ -10,8 +10,11 @@ void init_tokenizer(t_tokenizer *tokenizer) {
 
 t_token get_next_token(t_tokenizer *tokenizer)
 {
-    tokenizer->token.value = ft_calloc(ft_strlen(tokenizer->characteres) + 1, sizeof(char));
-    ft_strcpy(tokenizer->token.value, tokenizer->characteres);
+    if (tokenizer->token.type != TK_PARENTHESIS)
+    { 
+        tokenizer->token.value = ft_calloc(ft_strlen(tokenizer->characteres) + 1, sizeof(char));
+        ft_strcpy(tokenizer->token.value, tokenizer->characteres);
+    }
     advance(tokenizer);
     return (tokenizer->token);
 }
