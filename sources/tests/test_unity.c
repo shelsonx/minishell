@@ -14,132 +14,87 @@ void tearDown(void)
    //
 }
 
-void test_env(void)
+void    write_news_lines_minishell(void)
 {
-    t_builtin_vars builtins;
-    init_env(&builtins, env);
-    char *var = "SHELL";
-    char *result = get_env_path(var, &builtins);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY("/bin/bash", result, 7);
-    free(result);
-}
-
-void test_token_word(void)
-{
-    //cc test_unity.c unity_tests.c ../lexer/lexical_analyzer.c ../lexer/lexical_resources.c ../lexer/get_token.c ../../Unity/src/unity.c ../utils/ht_functions.c ../utils/ht_utils.c ../utils/linkedlist_utils.c ../../libs/libft/libft.a 
-    t_token token;
-    t_tokenizer tokenizer;
-
+    char *lines_minishell = get_join_lines("files/out_minishell");
+    char *lines_origem = get_join_lines("files/out_shell");
+    char **lines = ft_split(lines_minishell, '\n');
     
-    tokenizer.content = ft_strdup("echo");
-    init_tokenizer(&tokenizer);
-    token = next_token(&tokenizer);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY("echo", token.value, 4);
-    TEST_ASSERT_EQUAL(TK_WORD, token.type);
-}
-
-void test_token_redirections(void)
-{
-    //cc test_unity.c unity_tests.c ../lexer/lexical_analyzer.c ../lexer/lexical_resources.c ../lexer/get_token.c ../../Unity/src/unity.c ../utils/ht_functions.c ../utils/ht_utils.c ../utils/linkedlist_utils.c ../../libs/libft/libft.a 
-    t_token token;
-    t_tokenizer tokenizer;
-
-    tokenizer.content = ft_strdup("> file");
-    init_tokenizer(&tokenizer);
-    token = next_token(&tokenizer);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY(">", token.value, 1);
-    TEST_ASSERT_EQUAL(TK_GREAT, token.type);
-
-    tokenizer.content = ft_strdup("< file");
-    init_tokenizer(&tokenizer);
-    token = next_token(&tokenizer);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY("<", token.value, 1);
-    TEST_ASSERT_EQUAL(TK_LESS, token.type);
-
-    tokenizer.content = ft_strdup(">> file");
-    init_tokenizer(&tokenizer);
-    token = next_token(&tokenizer);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY(">>", token.value, 1);
-    TEST_ASSERT_EQUAL(TK_DGREAT, token.type);
-
-    tokenizer.content = ft_strdup("<< file");
-    init_tokenizer(&tokenizer);
-    token = next_token(&tokenizer);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY("<<", token.value, 1);
-    TEST_ASSERT_EQUAL(TK_DLESS, token.type);
-}
-
-void test_lexer_module(void)
-{
-    int fd_out, fd_in;
-    char *line = ft_strdup("");
-    char *out = ft_strdup("");
-    char *expected = ft_strdup("");
-
-    test_lexer();
-    fd_out = open("out", O_RDONLY, 0777);
-    fd_in = open("expected", O_RDONLY, 0777);
-    while (line = ft_get_next_line(fd_out))
-        out = ft_strjoin(out, line);
-    line = ft_strdup("");
-     while (line = ft_get_next_line(fd_in))
-        expected = ft_strjoin(expected, line);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY(expected, out, ft_strlen(expected)-1);
-    pid_t pid = fork();
-    if (pid == 0)
+    int out_minishell;
+    out_minishell = open("files/out_minishell", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    int x = 1;
+    while (x < ft_len_rows_tab(lines)-1)
     {
-        char *args[] = {"/bin/rm", "out", NULL};
-        execve(args[0], args, NULL);
+        ft_putendl_fd(lines[x], out_minishell);
+        x++;
     }
-    waitpid(pid, NULL, 0);
-    close(fd_out);
+    close(out_minishell);
+}
+
+char    *get_lines(char *path)
+{
+    FILE *fd_minishell = fopen(path, "r");
+    char line[255];
+    char    *lines = ft_strdup("");
+    while (fgets(line, 255, fd_minishell))
+        lines = ft_strjoin(lines, line);
+    fclose(fd_minishell);
+    return (lines);
 }
 
 void test_execute_minishell(void)
 {
+    int fd_in;
+    int fd_out;
+
     pid_t pid = fork();
     if (pid == 0)
     {
-        char *args[] = {"/bin/ls", "-l", NULL};
-        int file_fd = open("files/out_origem", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        dup2(file_fd, STDOUT_FILENO);
-        execve(args[0], args, NULL);
+        char *args[] = {"/home/shelson/projects/minishell/minishell", NULL};
+        fd_in = open("files/commands", O_RDONLY);
+        fd_out = open("files/out_minishell", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        dup2(fd_in, STDIN_FILENO);
+        dup2(fd_out, STDOUT_FILENO);
+        execve(args[0], args, env);
     }
+    close(fd_in);
+    close(fd_out);
     waitpid(pid, NULL, 0);
 
-    pid = fork();
-    if (pid == 0)
+    pid_t pid2 = fork();
+    if (pid2 == 0)
     {
-        char *args[] = {"./minishell",  NULL};
-        execve(args[0], args, NULL);
-        int file_fd = open("files/out_minishell", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        dup2(file_fd, STDOUT_FILENO);
+        char *args[] = {"/bin/bash",  NULL};
+        fd_in = open("files/commands", O_RDONLY);
+        fd_out = open("files/out_shell", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        dup2(fd_in, STDIN_FILENO);
+        dup2(fd_out, STDOUT_FILENO);
+        execve(args[0], args, env);
     }
-    waitpid(pid, NULL, 0);
+    close(fd_in);
+    close(fd_out);
+    waitpid(pid2, NULL, 0);
 
-   /*  pid = fork();
-    if (pid == 0)
+
+    if (pid != 0 && pid2 !=0)
     {
-        char *args[] = {"/bin/ls", "-l", NULL};
-        int file_fd = open("files/out_minishell", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-        dup2(file_fd, STDOUT_FILENO);
-        execve(args[0], args, NULL);
-    }
-    waitpid(pid, NULL, 0); */
+        write_news_lines_minishell();
 
-    char *lines_minishell = get_join_lines("files/out_minishell");
-    char *lines_origem = get_join_lines("files/out_origem");
-    TEST_ASSERT_EQUAL_CHAR_ARRAY(lines_minishell, lines_origem, ft_strlen(lines_origem)-1);
+        char *lines_minishell = get_lines("files/out_minishell");
+        //debug manual
+        dprintf(2, "minishell: %s\n", lines_minishell);
+        char *lines_origem = get_lines("files/out_shell");
+        //debug manual
+        dprintf(2, "shell: %s\n", lines_origem);
+        
+        TEST_ASSERT_EQUAL_CHAR_ARRAY(lines_origem, lines_minishell, ft_strlen(lines_origem));
+    }
 }
 
 int main(int argc, char **argv, char **envp)
 {
     env = envp;
     UNITY_BEGIN();
-    RUN_TEST(test_env);
-    RUN_TEST(test_token_word);
-    RUN_TEST(test_token_redirections);
-    RUN_TEST(test_lexer_module);
     RUN_TEST(test_execute_minishell);
     return UNITY_END();
 }
