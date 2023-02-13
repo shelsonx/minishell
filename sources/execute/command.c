@@ -43,6 +43,8 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 	{
 		free(input_cmd);
 		handler_builtins(data);
+		ft_free_tab(data->pipeline);
+		data->pipeline = NULL;
 		return ;
 	}
 	else
