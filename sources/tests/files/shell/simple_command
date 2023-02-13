@@ -1,5 +1,4 @@
 a.out
-expected
 files
 test_builtin_in_parent.c
 test_create_args.c
