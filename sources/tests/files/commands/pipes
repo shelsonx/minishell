@@ -1,0 +1,1 @@
+ls -l -a | sort -r | head -4 | wc -l -c

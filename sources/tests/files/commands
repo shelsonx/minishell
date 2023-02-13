@@ -1,1 +1,0 @@
-echo Hello $USER | tr s S
