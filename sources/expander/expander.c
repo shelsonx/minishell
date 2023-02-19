@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
-static void	parameter_expander(char **str, char *parameters, t_builtin_vars *builtin_vars)
+static void	parameter_expander(char **str, char *parameters,
+			t_builtin_vars *builtin_vars)
 {
 	int		i;
 	char	**splitted;
@@ -25,7 +26,7 @@ static void	parameter_expander(char **str, char *parameters, t_builtin_vars *bui
 
 static char	*get_parameter(char **args, int *x, int *y)
 {
-	int start;
+	int		start;
 	char	*parameter;
 	char	*sub;
 
@@ -41,7 +42,7 @@ static char	*get_parameter(char **args, int *x, int *y)
 			while (ft_isalnum(args[(*x)][(*y)]) || args[(*x)][(*y)] == '_')
 				(*y)++;
 		}
-		sub = ft_substr(args[(*x)], start, (*y)-start);
+		sub = ft_substr(args[(*x)], start, (*y) -start);
 		if (sub)
 			parameter = ft_concat_strs(parameter, sub, " ");
 	}
@@ -58,7 +59,8 @@ static char	*get_parameters(char **args, int *x, int *y)
 		if (args[(*x)][(*y)] == '$')
 		{
 			(*y)++;
-			parameters = ft_concat_strs(parameters, get_parameter(args, x, y), " ");
+			parameters = ft_concat_strs(parameters,
+					get_parameter(args, x, y), " ");
 			(*y)--;
 		}
 		(*y)++;
@@ -93,7 +95,7 @@ static void	expander_special_parameter(char **args, t_data *data)
 	}
 }
 
-void    expander(char **args, t_builtin_vars *builtin_vars, t_data *data)
+void	expander(char **args, t_builtin_vars *builtin_vars, t_data *data)
 {
 	int		x;
 	int		y;

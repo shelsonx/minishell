@@ -1,9 +1,9 @@
 #include "../../includes/minishell.h"
 
-int has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
+int	has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 {
-    char	*search;
-    char	**redirection;
+	char	*search;
+	char	**redirection;
 	char	*num_str;
 	int		i;
 
@@ -12,7 +12,7 @@ int has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 	{
 		num_str = ft_itoa(i);
 		search = ht_search(parser_data->table_redirection, num_str);
-    	redirection = ft_split(search, ' ');
+		redirection = ft_split(search, ' ');
 		expander(redirection, parser_data->builtin_vars, parser_data->data);
 		if (ft_strcmp(redirection[2], index_cmd) == 0)
 		{
@@ -26,5 +26,5 @@ int has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 		free(num_str);
 		ft_free_tab(redirection);
 	}
-    return (FALSE);
+	return (FALSE);
 }
