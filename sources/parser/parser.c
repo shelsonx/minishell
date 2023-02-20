@@ -9,7 +9,6 @@ void    free_parser_error(t_parser *parser)
     free(parser->prompt->line);
     free(parser->prompt->prompt_str);
     free(parser->prompt->pwd);
-    rl_clear_history();
 }
 
 void    error(t_parser *parser_data)
