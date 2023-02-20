@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void    remove_quotes(char **args)
+void	remove_quotes(char **args)
 {
     int     x;
     char    quote[2];
