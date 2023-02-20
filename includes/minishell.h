@@ -16,7 +16,7 @@
 # define MININT -2147483648 
 # define MAXINT 2147483647
 # define CAPACITY 50000 // Size of the Hash Table
-# define METACHARS	"|<>&()\t "
+# define METACHARS	"|<>()\t "
 
 typedef struct s_token
 {
