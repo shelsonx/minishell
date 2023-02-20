@@ -1,10 +1,64 @@
 #include "../../includes/minishell.h"
 
+static char **create_new_args(char **args, int *amount)
+{
+    char    **new_args;
+    int     i;
+    int     y;
+    int     count;
+
+    i = -1;
+    count = 0;
+    while (args[++i])
+        if (ft_strlen(args[i]) > 0)
+            count++;
+    new_args = ft_calloc(count + 1, sizeof(char *));
+    i = -1;
+    y = 0;
+    while (args[++i])
+    {
+        if (ft_strlen(args[i]) > 0)
+        {
+            new_args[y] = ft_calloc(ft_strlen(args[i]) + 1, sizeof(char));
+            ft_strcpy(new_args[y], args[i]);
+            y++;
+        }
+    }
+    *amount = count;
+    return (new_args);
+}
+
+static void set_new_values_args(char **args, char **new_args, int amount)
+{
+    int i;
+
+    i = -1;
+    while (new_args[++i])
+    {
+        free(args[i]);
+        args[i] = NULL;
+        args[i] = ft_strdup(new_args[i]);
+        free(new_args[i]);
+    }
+    i = amount;
+    int total = ft_len_rows_tab(args);
+    while (++i <= total)
+    {
+        free(args[i]);
+        args[i] = NULL;
+    }
+    free(new_args);
+    free(args[amount]);
+    args[amount] = NULL;
+}
+
 void	remove_quotes(char **args)
 {
     int     x;
+    int     amount;
     char    quote[2];
     char    *old;
+    char    **new_args;
 
     x = 0;
     ft_memset(quote, 0, 2);
@@ -19,46 +73,6 @@ void	remove_quotes(char **args)
         }
         x++;
     }
-
-    //calculate amount values
-	int count = 0;
-    int i = -1;
-    while (args[++i])
-        if (ft_strlen(args[i]) > 0)
-            count++;
-    
-    //create new_args to save news values
-    char    **new_args = ft_calloc(count + 1, sizeof(char *));
-    i = -1;
-    int y = 0;
-    while (args[++i])
-    {
-        if (ft_strlen(args[i]) > 0)
-        {
-            new_args[y] = ft_calloc(ft_strlen(args[i]) + 1, sizeof(char));
-            ft_strcpy(new_args[y], args[i]);
-            y++;
-        }
-    }
-
-    //empty args and copy values of the new_args to args    
-    i = -1;
-    while (new_args[++i])
-    {
-        free(args[i]);
-        args[i] = NULL;
-        args[i] = ft_strdup(new_args[i]);
-        free(new_args[i]);
-    }
-    //clear remaining
-    i = count;
-    int total = ft_len_rows_tab(args);
-    while (++i <= total)
-    {
-        free(args[i]);
-        args[i] = NULL;
-    }
-    free(new_args);
-    free(args[count]);
-    args[count] = NULL;
+    new_args = create_new_args(args, &amount);
+    set_new_values_args(args, new_args, amount);
 }
