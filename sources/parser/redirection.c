@@ -6,7 +6,7 @@
 /*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:37:55 by shelson           #+#    #+#             */
-/*   Updated: 2023/02/09 12:21:01 by shelson          ###   ########.fr       */
+/*   Updated: 2023/02/19 23:02:08 by shelson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ t_token *redirection(t_parser *parser)
     {
         free(tokens);
         free_parser_error(parser);
+        free(parser->tokenizer->token.value);
+        parser->tokenizer->token.value = NULL;
         error(parser);
     }
     check_filename(current_token, parser, &tmp, &tokens);
