@@ -3,29 +3,26 @@
 static int	is_limiter(char *line, char *limiter)
 {
 	return (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0
-		&& (ft_strlen(line) -1) == ft_strlen(limiter));
+		&& (ft_strlen(line)) == ft_strlen(limiter));
 }
 
 void	here_doc(int **fd, char *limiter)
 {
 	char	*line;
-	int		fd2;
+	char	*tmp;
 
-	fd2 = dup(0);
-	while (true)
+	while (TRUE)
 	{
-		ft_printf("> ");
-		line = ft_get_next_line(fd2);
+		line = readline("> ");
 		if (is_limiter(line, limiter))
 		{
 			free(line);
-			close(fd2);
 			close(fd[0][1]);
-			line = ft_get_next_line(fd2);
 			break ;
 		}
-		write(fd[0][1], line, ft_strlen(line));
+		tmp = ft_strjoin(line, "\n");
+		write(fd[0][1], tmp, ft_strlen(tmp));
+		free(tmp);
 		free(line);
 	}
-	free(line);
 }
