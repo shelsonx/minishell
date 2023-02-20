@@ -3,11 +3,11 @@
 void    remove_quotes(char **args)
 {
     int     x;
-    char    *quote;
+    char    quote[2];
     char    *old;
 
     x = 0;
-    quote = ft_calloc(sizeof(char *), 2);
+    ft_memset(quote, 0, 2);
     while (args[x])
     {
         if (is_quote(args[x][0]) && is_quote(args[x][ft_strlen(args[x]) -1]))
@@ -17,11 +17,8 @@ void    remove_quotes(char **args)
             args[x] = ft_strtrim(args[x], quote);
             free(old);
         }
-        while (args[x][ft_strlen(args[x]) -1] == quote[0] && is_quote(quote[0]))
-           args[x] = ft_strtrim(args[x], quote);
         x++;
     }
-    free(quote);
 
     //calculate amount values
 	int count = 0;
@@ -52,9 +49,16 @@ void    remove_quotes(char **args)
         args[i] = NULL;
         args[i] = ft_strdup(new_args[i]);
         free(new_args[i]);
-        //args[i] = ft_calloc(count + 1, sizeof(char));
-        //ft_strcpy(args[i], new_args[i]);
+    }
+    //clear remaining
+    i = count;
+    int total = ft_len_rows_tab(args);
+    while (++i <= total)
+    {
+        free(args[i]);
+        args[i] = NULL;
     }
     free(new_args);
+    free(args[count]);
     args[count] = NULL;
 }

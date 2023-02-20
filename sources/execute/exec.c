@@ -15,6 +15,8 @@ char	*get_input_cmd(int position)
 static	void exec_only_one_command(t_data *data, t_parser *parser_data)
 {
 	char	*index_cmd;
+	int 	fd_in;
+	int 	fd_out;
 
 	index_cmd = get_input_cmd(0);
 	if (has_redirect(parser_data, "<", index_cmd) && get_fd_in(parser_data, index_cmd) == -1)
@@ -22,8 +24,9 @@ static	void exec_only_one_command(t_data *data, t_parser *parser_data)
 	data->pipeline = get_pipeline(data, parser_data, 0);
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
-	exec_one_command(data, get_fd_in(parser_data, index_cmd), 
-		get_fd_out(parser_data, index_cmd));
+	fd_in = get_fd_in(parser_data, index_cmd);
+	fd_out = get_fd_out(parser_data, index_cmd);
+	exec_one_command(data, fd_in, fd_out);
 }
 
 static void exec_two_commands(t_data *data, t_parser *parser_data, int total_commands)

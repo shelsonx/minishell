@@ -17,8 +17,11 @@ static void	parameter_expander(char **str, char *parameters, t_builtin_vars *bui
 		replaced = ft_replace_str(*str, joinned, env);
 		free(*str);
 		free(env);
-		*str = replaced;
+		*str = ft_calloc(ft_strlen(replaced) + 1, sizeof(char));
+		ft_strcpy(*str, replaced);
 		free(joinned);
+		free(replaced);
+		replaced = NULL;
 	}
 	ft_free_tab(splitted);
 }
