@@ -118,7 +118,7 @@ void	tk_word(t_tokenizer *tokenizer)
                 return ;
             }
         }
-        if (tokenizer->token.type == TK_EOF || is_quote(tokenizer->content[tokenizer->pos]))
+        if (tokenizer->token.type == TK_EOF)
             return ;
         i++;
     }

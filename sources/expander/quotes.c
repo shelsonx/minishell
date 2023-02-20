@@ -52,6 +52,21 @@ static void set_new_values_args(char **args, char **new_args, int amount)
     args[amount] = NULL;
 }
 
+static void remove_remmaining_quotes(char **args, char *quote, int x)
+{
+    char    *old;
+
+    if (ft_strlen(args[x]) > 0)
+    {
+        while (args[x][ft_strlen(args[x]) -1] == quote[0] && is_quote(quote[0]))
+        {
+            old = args[x];
+            args[x] = ft_strtrim(args[x], quote);
+            free(old);
+        }
+    }
+}
+
 void	remove_quotes(char **args)
 {
     int     x;
@@ -71,6 +86,7 @@ void	remove_quotes(char **args)
             args[x] = ft_strtrim(args[x], quote);
             free(old);
         }
+        remove_remmaining_quotes(args, quote, x);
         x++;
     }
     new_args = create_new_args(args, &amount);
