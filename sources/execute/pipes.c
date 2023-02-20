@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/06 20:23:05 by progerio          #+#    #+#             */
-/*   Updated: 2023/02/17 08:14:08 by shelson          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static int	get_amount_parameters(t_parser *parser_data, int index_cmd)
@@ -33,14 +21,16 @@ char	**get_pipeline(t_data *data, t_parser *parser_data, int index_cmd)
 	t_node	*current;
 	int		i;
 
-	data->pipeline  = ft_calloc(get_amount_parameters(parser_data, index_cmd) + 1, sizeof(char *));
+	data->pipeline = ft_calloc(get_amount_parameters(
+			parser_data, index_cmd) + 1, sizeof(char *));
 	current = parser_data->commands;
 	i = 0;
 	while (current)
 	{
 		if (current->index == index_cmd)
 		{
-			data->pipeline[i] = ft_calloc(ft_strlen(current->value) + 1, sizeof(char)); 
+			data->pipeline[i] = ft_calloc(ft_strlen(
+						current->value) + 1, sizeof(char));
 			ft_strcpy(data->pipeline[i], current->value);
 			i++;
 		}
@@ -49,10 +39,10 @@ char	**get_pipeline(t_data *data, t_parser *parser_data, int index_cmd)
 	return (data->pipeline);
 }
 
-int **create_pipes(int amount)
+int	**create_pipes(int amount)
 {
-	int	i;
-    int **tube;
+	int		i;
+	int		**tube;
 
 	tube = ft_calloc
 		(sizeof(int **), (amount + 1));
@@ -67,5 +57,5 @@ int **create_pipes(int amount)
 		}
 		i++;
 	}
-    return (tube);
+	return (tube);
 }

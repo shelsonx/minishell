@@ -45,7 +45,7 @@ static char	*get_parameter(char **args, int *x, int *y)
 			while (ft_isalnum(args[(*x)][(*y)]) || args[(*x)][(*y)] == '_')
 				(*y)++;
 		}
-		sub = ft_substr(args[(*x)], start, (*y) -start);
+		sub = ft_substr(args[(*x)], start, (*y) - start);
 		if (sub)
 			parameter = ft_concat_strs(parameter, sub, " ");
 	}
@@ -84,7 +84,7 @@ static void	expander_special_parameter(char **args, t_data *data)
 		y = 0;
 		while (args[x][y])
 		{
-			if (args[x][y] == '$' && args[x][y+1] == '?')
+			if (args[x][y] == '$' && args[x][y + 1] == '?')
 			{
 				str_exit_status = ft_itoa(*data->exit_status);
 				old_pipeline = args[x];

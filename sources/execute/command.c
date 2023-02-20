@@ -5,7 +5,7 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 	pid_t	child_pid;
 	int		status;
 	char	*input_cmd;
-	
+
 	data->fd_in = fd_in;
 	data->fd_out = fd_out;
 	input_cmd = ft_strdup(data->pipeline[0]);
@@ -63,27 +63,27 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 	}
 }
 
-void set_fds(t_data *data, t_parser *parser_data, int i)
+void	set_fds(t_data *data, t_parser *parser_data, int i)
 {
-
 	int		fd_in;
 	int		fd_out;
 	char	*index_cmd;
 
-	index_cmd = get_input_cmd(i+1);
-	fd_in = get_fd_in(parser_data, index_cmd); 
+	index_cmd = get_input_cmd(i + 1);
+	fd_in = get_fd_in(parser_data, index_cmd);
 	fd_out = get_fd_out(parser_data, index_cmd);
-	if (fd_in == -1) 
+	if (fd_in == -1)
 		data->fd_in = data->fds[i][0];
 	else
 		data->fd_in = fd_in;
 	if (fd_out == -1)
-		data->fd_out = data->fds[i+1][1];
+		data->fd_out = data->fds[i + 1][1];
 	else
 		data->fd_out = fd_out;
 }
 
-void	exec_middles_commands(t_data *data, t_parser *parser_data, int total_cmds_middles)
+void	exec_middles_commands(t_data *data,
+		t_parser *parser_data, int total_cmds_middles)
 {
 	int		i;
 	char	*input_cmd;
@@ -92,7 +92,7 @@ void	exec_middles_commands(t_data *data, t_parser *parser_data, int total_cmds_m
 	while (i < total_cmds_middles)
 	{
 		set_fds(data, parser_data, i);
-		data->pipeline = get_pipeline(data, parser_data, i+1);
+		data->pipeline = get_pipeline(data, parser_data, i + 1);
 		expander(data->pipeline, parser_data->builtin_vars, data);
 		remove_quotes(data->pipeline);
 		input_cmd = ft_strdup(data->pipeline[0]);

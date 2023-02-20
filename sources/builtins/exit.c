@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char check_str_nb(char *declar)
+char	check_str_nb(char *declar)
 {
 	if (*declar == '+' || *declar == '-')
 		declar++;
@@ -13,7 +13,7 @@ char check_str_nb(char *declar)
 
 int	check_len(char **declar)
 {
-	char **len;
+	char	**len;
 
 	len = declar;
 	if (!declar)
@@ -31,13 +31,11 @@ int	error_msg(char *declar, int status)
 		ft_putstr_fd(declar, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		return (2);
-		//exit(2);
 	}
 	else
 	{
 		ft_putstr_fd("too many arguments\n", 2);
 		return (1);
-		//exit(1);
 	}
 	return (0);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 21:37:55 by shelson           #+#    #+#             */
-/*   Updated: 2023/02/20 09:06:16 by shelson          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void	free_redirection(t_token *current_token)
@@ -78,25 +66,25 @@ t_token	*redirection(t_parser *parser)
 	char	*tokens;
 	char	*tmp;
 
-    tokens = ft_strdup("");
-    current_token = redirection_op(parser);
-    tmp = tokens;
-    tokens = ft_strjoin(tokens, current_token->value);
-    free(tmp);
-    free_redirection(current_token);
-    free(parser->current_token->value);
-    parser->current_token->value = NULL;
-    consume(parser);
-    if (parser->current_token->type != TK_WORD)
-    {
-        free(tokens);
-        free_parser_error(parser);
-        free(parser->tokenizer->token.value);
-        parser->tokenizer->token.value = NULL;
-        error(parser);
-    }
-    check_filename(current_token, parser, &tmp, &tokens);
-    if (ft_strcmp(tokens, "") != 0)
-        set_redirect(parser, tokens);
-    return (current_token);
+	tokens = ft_strdup("");
+	current_token = redirection_op(parser);
+	tmp = tokens;
+	tokens = ft_strjoin(tokens, current_token->value);
+	free(tmp);
+	free_redirection(current_token);
+	free(parser->current_token->value);
+	parser->current_token->value = NULL;
+	consume(parser);
+	if (parser->current_token->type != TK_WORD)
+	{
+		free(tokens);
+		free_parser_error(parser);
+		free(parser->tokenizer->token.value);
+		parser->tokenizer->token.value = NULL;
+		error(parser);
+	}
+	check_filename(current_token, parser, &tmp, &tokens);
+	if (ft_strcmp(tokens, "") != 0)
+		set_redirect(parser, tokens);
+	return (current_token);
 }
