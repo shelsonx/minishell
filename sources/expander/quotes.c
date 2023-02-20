@@ -91,4 +91,6 @@ void	remove_quotes(char **args)
     }
     new_args = create_new_args(args, &amount);
     set_new_values_args(args, new_args, amount);
+    if (args[0] == NULL)
+        args[0] = ft_strdup(" ");
 }
