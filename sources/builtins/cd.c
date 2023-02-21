@@ -60,16 +60,12 @@ static char	*validate_args(t_data *data)
 	size_t	size;
 	char	*dir_param;
 	char	*tmp;
-	char	*env_path;
 
 	size = ft_len_rows_tab(data->pipeline);
 	if (size > 2)
 		return (NULL);
 	else if (size == 1)
-	{
-		env_path = get_env_path("HOME", data->builtin_vars);
-		return (env_path);
-	}
+		return (get_env_path("HOME", data->builtin_vars));
 	tmp = check_dots(data->pipeline);
 	if (tmp)
 	{
