@@ -15,21 +15,22 @@ void	error_command_msg(char **args, char *input_cmd)
 	}
 }
 
-int set_exec_command(char **exec_command, char *arg, char **paths, int i, t_builtin_vars *builtins)
+int	set_exec_command(char **exec_command, char *arg,
+		char **paths, int i, t_builtin_vars *builtins)
 {
-    if (ft_strncmp("./", arg, 2) == 0)
-        *exec_command = ft_substr(arg, 2, ft_strlen(arg));
-    else if (!is_full_path(arg, builtins))
-        *exec_command = join_path_command(paths[i], arg);
-    else
-        *exec_command = ft_strdup(arg);
-    if (access(*exec_command, X_OK) == 0)
-    {
-        ft_free_tab(paths);
+	if (ft_strncmp("./", arg, 2) == 0)
+		*exec_command = ft_substr(arg, 2, ft_strlen(arg));
+	else if (!is_full_path(arg, builtins))
+		*exec_command = join_path_command(paths[i], arg);
+	else
+		*exec_command = ft_strdup(arg);
+	if (access(*exec_command, X_OK) == 0)
+	{
+		ft_free_tab(paths);
 		free(*exec_command);
-        return (TRUE);
-    }
-    return (FALSE);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 int	get_exit_status(char *arg, t_builtin_vars *builtins)
@@ -52,7 +53,7 @@ int	get_exit_status(char *arg, t_builtin_vars *builtins)
 	while (paths[i])
 	{
 		if (set_exec_command(&exec_command, arg, paths, i, builtins))
-            return (0);
+			return (0);
 		else
 		{
 			free(exec_command);
@@ -60,7 +61,7 @@ int	get_exit_status(char *arg, t_builtin_vars *builtins)
 		}
 		i++;
 	}
-	set_exec_command(&exec_command, arg, paths, i-1, builtins);
+	set_exec_command(&exec_command, arg, paths, i - 1, builtins);
 	ft_free_tab(paths);
 	if (access(exec_command, F_OK) == 0)
 	{

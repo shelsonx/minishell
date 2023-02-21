@@ -7,7 +7,7 @@ void	ft_pwd(t_builtin_vars *builtin_vars)
 	current_path = get_env_path("PWD", builtin_vars);
 	if (!current_path)
 	{
-		printf("error"); 
+		printf("error");
 	}
 	else
 	{

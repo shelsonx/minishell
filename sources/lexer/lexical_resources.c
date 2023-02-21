@@ -71,7 +71,7 @@ int	check_quotes(t_tokenizer *tokenizer)
 
 int	is_valid_identifier(t_tokenizer *tknz, int position)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i <= position)
@@ -94,32 +94,32 @@ int	is_valid_identifier(t_tokenizer *tknz, int position)
 
 void	tk_word(t_tokenizer *tokenizer)
 {
-	int	i;
+	int		i;
 
-    i = 0;
-    while (!ft_strchr(METACHARS, tokenizer->current_char))
-    {
-        if (check_quotes(tokenizer))
-            return ;
-        add_char(tokenizer);
-        advance(tokenizer);
-        if (tokenizer->current_char == '=' && i > 0)
-        {
-            add_char(tokenizer);
-            advance(tokenizer);
-            if (is_valid_identifier(tokenizer, i+1))
-            {
-                while (!ft_strchr(METACHARS, tokenizer->current_char))
-                {
-                    add_char(tokenizer);
-                    advance(tokenizer);
-                }
-                tokenizer->token.type = TK_ASSIGNMENT_WORD;
-                return ;
-            }
-        }
-        if (tokenizer->token.type == TK_EOF)
-            return ;
-        i++;
-    }
+	i = 0;
+	while (!ft_strchr(METACHARS, tokenizer->current_char))
+	{
+		if (check_quotes(tokenizer))
+			return ;
+		add_char(tokenizer);
+		advance(tokenizer);
+		if (tokenizer->current_char == '=' && i > 0)
+		{
+			add_char(tokenizer);
+			advance(tokenizer);
+			if (is_valid_identifier(tokenizer, i + 1))
+			{
+				while (!ft_strchr(METACHARS, tokenizer->current_char))
+				{
+					add_char(tokenizer);
+					advance(tokenizer);
+				}
+				tokenizer->token.type = TK_ASSIGNMENT_WORD;
+				return ;
+			}
+		}
+		if (tokenizer->token.type == TK_EOF)
+			return ;
+		i++;
+	}
 }

@@ -2,13 +2,13 @@
 
 void	free_parser_error(t_parser *parser)
 {
-    ft_free_nodes_env(&parser->commands);
-    free_hashtable(parser->table_redirection);
-    free(parser->tokenizer->content);
-    free(parser->tokenizer->characteres);
-    free(parser->prompt->line);
-    free(parser->prompt->prompt_str);
-    free(parser->prompt->pwd);
+	ft_free_nodes_env(&parser->commands);
+	free_hashtable(parser->table_redirection);
+	free(parser->tokenizer->content);
+	free(parser->tokenizer->characteres);
+	free(parser->prompt->line);
+	free(parser->prompt->prompt_str);
+	free(parser->prompt->pwd);
 }
 
 void	error(t_parser *parser_data)
@@ -49,7 +49,7 @@ t_token	pipe_sequence(t_parser *parser)
 		consume(parser);
 		current_token = simple_command(parser);
 	}
-	if (parser->token_type == TK_PIPE || parser->token_type == -1 
+	if (parser->token_type == TK_PIPE || parser->token_type == -1
 		|| parser->current_token->type == TK_ERROR)
 	{
 		free_parser_error(parser);

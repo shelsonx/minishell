@@ -47,7 +47,7 @@ int	is_full_path(char *arg, t_builtin_vars *builtins)
 	int		i;
 	char	**paths;
 	char	*env_path;
-	
+
 	env_path = get_env_path("PATH", builtins);
 	paths = get_paths_cmds(env_path);
 	i = 0;
