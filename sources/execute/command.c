@@ -52,7 +52,7 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
-		if (data->args[0] == NULL)
+		if (data->args[0] == NULL || fd_out == INVALID_FD)
 		{
 			ft_free_tab(data->pipeline);
 			return ;
@@ -105,7 +105,7 @@ void	exec_middles_commands(t_data *data,
 		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
-		if (data->args[0] == NULL)
+		if (data->args[0] == NULL || data->fd_out == INVALID_FD)
 			return ;
 		execute_child_process(data);
 		ft_free_tab(data->pipeline);
@@ -134,7 +134,7 @@ void	exec_last_command(t_data *data, int fd_in, int fd_out)
 	data->args = create_args(data->pipeline, data->builtin_vars);
 	error_command_msg(data->args, input_cmd);
 	free(input_cmd);
-	if (data->args[0] == NULL)
+	if (data->args[0] == NULL || fd_out == INVALID_FD)
 		return ;
 	else
 		*data->exit_status = 0;

@@ -27,6 +27,8 @@ static void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	remove_quotes(data->pipeline);
 	fd_in = get_fd_in(parser_data, index_cmd);
 	fd_out = get_fd_out(parser_data, index_cmd);
+	if (fd_out == INVALID_FD)
+		return ;
 	exec_one_command(data, fd_in, fd_out);
 }
 
@@ -35,16 +37,16 @@ static void	exec_two_commands(t_data *data,
 {
 	char	*index_cmd;
 	int		fd_in;
-	int		out;
+	int		fd_out;
 
 	index_cmd = get_input_cmd(0);
 	data->pipeline = get_pipeline(data, parser_data, 0);
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
 	data->fds = create_pipes(1);
-	exec_first_command(data,
-		get_fd_in(parser_data, index_cmd),
-		get_fd_out(parser_data, index_cmd));
+	fd_in = get_fd_in(parser_data, index_cmd);
+	fd_out = get_fd_out(parser_data, index_cmd);
+	exec_first_command(data, fd_in, fd_out);
 	data->pipeline = get_pipeline(data, parser_data, 1);
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
@@ -53,8 +55,8 @@ static void	exec_two_commands(t_data *data,
 	if (fd_in == -1)
 		fd_in = data->fds[0][0];
 	index_cmd = get_input_cmd(total_commands -1);
-	out = get_fd_out(parser_data, index_cmd);
-	exec_last_command(data, fd_in, out);
+	fd_out = get_fd_out(parser_data, index_cmd);
+	exec_last_command(data, fd_in, fd_out);
 }
 
 static void	exec_serveral_commands(t_data *data,
