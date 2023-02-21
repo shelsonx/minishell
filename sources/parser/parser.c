@@ -50,7 +50,8 @@ t_token	pipe_sequence(t_parser *parser)
 		current_token = simple_command(parser);
 	}
 	if (parser->token_type == TK_PIPE || parser->token_type == -1
-		|| parser->current_token->type == TK_ERROR)
+		|| parser->current_token->type == TK_ERROR 
+		|| parser->current_token->type == TK_PARENTHESIS)
 	{
 		free_parser_error(parser);
 		error(parser);

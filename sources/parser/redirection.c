@@ -6,7 +6,7 @@
 /*   By: shelson <shelson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:37:55 by shelson           #+#    #+#             */
-/*   Updated: 2023/02/21 11:40:08 by shelson          ###   ########.fr       */
+/*   Updated: 2023/02/21 14:33:21 by shelson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ t_token	*redirection(t_parser *parser)
     {
         free(tokens);
         free_parser_error(parser);
-		if (parser->current_token->type != TK_EOF)
+		if (parser->current_token->type != TK_EOF 
+			&& parser->current_token->type != TK_PARENTHESIS)
 		{
 			free(parser->tokenizer->token.value);
 			parser->tokenizer->token.value = NULL;
