@@ -27,6 +27,30 @@ int	get_position(t_builtin_vars *builtins, char *arg)
 	return (position);
 }
 
+static void	clear_node(t_node **head, t_node *current)
+{
+	*head = current->next;
+	free(current->value);
+	free(current);
+	current = NULL;
+}
+
+static void	update_pos_and_clear_node(
+	t_node *previous, t_node *current, int *position)
+{
+	while (*position != 0)
+	{
+		previous = current;
+		current = current->next;
+		*position = *position -1;
+	}
+	previous->next = current->next;
+	free(current->value);
+	free(current);
+	current = NULL;
+	*position = *position;
+}
+
 void	del_pos(t_node **head, int position)
 {
 	t_node	*current;
@@ -37,25 +61,9 @@ void	del_pos(t_node **head, int position)
 	if (*head == NULL)
 		return ;
 	else if (position == 0)
-	{
-		*head = current->next;
-		free(current->value);
-		free(current);
-		current = NULL;
-	}
+		clear_node(head, current);
 	else
-	{
-		while (position != 0)
-		{
-			previous = current;
-			current = current->next;
-			position--;
-		}
-		previous->next = current->next;
-		free(current->value);
-		free(current);
-		current = NULL;
-	}
+		update_pos_and_clear_node(previous, current, &position);
 }
 
 void	ft_unset(t_builtin_vars *builtins, char **args)
