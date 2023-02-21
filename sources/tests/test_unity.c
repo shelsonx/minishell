@@ -69,6 +69,17 @@ void test_expander(void)
         ft_strlen(lines_tests->lines_shell));
 }
 
+void test_quotes(void)
+{
+    t_lines_tests *lines_tests = get_lines_tests(
+       "files/commands/quotes", "files/commands/quotes", 
+        "files/minishell/quotes", "files/shell/quotes",
+        env);
+    TEST_ASSERT_EQUAL_CHAR_ARRAY(
+        lines_tests->lines_shell, lines_tests->lines_minishell,
+        ft_strlen(lines_tests->lines_shell));
+}
+
 int main(int argc, char **argv, char **envp)
 {
     env = envp;
@@ -78,5 +89,6 @@ int main(int argc, char **argv, char **envp)
     RUN_TEST(test_redirect_in);
     RUN_TEST(test_builtin_echo);
     RUN_TEST(test_expander);
+    RUN_TEST(test_quotes);
     return UNITY_END();
 }

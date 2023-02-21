@@ -1,15 +1,5 @@
 a.ouT
 files
-TesT_builTin_in_parenT.c
-TesT_creaTe_args.c
-TesT_env.c
-TesT_execuTor.c
-TesT_exporT.c
-TesT_hashTable.c
-TesT_lexer.c
-TesT_parser.c
-TesT_replace_sTr.c
 TesT_uniTy.c
-TesT_unseT.c
 uniTy_TesTs.c
 uniTy_TesTs.h

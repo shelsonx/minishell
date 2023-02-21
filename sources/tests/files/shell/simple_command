@@ -1,15 +1,5 @@
 a.out
 files
-test_builtin_in_parent.c
-test_create_args.c
-test_env.c
-test_executor.c
-test_export.c
-test_hashtable.c
-test_lexer.c
-test_parser.c
-test_replace_str.c
 test_unity.c
-test_unset.c
 unity_tests.c
 unity_tests.h
