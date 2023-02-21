@@ -24,11 +24,13 @@ void	free_prompt(t_parser *parser_data)
 void	make_prompt_text(t_parser *parser_data)
 {
 	char	*tmp;
+	char	*pwd_view;
 
-	parser_data->prompt->text = "🎸MINISHELL𝄫";
+	parser_data->prompt->text = "🎸";
 	parser_data->prompt->pwd = get_env_path("PWD", parser_data->builtin_vars);
-	tmp = ft_strjoin(parser_data->prompt->text, parser_data->prompt->pwd);
-	parser_data->prompt->prompt_str = ft_strjoin(tmp, "$ ");
+	pwd_view = ft_strrchr(parser_data->prompt->pwd, '/');
+	tmp = ft_strjoin(parser_data->prompt->text, pwd_view);
+	parser_data->prompt->prompt_str = ft_strjoin(tmp, "⇢⌲ ");
 	free(tmp);
 }
 
