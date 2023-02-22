@@ -45,7 +45,7 @@ void	insert_args_in_export(t_builtin_vars *builtins, char *args)
 	add_env_path(builtins, "1", args);
 }
 
-int	update_value(t_builtin_vars *builtins, char *args)
+int	to_update(t_builtin_vars *builtins, char *args)
 {
 	char	**splitted_args;
 	char	**splitted_ht_search;
@@ -183,44 +183,52 @@ int	contains_equal(char *args)
 	return (FALSE);
 }
 
-void	ft_export_aux(t_builtin_vars *builtins, char **args)
+static void	set_in_export(t_builtin_vars *builtins, char **args, int i)
 {
-	int		i;
 	char	**splitter_equals;
-	int		position;
+
+	if (!contains_equal(args[i]))
+	{
+		if (is_valid_identifier_2(args[i]))
+			insert_args_in_export(builtins, args[i]);
+	}
+	else
+	{
+		splitter_equals = ft_split(args[i], '=');
+		if (ft_strlen(args[i]) > 1)
+		{
+			if (is_valid_identifier_2(splitter_equals[0]))
+				insert_args_in_export(builtins, args[i]);
+		}
+		else
+		{
+			if (is_valid_identifier_2(args[i]))
+				insert_args_in_export(builtins, args[i]);
+		}
+		ft_free_tab(splitter_equals);
+	}
+}
+
+static void update(t_builtin_vars *builtins, char **args, int i)
+{
+	int	position;
+
+	position = get_position(builtins, args[i]);
+	del_pos(&builtins->env2, position);
+	add_env_path(builtins, "1", args[i]);
+}
+
+void	export(t_builtin_vars *builtins, char **args)
+{
+	int	i;
 
 	i = 1;
 	while (args[i])
 	{
-		if (update_value(builtins, args[i]))
-		{
-			position = get_position(builtins, args[i]);
-			del_pos(&builtins->env2, position);
-			add_env_path(builtins, "1", args[i]);
-		}
+		if (to_update(builtins, args[i]))
+			update(builtins, args, i);
 		else
-		{
-			if (!contains_equal(args[i]))
-			{
-				if (is_valid_identifier_2(args[i]))
-					insert_args_in_export(builtins, args[i]);
-			}
-			else
-			{
-				splitter_equals = ft_split(args[i], '=');
-				if (ft_strlen(args[i]) > 1)
-				{
-					if (is_valid_identifier_2(splitter_equals[0]))
-						insert_args_in_export(builtins, args[i]);
-				}
-				else
-				{
-					if (is_valid_identifier_2(args[i]))
-						insert_args_in_export(builtins, args[i]);
-				}
-				ft_free_tab(splitter_equals);
-			}
-		}
+			set_in_export(builtins, args, i);
 		i++;
 	}
 }
@@ -230,5 +238,5 @@ void	ft_export(t_builtin_vars *builtins, char **args)
 	if (ft_len_rows_tab(args) == 1)
 		print_export(builtins);
 	if (ft_len_rows_tab(args) > 1)
-		ft_export_aux(builtins, args);
+		export(builtins, args);
 }
