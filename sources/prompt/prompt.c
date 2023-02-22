@@ -24,14 +24,19 @@ void	free_prompt(t_parser *parser_data)
 void	make_prompt_text(t_parser *parser_data)
 {
 	char	*tmp;
+	char	*tmp2;
 	char	*pwd_view;
 
 	parser_data->prompt->text = "\033[1;31m 🎸MS𝄫: ";
 	parser_data->prompt->pwd = get_env_path("PWD", parser_data->builtin_vars);
 	pwd_view = ft_strrchr(parser_data->prompt->pwd, '/');
-	tmp = ft_strjoin(parser_data->prompt->text, pwd_view);
+	if (pwd_view == NULL)
+		pwd_view = "\033[0;33m 𝟒𝟐⑀⍴";
+	tmp2 = ft_strjoin("\033[0;33m", pwd_view);
+	tmp = ft_strjoin(parser_data->prompt->text, tmp2);
 	parser_data->prompt->prompt_str = ft_strjoin(tmp, "≫ \033[0m");
 	free(tmp);
+	free(tmp2);
 }
 
 void	free_signal(t_parser *parser)
