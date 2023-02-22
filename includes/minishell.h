@@ -151,6 +151,9 @@ int				contains_equal(char *args);
 int				is_valid_id(char *args);
 int				env_exists(t_builtin_vars *builtins, char *args);
 
+//export utils_2
+int				to_update(t_builtin_vars *builtins, char *args);
+
 //utils builtins
 int				get_amount_builtins(t_parser *parser_data);
 int				count_args(char **declar);
