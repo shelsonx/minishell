@@ -1,10 +1,10 @@
 #include "../../includes/minishell.h"
 
-void	ft_pwd(t_builtin_vars *builtin_vars)
+void	ft_pwd(void)
 {
 	char		*current_path;
 
-	current_path = get_env_path("PWD", builtin_vars);
+	current_path = getcwd(NULL, 0);
 	if (!current_path)
 	{
 		printf("error");

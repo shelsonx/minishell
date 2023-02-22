@@ -132,7 +132,7 @@ enum e_TOKENS
 char			*get_env_path(char *path, t_builtin_vars *builtin);
 void			init_env(t_builtin_vars *builtin_vars, char **envp);
 void			ft_env(t_builtin_vars *builtin_vars);
-void			ft_pwd(t_builtin_vars *builtin_vars);
+void			ft_pwd(void);
 char			**get_env(t_builtin_vars *builtin_vars);
 char			**get_builtins_names(void);
 int				is_builtins(char *builtin_name);
