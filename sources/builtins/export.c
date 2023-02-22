@@ -53,7 +53,7 @@ static void	set_in_export(t_builtin_vars *builtins, char **args, int i)
 	}
 }
 
-static void update(t_builtin_vars *builtins, char **args, int i)
+static void	update(t_builtin_vars *builtins, char **args, int i)
 {
 	int	position;
 

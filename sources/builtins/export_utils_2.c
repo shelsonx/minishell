@@ -1,50 +1,50 @@
 #include "../../includes/minishell.h"
 
-static void free_export_data(t_update_export *up_export)
+static void	free_export_data(t_update_export *up_export)
 {
-    free(up_export->tmp1);
-    free(up_export->tmp2);
-    ft_free_tab(up_export->splitted_args);
-    ft_free_tab(up_export->splitted_ht_search);
+	free(up_export->tmp1);
+	free(up_export->tmp2);
+	ft_free_tab(up_export->splitted_args);
+	ft_free_tab(up_export->splitted_ht_search);
 }
 
-static void set_tmp(t_update_export *up_export)
+static void	set_tmp(t_update_export *up_export)
 {
-    if (up_export->splitted_args[1] == NULL)
-        up_export->tmp1 = ft_strdup("");
-    else
-        up_export->tmp1 = ft_strdup(up_export->splitted_args[1]);
-    if (up_export->splitted_ht_search[1] == NULL)
-        up_export->tmp2 = ft_strdup("");
-    else
-        up_export->tmp2 = ft_strdup(up_export->splitted_ht_search[1]);
+	if (up_export->splitted_args[1] == NULL)
+		up_export->tmp1 = ft_strdup("");
+	else
+		up_export->tmp1 = ft_strdup(up_export->splitted_args[1]);
+	if (up_export->splitted_ht_search[1] == NULL)
+		up_export->tmp2 = ft_strdup("");
+	else
+		up_export->tmp2 = ft_strdup(up_export->splitted_ht_search[1]);
 }
 
 int	to_update(t_builtin_vars *builtins, char *args)
 {
-    t_update_export up_export;
-	t_node	        *current;
+	t_update_export	up;
+	t_node			*current;
 
-	up_export.tmp1 = NULL;
-	up_export.tmp2 = NULL;
+	up.tmp1 = NULL;
+	up.tmp2 = NULL;
 	current = builtins->env2;
 	while (current)
 	{
-		up_export.splitted_args = ft_split(args, '=');
-		up_export.splitted_ht_search = ft_split(current->value, '=');
-		up_export.res1 = ft_strcmp(up_export.splitted_args[0], up_export.splitted_ht_search[0]);
-		if (up_export.res1 == 0)
+		up.splitted_args = ft_split(args, '=');
+		up.splitted_ht_search = ft_split(current->value, '=');
+		up.res1 = ft_strcmp(up.splitted_args[0], up.splitted_ht_search[0]);
+		if (up.res1 == 0)
 		{
-			set_tmp(&up_export);
-			up_export.res2 = ft_strcmp(up_export.tmp1, up_export.tmp2);
-			if (up_export.res2 != 0)
+			set_tmp(&up);
+			up.res2 = ft_strcmp(up.tmp1, up.tmp2);
+			if (up.res2 != 0)
 			{
-				free_export_data(&up_export);
+				free_export_data(&up);
 				return (TRUE);
 			}
 		}
 		current = current->next;
-		free_export_data(&up_export);
+		free_export_data(&up);
 	}
 	return (FALSE);
 }

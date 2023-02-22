@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int contains_equal(char *args)
+int	contains_equal(char *args)
 {
 	int		i;
 
@@ -16,7 +16,7 @@ int contains_equal(char *args)
 	return (FALSE);
 }
 
-static char ft_isunderscore(char c)
+static char	ft_isunderscore(char c)
 {
 	if (c == '_')
 		return (true);
@@ -50,25 +50,25 @@ int	is_valid_id(char *args)
 	return (TRUE);
 }
 
-static void set_tmp(t_node *current, char **tmp1, char **tmp2, char *args)
+static void	set_tmp(t_node *current, char **tmp1, char **tmp2, char *args)
 {
-    if (contains_equal(current->value))
-    {
-        free(*tmp1);
-        *tmp1 = ft_substr(current->value, 0, ft_strlen(current->value) - 1);
-    }
-    if (contains_equal(args))
-    {
-        free(*tmp2);
-        *tmp2 = ft_substr(args, 0, ft_strlen(args) - 1);
-        if (ft_strncmp(current->value, args,
-                ft_strlen(current->value)) == 0)
-        {
-            free(current->value);
-            current->value = ft_calloc(ft_strlen(args) + 1, sizeof(char));
-            ft_strcpy(current->value, args);
-        }
-    }
+	if (contains_equal(current->value))
+	{
+		free(*tmp1);
+		*tmp1 = ft_substr(current->value, 0, ft_strlen(current->value) - 1);
+	}
+	if (contains_equal(args))
+	{
+		free(*tmp2);
+		*tmp2 = ft_substr(args, 0, ft_strlen(args) - 1);
+		if (ft_strncmp(current->value, args,
+				ft_strlen(current->value)) == 0)
+		{
+			free(current->value);
+			current->value = ft_calloc(ft_strlen(args) + 1, sizeof(char));
+			ft_strcpy(current->value, args);
+		}
+	}
 }
 
 int	env_exists(t_builtin_vars *builtins, char *args)
