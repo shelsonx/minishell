@@ -9,14 +9,20 @@ char	*get_env_path(char *path, t_builtin_vars *builtin)
 	current = builtin->env2;
 	while (current)
 	{
-		splitted = ft_split(current->value, '=');
-		if (ft_strcmp(path, splitted[0]) == 0)
+		if (contains_equal(current->value))
 		{
-			env_path = ft_strdup(splitted[1]);
+			splitted = ft_split(current->value, '=');
+			if (ft_strcmp(path, splitted[0]) == 0)
+			{	
+				if (splitted[1])
+					env_path = ft_strdup(splitted[1]);
+				else
+					env_path = ft_strdup("");
+				ft_free_tab(splitted);
+				return (env_path);
+			}
 			ft_free_tab(splitted);
-			return (env_path);
 		}
-		ft_free_tab(splitted);
 		current = current->next;
 	}
 	env_path = ft_strdup("");
