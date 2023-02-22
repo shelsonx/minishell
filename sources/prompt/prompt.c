@@ -26,11 +26,11 @@ void	make_prompt_text(t_parser *parser_data)
 	char	*tmp;
 	char	*pwd_view;
 
-	parser_data->prompt->text = "🎸";
+	parser_data->prompt->text = "\033[1;31m 🎸MS𝄫: ";
 	parser_data->prompt->pwd = get_env_path("PWD", parser_data->builtin_vars);
 	pwd_view = ft_strrchr(parser_data->prompt->pwd, '/');
 	tmp = ft_strjoin(parser_data->prompt->text, pwd_view);
-	parser_data->prompt->prompt_str = ft_strjoin(tmp, "⇢⌲ ");
+	parser_data->prompt->prompt_str = ft_strjoin(tmp, "≫ \033[0m");
 	free(tmp);
 }
 
