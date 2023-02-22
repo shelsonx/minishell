@@ -27,20 +27,6 @@ void	print_export(t_builtin_vars *builtins)
 	}
 }
 
-void	add_env_path(t_builtin_vars *builtins, char *key, char *value)
-{
-	if (env_exists(builtins, value))
-	{
-		return ;
-	}
-	ft_add_back(&builtins->env2, ft_new_env(ft_atoi(key), value));
-}
-
-void	insert_args_in_export(t_builtin_vars *builtins, char *args)
-{
-	add_env_path(builtins, "1", args);
-}
-
 static void	set_in_export(t_builtin_vars *builtins, char **args, int i)
 {
 	char	**splitter_equals;

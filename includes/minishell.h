@@ -104,6 +104,16 @@ typedef struct s_data {
 	t_parser		*parser_data;
 }	t_data;
 
+typedef struct s_update_export
+{
+	char	**splitted_args;
+	char	**splitted_ht_search;
+	char	*tmp1;
+	char	*tmp2;
+	int		res1;
+	int		res2;
+}	t_update_export;
+
 enum e_TOKENS
 {
 	TK_WORD,
@@ -153,6 +163,8 @@ int				env_exists(t_builtin_vars *builtins, char *args);
 
 //export utils_2
 int				to_update(t_builtin_vars *builtins, char *args);
+void			add_env_path(t_builtin_vars *builtins, char *key, char *value);
+void			insert_args_in_export(t_builtin_vars *builtins, char *args);
 
 //utils builtins
 int				get_amount_builtins(t_parser *parser_data);
