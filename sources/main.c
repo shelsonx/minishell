@@ -2,8 +2,10 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	prompt(envp);
-	argc = argc;
-	argv = argv;
+	if (argc > 1)
+		ft_putendl_fd("Invalid arguments!", 2);
+	else
+		prompt(envp);
+	(void) argv;
 	return (0);
 }
