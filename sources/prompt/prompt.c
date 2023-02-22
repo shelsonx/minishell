@@ -59,6 +59,13 @@ void	run(t_parser *parser_data)
 		signal(SIGINT, sighandler);
 		make_prompt_text(parser_data);
 		parser_data->prompt->line = readline(parser_data->prompt->prompt_str);
+		if (ft_strlen(parser_data->prompt->line) == 0)
+		{
+			free(parser_data->prompt->line);
+			free(parser_data->prompt->pwd);
+			free(parser_data->prompt->prompt_str);
+			continue ;
+		}
 		if (parser_data->prompt->line == NULL)
 		{
 			free_signal(parser_data);
