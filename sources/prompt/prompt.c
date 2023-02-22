@@ -28,13 +28,13 @@ void	make_prompt_text(t_parser *parser_data)
 	char	*pwd_view;
 
 	parser_data->prompt->text = "\033[1;31m 🎸MS𝄫: ";
-	parser_data->prompt->pwd = get_env_path("PWD", parser_data->builtin_vars);
+	parser_data->prompt->pwd = getcwd(NULL, 0);
 	pwd_view = ft_strrchr(parser_data->prompt->pwd, '/');
 	if (pwd_view == NULL)
 		pwd_view = "\033[0;33m 𝟒𝟐⑀⍴";
 	tmp2 = ft_strjoin("\033[0;33m", pwd_view);
 	tmp = ft_strjoin(parser_data->prompt->text, tmp2);
-	parser_data->prompt->prompt_str = ft_strjoin(tmp, "≫ \033[0m");
+	parser_data->prompt->prompt_str = ft_strjoin(tmp, " 𝟒𝟐⑀⍴≫ \033[0m");
 	free(tmp);
 	free(tmp2);
 }
