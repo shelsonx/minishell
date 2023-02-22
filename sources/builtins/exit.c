@@ -40,13 +40,35 @@ int	error_msg(char *declar, int status)
 	return (0);
 }
 
-void	ft_exit(char **declar)
+static void	check_exit(char **declar, int declar_len)
 {
 	float	value;
-	int		declar_len;
 	int		status_exit;
 
 	status_exit = 0;
+	if (*(declar + 1) && check_str_nb(*(declar + 1)) == 0)
+		status_exit = error_msg(*(declar + 1), 2);
+	else if (declar_len > 2)
+		status_exit = error_msg("", 1);
+	if (status_exit > 0)
+	{
+		ft_free_tab(declar);
+		exit(status_exit);
+	}
+	value = ft_atoi(*(declar + 1));
+	if (value < MININT || value > MAXINT)
+	{
+		ft_free_tab(declar);
+		exit(0);
+	}
+	ft_free_tab(declar);
+	exit((unsigned char)value);
+}
+
+void	ft_exit(char **declar)
+{
+	int		declar_len;
+
 	declar_len = check_len(declar);
 	if (declar_len == 1)
 	{
@@ -54,23 +76,5 @@ void	ft_exit(char **declar)
 		exit(0);
 	}
 	else
-	{
-		if (*(declar + 1) && check_str_nb(*(declar + 1)) == 0)
-			status_exit = error_msg(*(declar + 1), 2);
-		else if (declar_len > 2)
-			status_exit = error_msg("", 1);
-		if (status_exit > 0)
-		{
-			ft_free_tab(declar);
-			exit(status_exit);
-		}
-		value = ft_atoi(*(declar + 1));
-		if (value < MININT || value > MAXINT)
-		{
-			ft_free_tab(declar);
-			exit(0);
-		}
-		ft_free_tab(declar);
-		exit((unsigned char)value);
-	}
+		check_exit(declar, declar_len);
 }
