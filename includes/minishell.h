@@ -69,6 +69,7 @@ typedef struct s_builtin_vars
 	int				size;
 	t_hashtable		*env;
 	t_node			*env2;
+	int				i;
 }	t_builtin_vars;
 
 typedef struct s_prompt
@@ -214,8 +215,13 @@ int				exists_commands(t_data *data);
 int				get_fd_in(t_parser *parser_data, char *index_cmd);
 int				get_fd_out(t_parser *parser_data, char *index_cmd);
 void			here_doc(int **fd, char *limiter);
+
+//redirects_utils
 int				has_redirect(t_parser *parser_data,
 					char *redirect, char *index_cmd);
+
+void			set_fds_middle_cmd(t_data *data, t_parser *parser_data, int i);
+void			set_fds_first_cmd(t_data *data, int fd_in, int fd_out);
 
 //pipes
 int				**create_pipes(int amount);
