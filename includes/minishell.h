@@ -183,7 +183,6 @@ int				execute(t_parser *parser_data);
 char			*get_input_cmd(int position);
 
 //execute utils
-void			error_command_msg(char **args, char *input_cmd);
 int				get_exit_status(char *arg, t_builtin_vars *builtins);
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 
@@ -197,6 +196,7 @@ void			ft_close_fds(int **fds);
 
 //paths
 char			**get_paths_cmds(char *env_path);
+char			**get_paths(t_builtin_vars *builtins);
 char			*join_path_command(char *path, char *command);
 char			**create_args(char **pipeline, t_builtin_vars *builtins);
 int				is_full_path(char *arg, t_builtin_vars *builtins);
@@ -231,6 +231,7 @@ void			sighandler(int sigtype);
 
 //exit program
 void			exit_program(t_data *data);
+void			error_command_msg(char **args, char *input_cmd);
 
 //get token
 t_token			get_word(t_tokenizer *tokenizer);

@@ -1,20 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	error_command_msg(char **args, char *input_cmd)
-{
-	char	*msg;
-	char	*tmp;
-
-	if (args[0] == NULL)
-	{
-		tmp = ft_strjoin("minishell: ", input_cmd);
-		msg = ft_strjoin(tmp, ": command not found\n");
-		write(STDOUT_FILENO, msg, ft_strlen(msg));
-		free(tmp);
-		free(msg);
-	}
-}
-
 static int	set_exec_command(char **exec_command, char *arg,
 		char **paths, t_builtin_vars *builtins)
 {
@@ -57,7 +42,6 @@ static int	has_permission(char *exec_command)
 	return (TRUE);
 }
 
-
 static int	get_status(char **exec_command, char *arg,
 		char **paths, t_builtin_vars *builtins)
 {
@@ -99,19 +83,15 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
 	char	**paths;
-	char	*env_path;
-	int		i;
 
-	env_path = get_env_path("PATH", builtins);
-	paths = get_paths_cmds(env_path);
-	free(env_path);
-	i = 0;
-	while (paths[i])
+	paths = get_paths(builtins);
+	builtins->i = -1;
+	while (paths[++builtins->i])
 	{
 		if (ft_strncmp("./", arg, 2) == 0)
 			exec_command = ft_substr(arg, 2, ft_strlen(arg));
 		else if (!is_full_path(arg, builtins))
-			exec_command = join_path_command(paths[i], arg);
+			exec_command = join_path_command(paths[builtins->i], arg);
 		else
 			exec_command = ft_strdup(arg);
 		if (access(exec_command, X_OK) == 0)
@@ -121,7 +101,6 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 		}
 		free(exec_command);
 		exec_command = NULL;
-		i++;
 	}
 	ft_free_tab(paths);
 	return (NULL);

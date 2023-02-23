@@ -31,6 +31,17 @@ char	**get_paths_cmds(char *env_path)
 	return (paths);
 }
 
+char	**get_paths(t_builtin_vars *builtins)
+{
+	char	*env_path;
+	char	**paths;
+
+	env_path = get_env_path("PATH", builtins);
+	paths = get_paths_cmds(env_path);
+	free(env_path);
+	return (paths);
+}
+
 char	*join_path_command(char *path, char *command)
 {
 	char	*full_path;
