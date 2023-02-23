@@ -22,7 +22,8 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 		data->args = create_args(data->pipeline, data->builtin_vars);
 		error_command_msg(data->args, input_cmd);
 		free(input_cmd);
-		if (data->args[0] == NULL)
+
+		if (data->args[0] == NULL || fd_in ==  INVALID_FD)
 			return ;
 		child_pid = execute_child_process(data);
 		waitpid(child_pid, &status, 0);

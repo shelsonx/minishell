@@ -214,7 +214,7 @@ void			exec_last_command(t_data *data, int fd_in, int fd_out);
 int				exists_commands(t_data *data);
 int				get_fd_in(t_parser *parser_data, char *index_cmd);
 int				get_fd_out(t_parser *parser_data, char *index_cmd);
-void			here_doc(int **fd, char *limiter);
+void			here_doc(int fd[], char *limiter);
 
 //redirects_utils
 int				has_redirect(t_parser *parser_data,

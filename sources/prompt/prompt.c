@@ -53,10 +53,10 @@ void	free_signal(t_parser *parser)
 
 void	run(t_parser *parser_data)
 {
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sighandler);
 	while (true)
 	{	
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, sighandler);
 		make_prompt_text(parser_data);
 		parser_data->prompt->line = readline(parser_data->prompt->prompt_str);
 		rl_reset_screen_size();
