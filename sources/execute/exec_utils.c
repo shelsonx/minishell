@@ -46,6 +46,28 @@ static int	set_exec_cmds(char **exec_command, char *arg,
 	return (-1);
 }
 
+static int	has_permission(char *exec_command)
+{
+	if (access(exec_command, F_OK) == 0)
+	{
+		free(exec_command);
+		return (FALSE);
+	}
+	free(exec_command);
+	return (TRUE);
+}
+
+
+static int	get_status(char **exec_command, char *arg,
+		char **paths, t_builtin_vars *builtins)
+{
+	set_exec_command(exec_command, arg, paths, builtins);
+	ft_free_tab(paths);
+	if (!has_permission(*exec_command))
+		return (126);
+	return (127);
+}
+
 int	get_exit_status(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
@@ -70,15 +92,7 @@ int	get_exit_status(char *arg, t_builtin_vars *builtins)
 			return (0);
 	}
 	builtins->i = i - 1;
-	set_exec_command(&exec_command, arg, paths, builtins);
-	ft_free_tab(paths);
-	if (access(exec_command, F_OK) == 0)
-	{
-		free(exec_command);
-		return (126);
-	}
-	free(exec_command);
-	return (127);
+	return (get_status(&exec_command, arg, paths, builtins));
 }
 
 char	*get_exec_command(char *arg, t_builtin_vars *builtins)
