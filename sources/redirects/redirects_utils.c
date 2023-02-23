@@ -28,3 +28,31 @@ int	has_redirect(t_parser *parser_data, char *redirect, char *index_cmd)
 	}
 	return (FALSE);
 }
+
+void	set_fds_middle_cmd(t_data *data, t_parser *parser_data, int i)
+{
+	int		fd_in;
+	int		fd_out;
+	char	*index_cmd;
+
+	index_cmd = get_input_cmd(i + 1);
+	fd_in = get_fd_in(parser_data, index_cmd);
+	fd_out = get_fd_out(parser_data, index_cmd);
+	if (fd_in == -1)
+		data->fd_in = data->fds[i][0];
+	else
+		data->fd_in = fd_in;
+	if (fd_out == -1)
+		data->fd_out = data->fds[i + 1][1];
+	else
+		data->fd_out = fd_out;
+}
+
+void	set_fds_first_cmd(t_data *data, int fd_in, int fd_out)
+{
+	data->fd_in = fd_in;
+	if (fd_out == -1)
+		data->fd_out = data->fds[0][1];
+	else
+		data->fd_out = fd_out;
+}
