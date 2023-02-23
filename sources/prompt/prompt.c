@@ -27,14 +27,14 @@ void	make_prompt_text(t_parser *parser_data)
 	char	*tmp2;
 	char	*pwd_view;
 
-	parser_data->prompt->text = "\033[1;31m 🎸MS𝄫: ";
+	parser_data->prompt->text = "\001\e[1m\e[31m\002 🎸MS𝄫: ";
 	parser_data->prompt->pwd = getcwd(NULL, 0);
 	pwd_view = ft_strrchr(parser_data->prompt->pwd, '/');
 	if (pwd_view == NULL)
-		pwd_view = "\033[0;33m 𝟒𝟐⑀⍴";
-	tmp2 = ft_strjoin("\033[0;33m", pwd_view);
+		pwd_view = "\001\e[33m\002 𝟒𝟐⑀⍴";
+	tmp2 = ft_strjoin("\001\e[33m\002", pwd_view);
 	tmp = ft_strjoin(parser_data->prompt->text, tmp2);
-	parser_data->prompt->prompt_str = ft_strjoin(tmp, " 𝟒𝟐⑀⍴≫ \033[0m");
+	parser_data->prompt->prompt_str = ft_strjoin(tmp, " 𝟒𝟐⑀⍴≫ \001\033\e[0m\002");
 	free(tmp);
 	free(tmp2);
 }
@@ -59,6 +59,7 @@ void	run(t_parser *parser_data)
 		signal(SIGINT, sighandler);
 		make_prompt_text(parser_data);
 		parser_data->prompt->line = readline(parser_data->prompt->prompt_str);
+		rl_reset_screen_size();
 		if (parser_data->prompt->line == NULL)
 		{
 			free_signal(parser_data);
