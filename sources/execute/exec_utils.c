@@ -33,6 +33,19 @@ static int	set_exec_command(char **exec_command, char *arg,
 	return (FALSE);
 }
 
+static int	set_exec_cmds(char **exec_command, char *arg,
+		char **paths, t_builtin_vars *builtins)
+{
+	if (set_exec_command(exec_command, arg, paths, builtins))
+		return (0);
+	else
+	{
+		free(*exec_command);
+		exec_command = NULL;
+	}
+	return (-1);
+}
+
 int	get_exit_status(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
@@ -48,19 +61,13 @@ int	get_exit_status(char *arg, t_builtin_vars *builtins)
 	}
 	paths = get_paths_cmds(env_path);
 	free(env_path);
-	i = 0;
+	i = -1;
 	exec_command = NULL;
-	while (paths[i])
+	while (paths[++i])
 	{
 		builtins->i = i;
-		if (set_exec_command(&exec_command, arg, paths, builtins))
+		if (set_exec_cmds(&exec_command, arg, paths, builtins) == 0)
 			return (0);
-		else
-		{
-			free(exec_command);
-			exec_command = NULL;
-		}
-		i++;
 	}
 	builtins->i = i - 1;
 	set_exec_command(&exec_command, arg, paths, builtins);
