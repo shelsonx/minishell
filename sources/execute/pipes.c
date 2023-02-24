@@ -22,7 +22,7 @@ char	**get_pipeline(t_data *data, t_parser *parser_data, int index_cmd)
 	int		i;
 
 	data->pipeline = ft_calloc(get_amount_parameters(
-			parser_data, index_cmd) + 1, sizeof(char *));
+				parser_data, index_cmd) + 1, sizeof(char *));
 	current = parser_data->commands;
 	i = 0;
 	while (current)

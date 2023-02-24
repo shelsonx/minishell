@@ -27,11 +27,12 @@ static void	free_children(t_parser *parser_data, char **redirection)
 	ft_free_nodes_env(&parser_data->builtin_vars->env2);
 	rl_clear_history();
 }
+
 static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 {
-	int	fd[2];
-	int	wstatus;
-	pid_t pid;
+	int		fd[2];
+	int		wstatus;
+	pid_t	pid;
 
 	if (pipe(fd) < 0)
 	{

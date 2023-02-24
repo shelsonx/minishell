@@ -101,7 +101,7 @@ int	open_files(t_parser *parser_data)
 	return (-1);
 }
 
-t_data *ms_data;
+t_data	*ms_data;
 
 int	execute(t_parser *parser_data)
 {

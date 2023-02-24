@@ -8,14 +8,14 @@ static int	is_limiter(char *line, char *limiter)
 
 int	**get_fd_close(void)
 {
-    static int	*fd;
+	static int	*fd;
 
-    return (&fd);
+	return (&fd);
 }
 
-static void free_sinal_here_doc(void)
+static void	free_sinal_here_doc(void)
 {
-	extern t_data *ms_data;
+	extern t_data	*ms_data;
 
 	free(ms_data->parser_data->tokenizer->characteres);
 	free_hashtable(ms_data->parser_data->table_redirection);
@@ -47,10 +47,10 @@ void	interrupt_here_doc(int signal)
 
 void	set_fd_close(int *fd)
 {
-    int	**save;
+	int	**save;
 
-    save = get_fd_close();
-    *save = fd;
+	save = get_fd_close();
+	*save = fd;
 }
 
 void	here_doc(int fd[], char *limiter)
@@ -66,9 +66,10 @@ void	here_doc(int fd[], char *limiter)
 		line = readline("> ");
 		if (line == NULL)
 		{
-			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", limiter);
+			printf("minishell: warning: here-document delimited ");
+			printf("by end-of-file (wanted `%s')\n", limiter);
 			free(line);
-			break;
+			break ;
 		}
 		if (is_limiter(line, limiter))
 		{
