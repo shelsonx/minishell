@@ -3,7 +3,10 @@
 char	**create_args(char **pipeline, t_builtin_vars *builtins)
 {
 	char	*exec_cmd;
+	int		len;
+	int		i;
 
+	len = ft_len_rows_tab(pipeline);
 	exec_cmd = get_exec_command(pipeline[0], builtins);
 	if (exec_cmd)
 	{
@@ -16,6 +19,12 @@ char	**create_args(char **pipeline, t_builtin_vars *builtins)
 	{
 		free(pipeline[0]);
 		pipeline[0] = NULL;
+		i = 0;
+		while (++i < len)
+		{
+			free(pipeline[i]);
+			pipeline[i] = NULL;
+		}
 	}
 	return (pipeline);
 }
