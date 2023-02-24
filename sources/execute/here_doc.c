@@ -66,6 +66,7 @@ void	here_doc(int fd[], char *limiter)
 		line = readline("> ");
 		if (line == NULL)
 		{
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", limiter);
 			free(line);
 			break;
 		}
