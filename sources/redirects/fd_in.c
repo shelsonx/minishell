@@ -1,7 +1,5 @@
 #include "../../includes/minishell.h"
 
-# define FORKED 0
-
 static void	set_fd_in(char **redirection, int *fd)
 {
 	char	*tmp;
@@ -33,13 +31,15 @@ static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 {
 	int	fd[2];
 	int	wstatus;
+	pid_t pid;
 
 	if (pipe(fd) < 0)
 	{
 		perror("minishell: ");
 		return ;
 	}
-	if (fork() == FORKED)
+	pid = fork();
+	if (pid == FORKED)
 	{
 		here_doc(fd, redirection[1]);
 		close(fd[STDIN_FILENO]);
@@ -48,7 +48,7 @@ static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 		exit(EXIT_SUCCESS);
 	}
 	signal(SIGINT, SIG_IGN);
-	waitpid(-1, &wstatus, 0);
+	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, sighandler);
 	close(fd[STDOUT_FILENO]);
 	*fd_in = fd[STDIN_FILENO];

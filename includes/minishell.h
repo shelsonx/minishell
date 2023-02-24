@@ -18,6 +18,7 @@
 # define CAPACITY 50000 // Size of the Hash Table
 # define METACHARS	"|<>()\t "
 # define INVALID_FD -2
+# define FORKED 0
 
 typedef struct s_token
 {
