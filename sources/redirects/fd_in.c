@@ -16,7 +16,20 @@ static void	set_fd_in(char **redirection, int *fd)
 }
 
 // alterando aqui
-static void	set_here_doc(char **redirection, int *fd_in)
+static void	free_children(t_parser *parser_data, char **redirection)
+{
+	free_parser_error(parser_data);
+	ft_close_fds(parser_data->data->fds);
+	ft_free_fds(parser_data->data->fds);
+	ft_free_tab(parser_data->data->pipeline);
+	ft_free_tab(redirection);
+	free(parser_data->current_token);
+	free(parser_data->tokenizer);
+	ft_free_nodes_env(&parser_data->commands);
+	ft_free_nodes_env(&parser_data->builtin_vars->env2);
+	rl_clear_history();
+}
+static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 {
 	int	fd[2];
 	int	wstatus;
@@ -31,6 +44,7 @@ static void	set_here_doc(char **redirection, int *fd_in)
 		here_doc(fd, redirection[1]);
 		close(fd[STDIN_FILENO]);
 		close(fd[STDOUT_FILENO]);
+		free_children(parser_data, redirection);
 		exit(EXIT_SUCCESS);
 	}
 	signal(SIGINT, SIG_IGN);
@@ -61,7 +75,11 @@ static void	set_fds_in(t_parser *parser_data,
 		if (strcmp(redirection[0], "<") == 0)
 			set_fd_in(redirection, fd_in);
 		if (strcmp(redirection[0], "<<") == 0)
-			set_here_doc(redirection, fd_in);
+		{
+			free(num_str);
+			num_str = NULL;
+			set_here_doc(redirection, fd_in, parser_data);
+		}
 	}
 	ft_free_tab(redirection);
 	free(num_str);
