@@ -78,6 +78,7 @@ static void	set_fds_in(t_parser *parser_data,
 		{
 			free(num_str);
 			num_str = NULL;
+			parser_data->builtin_vars->redirection = redirection;
 			set_here_doc(redirection, fd_in, parser_data);
 		}
 	}

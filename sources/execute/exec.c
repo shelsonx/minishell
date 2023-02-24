@@ -101,6 +101,8 @@ int	open_files(t_parser *parser_data)
 	return (-1);
 }
 
+t_data *ms_data;
+
 int	execute(t_parser *parser_data)
 {
 	t_data		data;
@@ -117,6 +119,7 @@ int	execute(t_parser *parser_data)
 	total_commands = parser_data->index;
 	total_builtins = get_amount_builtins(parser_data);
 	parser_data->data = &data;
+	ms_data = &data;
 	if (total_commands == 0)
 		return (open_files(parser_data));
 	if (total_commands == 1)

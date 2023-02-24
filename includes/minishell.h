@@ -69,6 +69,7 @@ typedef struct s_builtin_vars
 	int				size;
 	t_hashtable		*env;
 	t_node			*env2;
+	char			**redirection;
 	int				i;
 }	t_builtin_vars;
 
