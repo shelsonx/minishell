@@ -259,12 +259,17 @@ t_token			get_next_token(t_tokenizer *tokenizer);
 t_token			next_token(t_tokenizer *tokenizer);
 
 //lexical resources
-void			add_char(t_tokenizer *tokenizer);
+
 void			invalid_token(t_tokenizer *tokenizer);
-void			advance(t_tokenizer *tokenizer);
-void			skip_space(t_tokenizer *tokenizer);
 void			tk_word(t_tokenizer *tokenizer);
+
+//lexica utils
+void			add_char(t_tokenizer *tokenizer);
+void			skip_space(t_tokenizer *tokenizer);
+void			advance(t_tokenizer *tokenizer);
 int				is_quote(char c);
+
+
 
 //parser
 void			parser(t_parser *parser);

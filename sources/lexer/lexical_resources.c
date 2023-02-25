@@ -1,33 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	add_char(t_tokenizer *tokenizer)
-{
-	char	*old_characteres;
-	char	current_char_p[2];
-
-	old_characteres = tokenizer->characteres;
-	current_char_p[0] = tokenizer->current_char;
-	current_char_p[1] = '\0';
-	tokenizer->characteres = ft_strjoin(tokenizer->characteres, current_char_p);
-	free(old_characteres);
-}
-
-void	advance(t_tokenizer *tokenizer)
-{
-	tokenizer->pos++;
-	if ((size_t)tokenizer->pos > ft_strlen(tokenizer->content))
-		tokenizer->token.type = TK_EOF;
-	else
-		tokenizer->current_char = tokenizer->content[tokenizer->pos];
-}
-
-void	skip_space(t_tokenizer *tokenizer)
-{
-	while (ft_isspace(tokenizer->current_char)
-		&& (tokenizer->token.type != TK_EOF))
-		advance(tokenizer);
-}
-
 int	is_quote_closed(t_tokenizer *tokenizer, char quote)
 {
 	while (tokenizer->current_char != quote)
@@ -38,11 +10,6 @@ int	is_quote_closed(t_tokenizer *tokenizer, char quote)
 		advance(tokenizer);
 	}
 	return (true);
-}
-
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
 }
 
 int	check_quotes(t_tokenizer *tokenizer)
@@ -92,6 +59,15 @@ int	is_valid_identifier(t_tokenizer *tknz, int position)
 	return (true);
 }
 
+static void	set_identifier(t_tokenizer *tokenizer)
+{
+	while (!ft_strchr(METACHARS, tokenizer->current_char))
+	{
+		add_char(tokenizer);
+		advance(tokenizer);
+	}
+}
+
 void	tk_word(t_tokenizer *tokenizer)
 {
 	int		i;
@@ -109,11 +85,7 @@ void	tk_word(t_tokenizer *tokenizer)
 			advance(tokenizer);
 			if (is_valid_identifier(tokenizer, i + 1))
 			{
-				while (!ft_strchr(METACHARS, tokenizer->current_char))
-				{
-					add_char(tokenizer);
-					advance(tokenizer);
-				}
+				set_identifier(tokenizer);
 				tokenizer->token.type = TK_ASSIGNMENT_WORD;
 				return ;
 			}

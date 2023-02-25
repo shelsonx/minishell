@@ -19,7 +19,7 @@ SRC				= main.c\
 				  utils_pipes.c\
 				  signals.c\
 				  exit_program.c \
-				  get_token.c lexical_analyzer.c lexical_resources.c \
+				  get_token.c lexical_analyzer.c lexical_resources.c lexical_utils.c \
 				  env.c pwd.c echo.c exit.c cd.c export.c export_utils.c unset.c\
 				  export_utils_2.c \
 				  expander.c quotes.c\
