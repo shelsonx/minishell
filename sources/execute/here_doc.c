@@ -6,13 +6,6 @@ static int	is_limiter(char *line, char *limiter)
 		&& (ft_strlen(line)) == ft_strlen(limiter));
 }
 
-int	**get_fd_close(void)
-{
-	static int	*fd;
-
-	return (&fd);
-}
-
 static void	free_sinal_here_doc(void)
 {
 	extern t_data	*g_ms_data;
@@ -45,12 +38,11 @@ void	interrupt_here_doc(int signal)
 	exit(EXIT_FAILURE);
 }
 
-void	set_fd_close(int *fd)
+void	message_here_doc(char *line, char *limiter)
 {
-	int	**save;
-
-	save = get_fd_close();
-	*save = fd;
+	printf("minishell: warning: here-document delimited ");
+	printf("by end-of-file (wanted `%s')\n", limiter);
+	free(line);
 }
 
 void	here_doc(int fd[], char *limiter)
@@ -66,9 +58,7 @@ void	here_doc(int fd[], char *limiter)
 		line = readline("> ");
 		if (line == NULL)
 		{
-			printf("minishell: warning: here-document delimited ");
-			printf("by end-of-file (wanted `%s')\n", limiter);
-			free(line);
+			message_here_doc(line, limiter);
 			break ;
 		}
 		if (is_limiter(line, limiter))

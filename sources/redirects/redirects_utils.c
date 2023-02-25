@@ -56,3 +56,18 @@ void	set_fds_first_cmd(t_data *data, int fd_in, int fd_out)
 	else
 		data->fd_out = fd_out;
 }
+
+int	**get_fd_close(void)
+{
+	static int	*fd;
+
+	return (&fd);
+}
+
+void	set_fd_close(int *fd)
+{
+	int	**save;
+
+	save = get_fd_close();
+	*save = fd;
+}
