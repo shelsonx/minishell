@@ -62,19 +62,3 @@ t_node	*ft_new(int index, char	*value)
 	node->next = NULL;
 	return (node);
 }
-
-void	ft_free_nodes(t_node **lst)
-{
-	t_node	*next;
-
-	if (!lst)
-		return ;
-	next = *lst;
-	while (next)
-	{
-		next = next->next;
-		free(*lst);
-		*lst = next;
-	}
-	*lst = NULL;
-}

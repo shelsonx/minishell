@@ -21,3 +21,19 @@ void	exit_program(t_data *data)
 	ft_free_tab(data->pipeline);
 	ft_free_fds(data->fds);
 }
+
+void	ft_free_nodes(t_node **lst)
+{
+	t_node	*next;
+
+	if (!lst)
+		return ;
+	next = *lst;
+	while (next)
+	{
+		next = next->next;
+		free(*lst);
+		*lst = next;
+	}
+	*lst = NULL;
+}
