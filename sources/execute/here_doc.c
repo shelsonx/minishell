@@ -15,20 +15,20 @@ int	**get_fd_close(void)
 
 static void	free_sinal_here_doc(void)
 {
-	extern t_data	*ms_data;
+	extern t_data	*g_ms_data;
 
-	free(ms_data->parser_data->tokenizer->characteres);
-	free_hashtable(ms_data->parser_data->table_redirection);
-	ft_free_nodes_env(&ms_data->builtin_vars->env2);
-	ft_free_nodes_env(&ms_data->parser_data->commands);
-	ft_free_tab(ms_data->pipeline);
-	free(ms_data->parser_data->prompt->line);
-	free(ms_data->parser_data->prompt->prompt_str);
-	free(ms_data->parser_data->prompt->pwd);
-	free(ms_data->parser_data->tokenizer->content);
-	free(ms_data->parser_data->current_token);
-	free(ms_data->parser_data->tokenizer);
-	ft_free_tab(ms_data->parser_data->builtin_vars->redirection);
+	free(g_ms_data->parser_data->tokenizer->characteres);
+	free_hashtable(g_ms_data->parser_data->table_redirection);
+	ft_free_nodes_env(&g_ms_data->builtin_vars->env2);
+	ft_free_nodes_env(&g_ms_data->parser_data->commands);
+	ft_free_tab(g_ms_data->pipeline);
+	free(g_ms_data->parser_data->prompt->line);
+	free(g_ms_data->parser_data->prompt->prompt_str);
+	free(g_ms_data->parser_data->prompt->pwd);
+	free(g_ms_data->parser_data->tokenizer->content);
+	free(g_ms_data->parser_data->current_token);
+	free(g_ms_data->parser_data->tokenizer);
+	ft_free_tab(g_ms_data->parser_data->builtin_vars->redirection);
 	rl_clear_history();
 }
 
