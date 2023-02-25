@@ -25,7 +25,7 @@ SRC				= main.c\
 				  expander.c quotes.c\
 				  builtins.c linked_list_env_utils.c \
 				  fd_in.c fd_out.c linked_list_funcs.c \
-				  redirects_utils.c builtins_utils.c exec_utils.c \
+				  redirects_utils.c builtins_utils.c exec_utils.c exit_status.c\
 				  simple_command.c redirection.c
 
 VPATH 			:= $(SRC_PATH)\

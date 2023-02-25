@@ -307,4 +307,6 @@ void			free_linkedlist(t_linkedlist *list);
 t_linkedlist	**create_overflow_buckets(t_hashtable *table);
 void			free_overflow_buckets(t_hashtable *table);
 
+//exit status
+int	get_exit_status(char *arg, t_builtin_vars *builtins);
 #endif /* MINISHELL */
