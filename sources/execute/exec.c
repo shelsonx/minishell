@@ -12,7 +12,7 @@ char	*get_input_cmd(int position)
 	return (index_cmd);
 }
 
-static void	exec_only_one_command(t_data *data, t_parser *parser_data)
+void	exec_only_one_command(t_data *data, t_parser *parser_data)
 {
 	char	*index_cmd;
 	int		fd_in;
@@ -32,7 +32,7 @@ static void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	exec_one_command(data, fd_in, fd_out);
 }
 
-static void	exec_two_commands(t_data *data,
+void	exec_two_commands(t_data *data,
 	t_parser *parser_data, int total_commands)
 {
 	char	*index_cmd;
@@ -59,7 +59,7 @@ static void	exec_two_commands(t_data *data,
 	exec_last_command(data, fd_in, fd_out);
 }
 
-static void	exec_serveral_commands(t_data *data,
+void	exec_serveral_commands(t_data *data,
 		t_parser *parser_data, int total_commands)
 {
 	char	*index_cmd;
@@ -87,20 +87,6 @@ static void	exec_serveral_commands(t_data *data,
 	exec_last_command(data, fd_in, get_fd_out(parser_data, index_cmd));
 }
 
-int	open_files(t_parser *parser_data)
-{
-	char	*num_str;
-	char	name[128];
-
-	ft_memset(name, 0, 128);
-	num_str = ft_itoa(0);
-	ft_strcpy(name, num_str);
-	get_fd_in(parser_data, name);
-	get_fd_out(parser_data, name);
-	free(num_str);
-	return (-1);
-}
-
 t_data	*ms_data;
 
 int	execute(t_parser *parser_data)
@@ -120,14 +106,7 @@ int	execute(t_parser *parser_data)
 	total_builtins = get_amount_builtins(parser_data);
 	parser_data->data = &data;
 	ms_data = &data;
-	if (total_commands == 0)
-		return (open_files(parser_data));
-	if (total_commands == 1)
-		exec_only_one_command(&data, parser_data);
-	if (total_commands == 2)
-		exec_two_commands(&data, parser_data, total_commands);
-	else if (total_commands > 2)
-		exec_serveral_commands(&data, parser_data, total_commands);
+	handler_cmds(&data, parser_data, total_commands);
 	if (total_commands > 0)
 		exit_program(&data);
 	i = -1;

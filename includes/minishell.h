@@ -184,9 +184,16 @@ char			**get_pipeline(t_data *data,
 int				execute(t_parser *parser_data);
 char			*get_input_cmd(int position);
 
+void			exec_only_one_command(t_data *data, t_parser *parser_data);
+void			exec_two_commands(t_data *data,
+					t_parser *parser_data, int total_commands);
+void			exec_serveral_commands(t_data *data,
+					t_parser *parser_data, int total_commands);
+
 //execute utils
-int				get_exit_status(char *arg, t_builtin_vars *builtins);
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
+void			open_files(t_parser *parser_data);
+void			handler_cmds(t_data *data, t_parser *parser_data, int total_commands);
 
 //prompt
 void			prompt(char **envp);
