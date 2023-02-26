@@ -197,6 +197,8 @@ void			handler_cmds(t_data *data, t_parser *parser_data,
 					int total_commands);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
+t_data			**get_data(void);
+void			set_data(t_data *data);
 
 //prompt
 void			prompt(char **envp);

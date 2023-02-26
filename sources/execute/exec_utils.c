@@ -51,3 +51,18 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 	ft_free_tab(paths);
 	return (NULL);
 }
+
+t_data	**get_data(void)
+{
+	static t_data	*data;
+
+	return (&data);
+}
+
+void	set_data(t_data *data)
+{
+	t_data	**data_save;
+
+	data_save = get_data();
+	*data_save = data;
+}

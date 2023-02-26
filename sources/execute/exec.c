@@ -87,8 +87,6 @@ void	exec_serveral_commands(t_data *data,
 	exec_last_command(data, fd_in, get_fd_out(parser_data, index_cmd));
 }
 
-t_data	*g_ms_data;
-
 int	execute(t_parser *parser_data)
 {
 	t_data		data;
@@ -105,7 +103,7 @@ int	execute(t_parser *parser_data)
 	total_commands = parser_data->index;
 	total_builtins = get_amount_builtins(parser_data);
 	parser_data->data = &data;
-	g_ms_data = &data;
+	set_data(&data);
 	handler_cmds(&data, parser_data, total_commands);
 	if (total_commands > 0)
 		exit_program(&data);
