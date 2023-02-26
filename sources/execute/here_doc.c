@@ -6,7 +6,7 @@ static int	is_limiter(char *line, char *limiter)
 		&& (ft_strlen(line)) == ft_strlen(limiter));
 }
 
-static void	free_sinal_here_doc(void)
+static void	free_signal_here_doc(void)
 {
 	t_data	*data;
 
@@ -35,7 +35,7 @@ void	interrupt_here_doc(int signal)
 	fd = *get_fd_close();
 	close(fd[STDIN_FILENO]);
 	close(fd[STDOUT_FILENO]);
-	free_sinal_here_doc();
+	free_signal_here_doc();
 	exit(EXIT_FAILURE);
 }
 
