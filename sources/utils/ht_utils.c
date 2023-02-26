@@ -19,22 +19,26 @@ t_hashtable	*create_table(int size)
 	return (table);
 }
 
-void	free_hashtable(t_hashtable *table)
+void	ht_insert_items(t_hashtable *table,
+			t_htitem *item, int index, char *value)
 {
-	int			i;
-	t_htitem	*item;
+	free(table->items[index]->value);
+	table->items[index]->value = (char *) ft_calloc (
+			ft_strlen(value) + 1, sizeof(char));
+	ft_strcpy(table->items[index]->value, value);
+	free_item(item);
+}
 
-	i = 0;
-	while (i < table->size)
+void	ht_insert_current_items(t_hashtable *table, t_htitem *item, int index)
+{
+	if (table->count == table->size)
 	{
-		item = table->items[i];
-		if (item != NULL)
-			free_item(item);
-		i++;
+		printf("Insert Error: Hash Table is full\n");
+		free_item(item);
+		return ;
 	}
-	free_overflow_buckets(table);
-	free(table->items);
-	free(table);
+	table->items[index] = item;
+	table->count++;
 }
 
 void	ht_insert(t_hashtable *table, char *key, char *value)
@@ -48,24 +52,13 @@ void	ht_insert(t_hashtable *table, char *key, char *value)
 	current_item = table->items[index];
 	if (current_item == NULL)
 	{
-		if (table->count == table->size)
-		{
-			printf("Insert Error: Hash Table is full\n");
-			free_item(item);
-			return ;
-		}
-		table->items[index] = item;
-		table->count++;
+		ht_insert_current_items(table, item, index);
 	}
 	else
 	{
 		if (ft_strcmp(current_item->key, key) == 0)
 		{
-			free(table->items[index]->value);
-			table->items[index]->value = (char *) ft_calloc (
-					ft_strlen(value) + 1, sizeof(char));
-			ft_strcpy(table->items[index]->value, value);
-			free_item(item);
+			ht_insert_items(table, item, index, value);
 			return ;
 		}
 		else

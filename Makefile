@@ -14,17 +14,18 @@ INCLUDE 		= ./includes/
 SRC				= main.c\
 				  prompt.c\
 				  parser.c\
-				  exec.c pipes.c paths.c command.c children_process.c ht_utils.c ht_functions.c linkedlist_utils.c\
+				  exec.c pipes.c paths.c command.c children_process.c \
+				  ht_utils.c ht_functions.c free_ht.c linkedlist_utils.c \
 				  here_doc.c\
 				  utils_pipes.c\
 				  signals.c\
 				  exit_program.c \
 				  get_token.c lexical_analyzer.c lexical_resources.c lexical_utils.c \
-				  env.c pwd.c echo.c exit.c cd.c export.c export_utils.c unset.c\
+				  env.c pwd.c echo.c exit.c cd.c export.c export_utils.c unset.c \
 				  export_utils_2.c \
 				  expander.c quotes.c\
 				  builtins.c linked_list_env_utils.c \
-				  fd_in.c fd_out.c linked_list_funcs.c \
+				  fd_in.c fd_out.c linked_list_funcs.c overflow_buckets.c \
 				  redirects_utils.c builtins_utils.c exec_utils.c exit_status.c\
 				  simple_command.c redirection.c
 

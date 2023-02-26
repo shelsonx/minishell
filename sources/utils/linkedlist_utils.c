@@ -8,19 +8,25 @@ t_linkedlist	*allocate_list(void)
 	return (list);
 }
 
-t_linkedlist	*linkedlist_insert(t_linkedlist *list, t_htitem *item)
+t_linkedlist	*linkedlist_insert_items(t_linkedlist *list, t_htitem *item)
 {
 	t_linkedlist	*head;
+
+	head = allocate_list();
+	head->item = item;
+	head->next = NULL;
+	list = head;
+	return (list);
+}
+
+t_linkedlist	*linkedlist_insert(t_linkedlist *list, t_htitem *item)
+{
 	t_linkedlist	*node;
 	t_linkedlist	*temp;
 
 	if (!list)
 	{
-		head = allocate_list();
-		head->item = item;
-		head->next = NULL;
-		list = head;
-		return (list);
+		linkedlist_insert_items(list, item);
 	}
 	else if (list->next == NULL)
 	{
@@ -58,34 +64,4 @@ void	free_linkedlist(t_linkedlist *list)
 		free(temp->item);
 		free(temp);
 	}
-}
-
-t_linkedlist	**create_overflow_buckets(t_hashtable *table)
-{
-	int				i;
-	t_linkedlist	**buckets;
-
-	buckets = (t_linkedlist **) ft_calloc (table->size, sizeof(t_linkedlist *));
-	i = 0;
-	while (i < table->size)
-	{
-		buckets[i] = NULL;
-		i++;
-	}
-	return (buckets);
-}
-
-void	free_overflow_buckets(t_hashtable *table)
-{
-	int				i;
-	t_linkedlist	**buckets;
-
-	buckets = table->overflow_buckets;
-	i = 0;
-	while (i < table->size)
-	{
-		free_linkedlist(buckets[i]);
-		i++;
-	}
-	free(buckets);
 }

@@ -193,7 +193,8 @@ void			exec_serveral_commands(t_data *data,
 //execute utils
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 void			open_files(t_parser *parser_data);
-void			handler_cmds(t_data *data, t_parser *parser_data, int total_commands);
+void			handler_cmds(t_data *data, t_parser *parser_data,
+					int total_commands);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
 
@@ -269,8 +270,6 @@ void			skip_space(t_tokenizer *tokenizer);
 void			advance(t_tokenizer *tokenizer);
 int				is_quote(char c);
 
-
-
 //parser
 void			parser(t_parser *parser);
 t_token			*cmd_word(t_parser *parser);
@@ -310,17 +309,21 @@ void			ht_delete(t_hashtable *table, char *key);
 
 //ht_utils
 t_hashtable		*create_table(int size);
-void			free_hashtable(t_hashtable *table);
 void			ht_insert(t_hashtable *table, char *key, char *value);
 char			*ht_search(t_hashtable *table, char *key);
+
+//free_ht
+void			free_hashtable(t_hashtable *table);
 
 //linkedlist_utils
 t_linkedlist	*allocate_list(void);
 t_linkedlist	*linkedlist_insert(t_linkedlist *list, t_htitem *item);
 void			free_linkedlist(t_linkedlist *list);
+
+//overflow_buckets
 t_linkedlist	**create_overflow_buckets(t_hashtable *table);
 void			free_overflow_buckets(t_hashtable *table);
 
 //exit status
-int	get_exit_status(char *arg, t_builtin_vars *builtins);
+int				get_exit_status(char *arg, t_builtin_vars *builtins);
 #endif /* MINISHELL */
