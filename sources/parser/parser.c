@@ -34,7 +34,7 @@ t_token	pipe_sequence(t_parser *parser)
 {
 	t_token	current_token;
 
-	check_erros_pipe(parser);
+	check_errors_pipe(parser);
 	current_token = simple_command(parser);
 	while (parser->current_token->type == TK_PIPE)
 	{

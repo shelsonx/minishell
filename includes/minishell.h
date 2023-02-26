@@ -218,7 +218,8 @@ int				is_full_path(char *arg, t_builtin_vars *builtins);
 //children processes
 pid_t			create_child_process(void);
 pid_t			execute_child_process(t_data *data);
-void			heredoc_children(t_parser *parser_data, int fd[], char **redirection);
+void			heredoc_children(
+					t_parser *parser_data, int fd[], char **redirection);
 
 //command
 void			exec_one_command(t_data *data, int fd_in, int fd_out);
@@ -286,8 +287,8 @@ void			free_parser_error(t_parser *parser);
 
 //parser utils
 void			init_parser(t_parser *parser_data);
-void    		check_erros_pipe(t_parser *parser);
-void			check_erros_redirection(t_parser *parser, char *tokens);
+void			check_errors_pipe(t_parser *parser);
+void			check_errors_redirection(t_parser *parser, char *tokens);
 
 //expander
 void			expander(char **args, t_builtin_vars *builtin_vars,

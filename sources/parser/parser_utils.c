@@ -10,7 +10,7 @@ void	init_parser(t_parser *parser_data)
 	parser_data->token_type = -1;
 }
 
-void	check_erros_pipe(t_parser *parser)
+void	check_errors_pipe(t_parser *parser)
 {
 	if (parser->current_token->type == TK_ERROR
 		|| parser->token_type == TK_PARENTHESIS
@@ -26,7 +26,7 @@ void	check_erros_pipe(t_parser *parser)
 	}
 }
 
-void	check_erros_redirection(t_parser *parser, char *tokens)
+void	check_errors_redirection(t_parser *parser, char *tokens)
 {
 	free(tokens);
 	free_parser_error(parser);
