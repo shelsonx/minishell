@@ -1,15 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	init_parser(t_parser *parser_data)
-{
-	parser_data->tokenizer->content = ft_strdup(parser_data->prompt->line);
-	parser_data->index = 0;
-	parser_data->commands = NULL;
-	parser_data->index_redirect = 0;
-	parser_data->table_redirection = create_table(1000);
-	parser_data->token_type = -1;
-}
-
 void	free_prompt(t_parser *parser_data)
 {
 	ft_free_nodes_env(&parser_data->commands);
@@ -59,7 +49,6 @@ void	run(t_parser *parser_data)
 	{	
 		make_prompt_text(parser_data);
 		parser_data->prompt->line = readline(parser_data->prompt->prompt_str);
-		rl_reset_screen_size();
 		if (parser_data->prompt->line == NULL)
 		{
 			free_signal(parser_data);

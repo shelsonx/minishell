@@ -29,3 +29,12 @@ pid_t	execute_child_process(t_data *data)
 	}
 	return (pid);
 }
+
+void	heredoc_children(t_parser *parser_data, int fd[], char **redirection)
+{
+	here_doc(fd, redirection[1]);
+	close(fd[STDIN_FILENO]);
+	close(fd[STDOUT_FILENO]);
+	free_children(parser_data, redirection);
+	exit(EXIT_SUCCESS);
+}

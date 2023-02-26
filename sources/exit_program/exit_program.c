@@ -37,3 +37,17 @@ void	ft_free_nodes(t_node **lst)
 	}
 	*lst = NULL;
 }
+
+void	free_children(t_parser *parser_data, char **redirection)
+{
+	free_parser_error(parser_data);
+	ft_close_fds(parser_data->data->fds);
+	ft_free_fds(parser_data->data->fds);
+	ft_free_tab(parser_data->data->pipeline);
+	ft_free_tab(redirection);
+	free(parser_data->current_token);
+	free(parser_data->tokenizer);
+	ft_free_nodes_env(&parser_data->commands);
+	ft_free_nodes_env(&parser_data->builtin_vars->env2);
+	rl_clear_history();
+}

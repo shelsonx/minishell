@@ -216,6 +216,7 @@ int				is_full_path(char *arg, t_builtin_vars *builtins);
 //children processes
 pid_t			create_child_process(void);
 pid_t			execute_child_process(t_data *data);
+void			heredoc_children(t_parser *parser_data, int fd[], char **redirection);
 
 //command
 void			exec_one_command(t_data *data, int fd_in, int fd_out);
@@ -244,6 +245,7 @@ void			sighandler(int sigtype);
 //exit program
 void			exit_program(t_data *data);
 void			error_command_msg(char **args, char *input_cmd);
+void			free_children(t_parser *parser_data, char **redirection);
 
 //get token
 t_token			get_word(t_tokenizer *tokenizer);
@@ -279,6 +281,11 @@ void			error(t_parser *parser_data);
 t_token			*redirection(t_parser *parser);
 t_token			*redirection_op(t_parser *parser);
 void			free_parser_error(t_parser *parser);
+
+//parser utils
+void			init_parser(t_parser *parser_data);
+void    		check_erros_pipe(t_parser *parser);
+void			check_erros_redirection(t_parser *parser, char *tokens);
 
 //expander
 void			expander(char **args, t_builtin_vars *builtin_vars,

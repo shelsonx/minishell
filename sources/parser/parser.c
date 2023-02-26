@@ -34,18 +34,7 @@ t_token	pipe_sequence(t_parser *parser)
 {
 	t_token	current_token;
 
-	if (parser->current_token->type == TK_ERROR
-		|| parser->token_type == TK_PARENTHESIS
-		|| parser->current_token->type == TK_PIPE)
-	{
-		if (parser->current_token->type == TK_PIPE)
-		{
-			free(parser->tokenizer->token.value);
-			parser->tokenizer->token.value = NULL;
-		}
-		free_parser_error(parser);
-		error(parser);
-	}
+	check_erros_pipe(parser);
 	current_token = simple_command(parser);
 	while (parser->current_token->type == TK_PIPE)
 	{

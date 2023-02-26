@@ -13,21 +13,6 @@ static void	set_fd_in(char **redirection, int *fd)
 	}
 }
 
-// alterando aqui
-static void	free_children(t_parser *parser_data, char **redirection)
-{
-	free_parser_error(parser_data);
-	ft_close_fds(parser_data->data->fds);
-	ft_free_fds(parser_data->data->fds);
-	ft_free_tab(parser_data->data->pipeline);
-	ft_free_tab(redirection);
-	free(parser_data->current_token);
-	free(parser_data->tokenizer);
-	ft_free_nodes_env(&parser_data->commands);
-	ft_free_nodes_env(&parser_data->builtin_vars->env2);
-	rl_clear_history();
-}
-
 static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 {
 	int		fd[2];
@@ -41,13 +26,7 @@ static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 	}
 	pid = fork();
 	if (pid == FORKED)
-	{
-		here_doc(fd, redirection[1]);
-		close(fd[STDIN_FILENO]);
-		close(fd[STDOUT_FILENO]);
-		free_children(parser_data, redirection);
-		exit(EXIT_SUCCESS);
-	}
+		heredoc_children(parser_data, fd, redirection);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, sighandler);

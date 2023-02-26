@@ -76,17 +76,7 @@ t_token	*redirection(t_parser *parser)
 	parser->current_token->value = NULL;
 	consume(parser);
 	if (parser->current_token->type != TK_WORD)
-	{
-		free(tokens);
-		free_parser_error(parser);
-		if (parser->current_token->type != TK_EOF
-			&& parser->current_token->type != TK_PARENTHESIS)
-		{
-			free(parser->tokenizer->token.value);
-			parser->tokenizer->token.value = NULL;
-		}
-		error(parser);
-	}
+		check_erros_redirection(parser, tokens);
 	check_filename(current_token, parser, &tmp, &tokens);
 	if (ft_strcmp(tokens, "") != 0)
 		set_redirect(parser, tokens);

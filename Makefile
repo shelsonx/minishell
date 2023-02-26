@@ -13,7 +13,7 @@ INCLUDE 		= ./includes/
 
 SRC				= main.c\
 				  prompt.c\
-				  parser.c\
+				  parser.c parser_utils.c\
 				  exec.c pipes.c paths.c command.c children_process.c \
 				  ht_utils.c ht_functions.c free_ht.c linkedlist_utils.c \
 				  here_doc.c\
