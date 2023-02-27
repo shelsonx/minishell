@@ -53,6 +53,32 @@ static void	set_new_values_args(char **args, char **new_args, int amount)
 	args[amount] = NULL;
 }
 
+void	remove_between_chars(char **arg)
+{
+	char	*replaced;
+	char	quote[2];
+	char	*tmp;
+
+	replaced = NULL;
+	ft_memset(quote, 0, 2);
+	if (contains_quotes(*arg))
+	{
+		tmp = ft_strchr(*arg, '\'');
+		if (tmp)
+			quote[0] = tmp[0];
+		else
+		{
+			tmp = ft_strchr(*arg, '\"');
+			quote[0] = tmp[0];
+		}
+		replaced = ft_replace_str(*arg, quote, "");
+		free(*arg);
+		*arg = ft_strdup(replaced);
+		free(replaced);
+		replaced = NULL;
+	}
+}
+
 static void	remove_remmaining_quotes(char **args, char *quote, int x)
 {
 	char	*old;
@@ -74,7 +100,6 @@ void	remove_quotes(char **args)
 	int		x;
 	int		amount;
 	char	quote[2];
-	char	*old;
 	char	**new_args;
 
 	x = 0;
@@ -82,12 +107,9 @@ void	remove_quotes(char **args)
 	while (args[x])
 	{
 		if (is_quote(args[x][0]) && is_quote(args[x][ft_strlen(args[x]) - 1]))
-		{
-			quote[0] = args[x][0];
-			old = args[x];
-			args[x] = ft_strtrim(args[x], quote);
-			free(old);
-		}
+			remove_sides(quote, args, x);
+		else
+			remove_between_chars(&args[x]);
 		remove_remmaining_quotes(args, quote, x);
 		x++;
 	}

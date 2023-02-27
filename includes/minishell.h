@@ -295,11 +295,14 @@ void			expander(char **args, t_builtin_vars *builtin_vars,
 					t_data *data);
 int				expand_simple_quotes(char **args, t_builtin_vars *builtin_vars);
 int				expand_double_quotes(char **args, t_builtin_vars *builtin_vars);
-int				contains_quotes(char **args, int quote);
 int				get_amount_character(char **args, char character);
 
 //quotes
 void			remove_quotes(char **args);
+
+//quotes utils
+int  			contains_quotes(char *arg);
+void			remove_sides(char quote[], char **args, int x);
 
 //linked list functions
 t_node			*ft_last(t_node *lst);
