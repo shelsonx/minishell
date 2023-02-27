@@ -9,6 +9,15 @@ int	is_quote_closed(t_tokenizer *tokenizer, char quote)
 		add_char(tokenizer);
 		advance(tokenizer);
 	}
+	if (ft_isalnum(tokenizer->content[tokenizer->pos + 1]))
+	{
+		advance(tokenizer);
+		while (ft_isalpha(tokenizer->current_char))
+		{
+			add_char(tokenizer);
+			advance(tokenizer);
+		}
+	}
 	return (true);
 }
 
