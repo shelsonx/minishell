@@ -4,7 +4,7 @@ void	init_tokenizer(t_tokenizer *tokenizer)
 {
 	tokenizer->pos = 0;
 	tokenizer->current_char = tokenizer->content[tokenizer->pos];
-	tokenizer->characteres = ft_strdup("");
+	tokenizer->characters = ft_strdup("");
 	tokenizer->token.value = NULL;
 	tokenizer->token.type = -1;
 }
@@ -14,8 +14,8 @@ t_token	get_next_token(t_tokenizer *tokenizer)
 	if (tokenizer->token.type != TK_PARENTHESIS)
 	{
 		tokenizer->token.value = ft_calloc(ft_strlen(
-					tokenizer->characteres) + 1, sizeof(char));
-		ft_strcpy(tokenizer->token.value, tokenizer->characteres);
+					tokenizer->characters) + 1, sizeof(char));
+		ft_strcpy(tokenizer->token.value, tokenizer->characters);
 	}
 	advance(tokenizer);
 	return (tokenizer->token);

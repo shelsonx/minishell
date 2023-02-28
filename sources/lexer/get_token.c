@@ -6,8 +6,8 @@ t_token	get_word(t_tokenizer *tokenizer)
 	if (tokenizer->token.type == TK_ERROR)
 		return (tokenizer->token);
 	tokenizer->token.value = ft_calloc(
-			ft_strlen(tokenizer->characteres) + 1, sizeof(char));
-	ft_strcpy(tokenizer->token.value, tokenizer->characteres);
+			ft_strlen(tokenizer->characters) + 1, sizeof(char));
+	ft_strcpy(tokenizer->token.value, tokenizer->characters);
 	if (tokenizer->token.type == TK_ASSIGNMENT_WORD)
 		return (tokenizer->token);
 	else

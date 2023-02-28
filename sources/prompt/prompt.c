@@ -7,7 +7,7 @@ void	free_prompt(t_parser *parser_data)
 	free(parser_data->prompt->line);
 	free(parser_data->prompt->pwd);
 	free(parser_data->prompt->prompt_str);
-	free(parser_data->tokenizer->characteres);
+	free(parser_data->tokenizer->characters);
 	free(parser_data->tokenizer->content);
 }
 

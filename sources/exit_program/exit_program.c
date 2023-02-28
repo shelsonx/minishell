@@ -54,7 +54,7 @@ void	free_children(t_parser *parser_data, char **redirection)
 
 void	free_children_main(t_data *data, char **env)
 {
-	free(data->parser_data->tokenizer->characteres);
+	free(data->parser_data->tokenizer->characters);
 	free(data->parser_data->prompt->line);
 	free(data->parser_data->prompt->prompt_str);
 	free(data->parser_data->prompt->pwd);

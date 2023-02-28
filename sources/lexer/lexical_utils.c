@@ -2,14 +2,14 @@
 
 void	add_char(t_tokenizer *tokenizer)
 {
-	char	*old_characteres;
+	char	*old_characters;
 	char	current_char_p[2];
 
-	old_characteres = tokenizer->characteres;
+	old_characters = tokenizer->characters;
 	current_char_p[0] = tokenizer->current_char;
 	current_char_p[1] = '\0';
-	tokenizer->characteres = ft_strjoin(tokenizer->characteres, current_char_p);
-	free(old_characteres);
+	tokenizer->characters = ft_strjoin(tokenizer->characters, current_char_p);
+	free(old_characters);
 }
 
 void	advance(t_tokenizer *tokenizer)

@@ -22,7 +22,7 @@ void	free_ft_exit(t_data *data)
 	ft_free_nodes_env(&data->builtin_vars->env2);
 	ft_free_nodes_env(&data->parser_data->commands);
 	free(data->parser_data->tokenizer->content);
-	free(data->parser_data->tokenizer->characteres);
+	free(data->parser_data->tokenizer->characters);
 	free(data->parser_data->current_token);
 	free(data->parser_data->tokenizer);
 	free(data->parser_data->prompt->line);

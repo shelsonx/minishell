@@ -52,13 +52,13 @@ int	is_valid_identifier(t_tokenizer *tknz, int position)
 	i = 0;
 	while (i <= position)
 	{
-		if (tknz->characteres[i] == '_' || ft_isalpha(tknz->characteres[i]))
+		if (tknz->characters[i] == '_' || ft_isalpha(tknz->characters[i]))
 		{
 			i++;
-			while (tknz->characteres[i] != '=')
+			while (tknz->characters[i] != '=')
 			{
-				if (!(tknz->characteres[i] == '_'
-						|| ft_isalnum(tknz->characteres[i])))
+				if (!(tknz->characters[i] == '_'
+						|| ft_isalnum(tknz->characters[i])))
 					return (false);
 				i++;
 			}

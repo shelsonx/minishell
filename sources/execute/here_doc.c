@@ -11,7 +11,7 @@ static void	free_signal_here_doc(void)
 	t_data	*data;
 
 	data = *get_data();
-	free(data->parser_data->tokenizer->characteres);
+	free(data->parser_data->tokenizer->characters);
 	free_hashtable(data->parser_data->table_redirection);
 	ft_free_nodes_env(&data->builtin_vars->env2);
 	ft_free_nodes_env(&data->parser_data->commands);

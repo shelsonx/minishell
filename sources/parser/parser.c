@@ -5,7 +5,7 @@ void	free_parser_error(t_parser *parser)
 	ft_free_nodes_env(&parser->commands);
 	free_hashtable(parser->table_redirection);
 	free(parser->tokenizer->content);
-	free(parser->tokenizer->characteres);
+	free(parser->tokenizer->characters);
 	free(parser->prompt->line);
 	free(parser->prompt->prompt_str);
 	free(parser->prompt->pwd);
@@ -22,8 +22,8 @@ void	consume(t_parser *parser)
 {
 	if (parser->current_token->type == parser->token_type)
 	{
-		free(parser->tokenizer->characteres);
-		parser->tokenizer->characteres = ft_strdup("");
+		free(parser->tokenizer->characters);
+		parser->tokenizer->characters = ft_strdup("");
 		*parser->current_token = next_token(parser->tokenizer);
 	}
 	else

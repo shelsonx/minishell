@@ -31,7 +31,7 @@ typedef struct s_tokenizer
 	char	current_char;
 	int		pos;
 	char	*content;
-	char	*characteres;
+	char	*characters;
 	t_token	token;
 }	t_tokenizer;
 
