@@ -27,10 +27,19 @@ static char	ft_isunderscore(char c)
 int	is_valid_id(char *args)
 {
 	int		i;
+	t_data	*data;
+	char	*tmp;
+	char	*tmp2;
 
+	data = *get_data();
 	if (!ft_isunderscore(args[0]) && !ft_isalpha(args[0]))
 	{
-		printf("minishell: export: `%s': not a valid identifier\n", args);
+		tmp = ft_strjoin( "minishell: export: ", args);
+		tmp2 = ft_strjoin(tmp, ": not a valid identifier");
+		ft_putendl_fd(tmp2, 2);
+		free(tmp);
+		free(tmp2);
+		*data->exit_status = 1;
 		return (FALSE);
 	}
 	else
@@ -40,8 +49,12 @@ int	is_valid_id(char *args)
 		{
 			if (!ft_isunderscore(args[i]) && !ft_isalnum(args[i]))
 			{
-				printf("minishell: export: `%s': not a valid identifier\n",
-					args);
+				tmp = ft_strjoin( "minishell: export: ", args);
+				tmp2 = ft_strjoin(tmp, ": not a valid identifier");
+				ft_putendl_fd(tmp2, 2);
+				free(tmp);
+				free(tmp2);
+				*data->exit_status = 1;
 				return (FALSE);
 			}
 			i++;
