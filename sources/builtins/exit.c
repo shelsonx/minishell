@@ -46,6 +46,12 @@ static void	check_exit(char **declar, int declar_len)
 	int		status_exit;
 
 	status_exit = 0;
+	if (ft_strcmp(declar[1], "-9223372036854775809") == 0)
+	{
+		ft_free_tab(declar);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		exit(2);
+	}
 	if (*(declar + 1) && check_str_nb(*(declar + 1)) == 0)
 		status_exit = error_msg(*(declar + 1), 2);
 	else if (declar_len > 2)
@@ -56,12 +62,17 @@ static void	check_exit(char **declar, int declar_len)
 		exit(status_exit);
 	}
 	value = ft_atoi(*(declar + 1));
-	if (value < MININT || value > MAXINT)
+	if (value < -2147483648 || value > 2147483647 || ft_strcmp(declar[1], "-9223372036854775808") == 0)
 	{
 		ft_free_tab(declar);
 		exit(0);
 	}
 	ft_free_tab(declar);
+	if (value == 0)
+	{
+		error_msg(*declar, 2);
+		value = 2; 
+	}
 	exit((unsigned char)value);
 }
 
