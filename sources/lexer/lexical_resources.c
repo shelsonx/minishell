@@ -70,7 +70,13 @@ int	is_valid_identifier(t_tokenizer *tknz, int position)
 
 static void	set_identifier(t_tokenizer *tokenizer)
 {
-	while (!ft_strchr(METACHARS, tokenizer->current_char))
+	char	*chars;
+
+	if (contains_quotes(tokenizer->content))
+		chars = "|<>()";
+	else
+		chars = METACHARS;
+	while (!ft_strchr(chars, tokenizer->current_char))
 	{
 		add_char(tokenizer);
 		advance(tokenizer);
