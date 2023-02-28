@@ -69,6 +69,11 @@ void	export(t_builtin_vars *builtins, char **args)
 	i = 1;
 	while (args[i])
 	{
+		if (contains_equal(args[i]) && ft_strlen(args[i]) == 1)
+		{
+			is_valid_id(args[i]);
+			return ;
+		}
 		if (to_update(builtins, args[i]))
 			update(builtins, args, i);
 		else
