@@ -64,8 +64,11 @@ char	**get_env(t_builtin_vars *builtin_vars)
 	i = -1;
 	while (++i < size)
 	{
-		env[i] = malloc(sizeof(char) * 2);
-		env[i] = current->value;
+		if (ft_strlen(current->value) > 0)
+		{
+			env[i] = ft_calloc(ft_strlen(current->value) + 1, sizeof(char));
+			ft_strcpy(env[i], current->value);
+		}
 		current = current->next;
 	}
 	return (env);

@@ -16,7 +16,9 @@ pid_t	create_child_process(void)
 pid_t	execute_child_process(t_data *data)
 {
 	pid_t	pid;
+	char	**env;
 
+	env = get_env(data->builtin_vars);
 	pid = create_child_process();
 	if (pid == 0)
 	{
@@ -24,9 +26,14 @@ pid_t	execute_child_process(t_data *data)
 		dup2(data->fd_out, STDOUT_FILENO);
 		ft_close_fds(data->fds);
 		if (execve(data->args[0], data->args,
-				get_env(data->builtin_vars)) == -1)
-			exit(EXIT_FAILURE);
+				env) == -1)
+			{
+				free_children_main(data, env);
+				exit(EXIT_FAILURE);
+			}
+		ft_free_tab(env);
 	}
+	ft_free_tab(env);
 	return (pid);
 }
 

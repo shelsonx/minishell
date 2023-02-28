@@ -249,6 +249,7 @@ void			sighandler(int sigtype);
 void			exit_program(t_data *data);
 void			error_command_msg(char **args, char *input_cmd);
 void			free_children(t_parser *parser_data, char **redirection);
+void			free_children_main(t_data *data, char **env);
 
 //get token
 t_token			get_word(t_tokenizer *tokenizer);
