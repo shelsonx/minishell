@@ -91,12 +91,14 @@ void	ft_cd(t_data *data)
 	new_directory = validate_args(data);
 	if (new_directory == NULL)
 	{
-		printf("minishell: cd: too many arguments\n");
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		*data->exit_status = 1;
 		return ;
 	}
 	if (chdir(new_directory))
 	{
 		perror(new_directory);
+		*data->exit_status = 1;
 		free(new_directory);
 		return ;
 	}
@@ -106,4 +108,5 @@ void	ft_cd(t_data *data)
 	getcwd(pwd, 1024);
 	ft_setenv(data->builtin_vars, "PWD", pwd);
 	free(new_directory);
+	*data->exit_status = 0;
 }
