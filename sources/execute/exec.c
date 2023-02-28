@@ -94,6 +94,7 @@ int	execute(t_parser *parser_data)
 	int			total_builtins;
 	static int	exit_status;
 	int			i;
+	int			status;
 
 	data.fds = NULL;
 	data.pipeline = NULL;
@@ -109,6 +110,12 @@ int	execute(t_parser *parser_data)
 		exit_program(&data);
 	i = -1;
 	while (i++ < (total_commands - total_builtins))
-		waitpid(-1, NULL, 0);
+	{
+
+		waitpid(-1, &status, 0);
+		if (status == 256)
+			*parser_data->data->exit_status = 1;
+		//dprintf(2, "status =%d\n", status);
+	}
 	return (0);
 }

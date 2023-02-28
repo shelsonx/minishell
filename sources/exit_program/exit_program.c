@@ -9,7 +9,7 @@ void	error_command_msg(char **args, char *input_cmd)
 	{
 		tmp = ft_strjoin("minishell: ", input_cmd);
 		msg = ft_strjoin(tmp, ": command not found\n");
-		write(STDOUT_FILENO, msg, ft_strlen(msg));
+		write(STDERR_FILENO, msg, ft_strlen(msg));
 		free(tmp);
 		free(msg);
 	}
