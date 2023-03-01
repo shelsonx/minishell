@@ -67,7 +67,7 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 	{
 		if (is_dir(arg))
 		{
-			msg_error("minishell: ", "", " Is a directory", 126);
+			msg_error("minishell: ", arg, ": Is a directory", 126);
 			ft_free_tab(paths);
 			exec_command = ft_strdup(arg);
 			return exec_command;
