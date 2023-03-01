@@ -14,7 +14,7 @@ void	free_parser_error(t_parser *parser)
 void	error(t_parser *parser_data)
 {
 	if (parser_data->tokenizer->token.type != TK_ERROR)
-		ft_printf("syntax error near unexpected token\n");
+		ft_putendl_fd("syntax error near unexpected token", 2);
 	run(parser_data);
 }
 

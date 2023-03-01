@@ -58,6 +58,7 @@ t_token	simple_command(t_parser *parser)
 	check_word(parser, &current_token);
 	check_redirects(parser);
 	check_word(parser, &current_token);
+	check_redirects(parser);
 	while (parser->current_token->type == TK_ASSIGNMENT_WORD)
 		check_assignment_word(parser, &current_token);
 	if (ft_size(parser->commands) > 0)
