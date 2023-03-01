@@ -25,6 +25,37 @@ void	handler_cmds(t_data *data, t_parser *parser_data, int total_commands)
 		exec_serveral_commands(data, parser_data, total_commands);
 }
 
+static int	is_dir(char *arg)
+{
+	struct stat	buffer;
+
+	if (stat(arg, &buffer) != 0)
+		return (FALSE);
+	if (S_ISDIR(buffer.st_mode))
+	{
+		if (arg[0] == '.')
+			arg++;
+		if (arg[0] == '/')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+void	msg_error(char *msg1, char *msg2, char *msg3, int exit_status)
+{
+	char	*tmp;
+	char	*tmp2;
+	t_data	*data;
+
+	data = *get_data();
+	tmp = ft_strjoin(msg1, msg2);
+	tmp2 = ft_strjoin(tmp, msg3);
+	ft_putendl_fd(tmp2, STDERR_FILENO);
+	free(tmp);
+	free(tmp2);
+	*data->exit_status = exit_status;
+}
+
 char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 {
 	char	*exec_command;
@@ -34,6 +65,13 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 	builtins->i = -1;
 	while (paths[++builtins->i])
 	{
+		if (is_dir(arg))
+		{
+			msg_error("minishell: ", "", " Is a directory", 126);
+			ft_free_tab(paths);
+			exec_command = ft_strdup(arg);
+			return exec_command;
+		}
 		if (ft_strncmp("./", arg, 2) == 0)
 			exec_command = ft_substr(arg, 2, ft_strlen(arg));
 		else if (!is_full_path(arg, builtins))
