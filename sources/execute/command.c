@@ -12,6 +12,11 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 	data->fds = create_pipes(1);
 	if (is_builtins(input_cmd))
 	{
+		if (fd_out == INVALID_FD)
+		{
+			*data->exit_status = 1;
+			return ;
+		}
 		free(input_cmd);
 		handler_builtins(data);
 		return ;
@@ -56,7 +61,7 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 	}
 	else
 	{
-		if (!set_and_valid_args(data, input_cmd, fd_out))
+		if (!set_and_valid_args(data, input_cmd, fd_out) || fd_in == -1)
 		{
 			ft_free_tab(data->args);
 			return ;
@@ -108,6 +113,11 @@ void	exec_last_command(t_data *data, int fd_in, int fd_out)
 	input_cmd = ft_strdup(data->pipeline[0]);
 	if (is_builtins(input_cmd))
 	{
+		if (fd_out == INVALID_FD)
+		{
+			*data->exit_status = 1;
+			return ;
+		}
 		free(input_cmd);
 		handler_builtins(data);
 		return ;

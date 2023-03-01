@@ -21,7 +21,10 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	index_cmd = get_input_cmd(0);
 	if (has_redirect(parser_data, "<", index_cmd)
 		&& get_fd_in(parser_data, index_cmd) == -1)
-		return ;
+		{
+			*data->exit_status = 1;
+			return ;
+		}
 	data->pipeline = get_pipeline(data, parser_data, 0);
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
@@ -96,6 +99,7 @@ int	execute(t_parser *parser_data)
 	int			i;
 	int			status;
 
+	status = -1;
 	data.fds = NULL;
 	data.pipeline = NULL;
 	data.exit_status = &exit_status;
