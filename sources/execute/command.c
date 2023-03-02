@@ -30,7 +30,14 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 		if (data->args[0] == NULL || fd_in == INVALID_FD)
 			return ;
 		child_pid = execute_child_process(data);
-		waitpid(child_pid, &status, 0);
+		//waitpid(child_pid, &status, 0);
+		if (waitpid(child_pid, &status, 0) == -1)
+			perror("minishell: ");
+		if ( WIFEXITED(status) ) {
+			const int es = WEXITSTATUS(status);
+			*data->exit_status = es;
+			//dprintf(2, "exit status was %d\n", es);
+		}
 	}
 }
 
@@ -61,7 +68,7 @@ void	exec_first_command(t_data *data, int fd_in, int fd_out)
 	}
 	else
 	{
-		if (!set_and_valid_args(data, input_cmd, fd_out) || fd_in == -1)
+		if (!set_and_valid_args(data, input_cmd, fd_out) || fd_in == INVALID_FD)
 		{
 			ft_free_tab(data->args);
 			return ;

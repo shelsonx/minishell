@@ -18,17 +18,24 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	int		fd_in;
 	int		fd_out;
 
+	data->pipeline = get_pipeline(data, parser_data, 0);
 	index_cmd = get_input_cmd(0);
+	if (ft_strcmp(data->pipeline[0], "echo") != 0)
+		fd_in = get_fd_in(parser_data, index_cmd);
 	if (has_redirect(parser_data, "<", index_cmd)
-		&& get_fd_in(parser_data, index_cmd) == -1)
+		&& fd_in == -1)
 		{
 			*data->exit_status = 1;
 			return ;
 		}
-	data->pipeline = get_pipeline(data, parser_data, 0);
+	if (fd_in == INVALID_FD)
+	{
+		*data->exit_status = 1;
+		return ;
+	}
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
-	fd_in = get_fd_in(parser_data, index_cmd);
+	//fd_in = get_fd_in(parser_data, index_cmd);
 	fd_out = get_fd_out(parser_data, index_cmd);
 	if (fd_out == INVALID_FD)
 		return ;
@@ -99,7 +106,7 @@ int	execute(t_parser *parser_data)
 	int			i;
 	int			status;
 
-	status = -1;
+	status = -2;
 	data.fds = NULL;
 	data.pipeline = NULL;
 	data.exit_status = &exit_status;
@@ -117,6 +124,10 @@ int	execute(t_parser *parser_data)
 	{
 
 		waitpid(-1, &status, 0);
+		if ( WIFEXITED(status) ) {
+			const int es = WEXITSTATUS(status);
+			*parser_data->data->exit_status = es;
+		}
 		if (status == 256)
 			*parser_data->data->exit_status = 1;
 		//dprintf(2, "status =%d\n", status);

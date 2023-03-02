@@ -7,6 +7,7 @@ static void	set_fd_in(char **redirection, int *fd)
 	*fd = open(redirection[1], O_RDONLY);
 	if (*fd < 0)
 	{
+		*fd = INVALID_FD;
 		tmp = ft_strjoin("minishell: ", redirection[1]);
 		perror(tmp);
 		free(tmp);
@@ -38,7 +39,6 @@ static void	set_here_doc(char **redirection, int *fd_in, t_parser *parser_data)
 		close(fd[STDIN_FILENO]);
 	}
 }
-
 static void	set_fds_in(t_parser *parser_data,
 			int *fd_in, char *index_cmd, int i)
 {
@@ -50,6 +50,7 @@ static void	set_fds_in(t_parser *parser_data,
 	search = ht_search(parser_data->table_redirection, num_str);
 	redirection = ft_split(search, ' ');
 	expander(redirection, parser_data->builtin_vars, parser_data->data);
+	remove_quotes(redirection);
 	if (ft_strcmp(redirection[2], index_cmd) == 0)
 	{
 		if (strcmp(redirection[0], "<") == 0)
