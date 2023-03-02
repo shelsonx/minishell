@@ -1,11 +1,27 @@
 #include "../../includes/minishell.h"
 
+static int	is_dir_2(char *arg)
+{
+	struct stat	buffer;
+
+	if (stat(arg, &buffer) != 0)
+		return (FALSE);
+	if (S_ISDIR(buffer.st_mode))
+	{
+		if (arg[0] == '.')
+			arg++;
+		if (arg[0] == '/')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
 void	error_command_msg(char **args, char *input_cmd)
 {
 	char	*msg;
 	char	*tmp;
 
-	if (args[0] == NULL)
+	if (args[0] == NULL && !is_dir_2(input_cmd) && (ft_strcmp(input_cmd, "") != 0))
 	{
 		tmp = ft_strjoin("minishell: ", input_cmd);
 		msg = ft_strjoin(tmp, ": command not found\n");

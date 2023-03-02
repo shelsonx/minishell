@@ -20,14 +20,10 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 
 	data->pipeline = get_pipeline(data, parser_data, 0);
 	index_cmd = get_input_cmd(0);
-	if (ft_strcmp(data->pipeline[0], "echo") != 0)
-		fd_in = get_fd_in(parser_data, index_cmd);
+	fd_in = get_fd_in(parser_data, index_cmd);
 	if (has_redirect(parser_data, "<", index_cmd)
 		&& fd_in == -1)
-		{
-			*data->exit_status = 1;
 			return ;
-		}
 	if (fd_in == INVALID_FD)
 	{
 		*data->exit_status = 1;
@@ -35,10 +31,12 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	}
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
-	//fd_in = get_fd_in(parser_data, index_cmd);
 	fd_out = get_fd_out(parser_data, index_cmd);
 	if (fd_out == INVALID_FD)
+	{
+		*data->exit_status = 1;
 		return ;
+	}
 	exec_one_command(data, fd_in, fd_out);
 }
 
@@ -56,7 +54,8 @@ void	exec_two_commands(t_data *data,
 	data->fds = create_pipes(1);
 	fd_in = get_fd_in(parser_data, index_cmd);
 	fd_out = get_fd_out(parser_data, index_cmd);
-	exec_first_command(data, fd_in, fd_out);
+	if (fd_in != INVALID_FD && fd_out != INVALID_FD)
+		exec_first_command(data, fd_in, fd_out);
 	data->pipeline = get_pipeline(data, parser_data, 1);
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);

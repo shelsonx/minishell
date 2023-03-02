@@ -75,6 +75,13 @@ int	get_fd_in(t_parser *parser_data, char *index_cmd)
 	fd_in = -1;
 	i = -1;
 	while (++i < parser_data->index_redirect)
+	{
+		if (fd_in == INVALID_FD)
+		{
+			*parser_data->data->exit_status = 1;
+			break ;
+		}
 		set_fds_in(parser_data, &fd_in, index_cmd, i);
+	}
 	return (fd_in);
 }

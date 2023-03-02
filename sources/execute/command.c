@@ -127,6 +127,7 @@ void	exec_last_command(t_data *data, int fd_in, int fd_out)
 		}
 		free(input_cmd);
 		handler_builtins(data);
+		*data->exit_status = 0;
 		return ;
 	}
 	*data->exit_status = get_exit_status(input_cmd, data->builtin_vars);
