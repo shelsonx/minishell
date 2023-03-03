@@ -21,9 +21,9 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	data->pipeline = get_pipeline(data, parser_data, 0);
 	index_cmd = get_input_cmd(0);
 	fd_in = get_fd_in(parser_data, index_cmd);
-	if (has_redirect(parser_data, "<", index_cmd)
+	/* if (has_redirect(parser_data, "<", index_cmd)
 		&& fd_in == -1)
-			return ;
+			return ; */
 	if (fd_in == INVALID_FD)
 	{
 		*data->exit_status = 1;

@@ -48,7 +48,9 @@ static void	set_fds_in(t_parser *parser_data,
 
 	num_str = ft_itoa(i);
 	search = ht_search(parser_data->table_redirection, num_str);
-	redirection = ft_split(search, ' ');
+	//dprintf(2, "%s\n", search);
+	//exit(0);
+	redirection = ft_split(search, 127);
 	expander(redirection, parser_data->builtin_vars, parser_data->data);
 	remove_quotes(redirection);
 	if (ft_strcmp(redirection[2], index_cmd) == 0)

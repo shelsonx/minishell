@@ -31,9 +31,12 @@ t_token	*redirection_op(t_parser *parser)
 void	set_redirect(t_parser *parser, char *tokens)
 {
 	char	*tmp;
+	char	join[2];
 
+	join[0] = 127;
+	join[1] = '\0';
 	tmp = tokens;
-	tokens = ft_strjoin(tokens, " ");
+	tokens = ft_strjoin(tokens, join);
 	free(tmp);
 	tmp = tokens;
 	tokens = ft_strjoin(tokens, get_input_cmd(parser->index));
@@ -47,17 +50,28 @@ void	set_redirect(t_parser *parser, char *tokens)
 void	check_filename(t_token *current_token,
 			t_parser *parser, char **tmp, char **tokens)
 {
-	current_token = cmd_word(parser);
-	*tmp = *tokens;
-	*tokens = ft_strjoin(*tokens, " ");
-	free(*tmp);
-	*tmp = *tokens;
-	*tokens = ft_strjoin(*tokens, current_token->value);
-	free_redirection(current_token);
-	free(parser->current_token->value);
-	parser->current_token->value = NULL;
-	consume(parser);
-	free(*tmp);
+	char	join[2];
+
+	join[0] = 127;
+	join[1] = '\0';
+	/* while (parser->current_token->type == TK_WORD)
+	{ */
+		current_token = cmd_word(parser);
+		*tmp = *tokens;
+		/* if (contains_quotes(*tokens))
+			*tokens = ft_strjoin(*tokens, "");
+		else */
+		*tokens = ft_strjoin(*tokens, join);
+		free(*tmp);
+		*tmp = *tokens;
+		*tokens = ft_strjoin(*tokens, current_token->value);
+		free_redirection(current_token);
+		free(parser->current_token->value);
+		parser->current_token->value = NULL;
+		consume(parser);
+		free(*tmp);
+	//}
+	//dprintf(2, "tokens= %s\n", *tokens);
 }
 
 t_token	*redirection(t_parser *parser)
