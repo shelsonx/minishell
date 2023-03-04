@@ -22,7 +22,7 @@ SRC				= main.c\
 				  exit_program.c \
 				  get_token.c lexical_analyzer.c lexical_resources.c lexical_utils.c \
 				  env.c pwd.c echo.c exit.c cd.c export.c export_utils.c unset.c \
-				  export_utils_2.c \
+				  export_utils_2.c fds_utils.c \
 				  expander.c quotes.c quotes_utils.c\
 				  builtins.c linked_list_env_utils.c \
 				  fd_in.c fd_out.c linked_list_funcs.c overflow_buckets.c \

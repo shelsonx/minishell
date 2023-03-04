@@ -116,19 +116,18 @@ int	execute(t_parser *parser_data)
 	if (total_commands > 0)
 		exit_program(&data);
 	i = -1;
+	int es;
 	while (i++ < (total_commands - total_builtins))
 	{
-
 		waitpid(-1, &status, 0);
 		if ( WIFEXITED(status) ) {
-			const int es = WEXITSTATUS(status);
+			es = WEXITSTATUS(status);
 			*parser_data->data->exit_status = es;
 		}
 		if (status == 256)
-		{
 			*parser_data->data->exit_status = 1;
-		}
-		//dprintf(2, "status =%d\n", status);
 	}
+	if (status == 512)
+		*parser_data->data->exit_status = 1;
 	return (0);
 }

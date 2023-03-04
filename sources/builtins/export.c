@@ -65,7 +65,9 @@ static void	update(t_builtin_vars *builtins, char **args, int i)
 void	export(t_builtin_vars *builtins, char **args)
 {
 	int	i;
+	t_data	*data;
 
+	data = *get_data();
 	i = 1;
 	while (args[i])
 	{
@@ -74,10 +76,13 @@ void	export(t_builtin_vars *builtins, char **args)
 			is_valid_id(args[i]);
 			return ;
 		}
-		if (to_update(builtins, args[i]))
-			update(builtins, args, i);
-		else
-			set_in_export(builtins, args, i);
+		if (data->parser_data->index == 1)
+		{
+			if (to_update(builtins, args[i]))
+				update(builtins, args, i);
+			else
+				set_in_export(builtins, args, i);
+		}
 		i++;
 	}
 }

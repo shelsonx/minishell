@@ -86,6 +86,7 @@ static void	expander_special_parameter(char **args, t_data *data)
 		y = 0;
 		while (args[x][y])
 		{
+			//dprintf(2, "args[%d] =%s\n", x, args[x]);
 			tmp = ft_strchr(args[x], '\'');
 			if (args[x][y] == '$' && args[x][y + 1] == '?' && tmp == NULL)
 			{
@@ -98,6 +99,11 @@ static void	expander_special_parameter(char **args, t_data *data)
 			y++;
 		}
 		x++;
+	}
+	if (ft_strcmp("$", args[ft_len_rows_tab(args)-1]) == 0 && x > 2)
+	{
+		free(args[ft_len_rows_tab(args)-1]);
+		args[ft_len_rows_tab(args)-1] = NULL;
 	}
 }
 
