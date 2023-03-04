@@ -45,13 +45,6 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 		redirection = ft_split(search, 127);
 		expander(redirection, parser_data->builtin_vars, parser_data->data);
 		remove_quotes(redirection);
-		/* if (contains_quotes(redirection[1]))
-		{
-			char *replaced = ft_replace_str(redirection[1], "\"", "");
-			free(redirection[1]);
-			redirection[1] = ft_strdup(replaced);
-			free(replaced);
-		} */
 		if (ft_strcmp(redirection[2], index_cmd) == 0)
 			set_fd_out(redirection, &file_fd);
 		if (file_fd == INVALID_FD)

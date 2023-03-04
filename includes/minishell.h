@@ -240,6 +240,11 @@ int				has_redirect(t_parser *parser_data,
 void			set_fds_middle_cmd(t_data *data, t_parser *parser_data, int i);
 void			set_fds_first_cmd(t_data *data, int fd_in, int fd_out);
 
+//fds utils
+int				set_in(t_parser *parser_data, char *index_cmd, int *fd_in);
+int				set_out(t_parser *parser_data, char *index_cmd, int *fd_out);
+int				set_fds(t_parser *parser_data, char *index_cmd, int *fd_in, int *fd_out);
+
 //pipes
 int				**create_pipes(int amount);
 

@@ -19,23 +19,20 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	int		fd_out;
 
 	data->pipeline = get_pipeline(data, parser_data, 0);
-	index_cmd = get_input_cmd(0);
-	fd_in = get_fd_in(parser_data, index_cmd);
-	/* if (has_redirect(parser_data, "<", index_cmd)
-		&& fd_in == -1)
-			return ; */
-	if (fd_in == INVALID_FD)
-	{
-		*data->exit_status = 1;
-		return ;
-	}
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
-	fd_out = get_fd_out(parser_data, index_cmd);
-	if (fd_out == INVALID_FD)
+	index_cmd = get_input_cmd(0);
+	if (has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">", index_cmd))
 	{
-		*data->exit_status = 1;
-		return ;
+		if (!set_fds(parser_data, index_cmd, &fd_in, &fd_out))
+			return ;
+	}
+	else
+	{
+		if (!set_in(parser_data, index_cmd, &fd_in))
+				return ;
+		if (!set_out(parser_data, index_cmd, &fd_out))
+			return ;
 	}
 	exec_one_command(data, fd_in, fd_out);
 }
@@ -128,7 +125,9 @@ int	execute(t_parser *parser_data)
 			*parser_data->data->exit_status = es;
 		}
 		if (status == 256)
+		{
 			*parser_data->data->exit_status = 1;
+		}
 		//dprintf(2, "status =%d\n", status);
 	}
 	return (0);
