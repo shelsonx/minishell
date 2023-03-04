@@ -52,6 +52,11 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 			*parser_data->data->exit_status = 1;
 			break ;
 		}
+		if (has_redirect(parser_data, "<", num_str) && parser_data->index_redirect >= 3)
+		{
+			*parser_data->data->exit_status = 1;
+			break;
+		}
 		free(num_str);
 		ft_free_tab(redirection);
 	}

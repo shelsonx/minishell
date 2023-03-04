@@ -22,7 +22,8 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
 	index_cmd = get_input_cmd(0);
-	if (has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">", index_cmd))
+	if ((has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">", index_cmd)) ||
+		(has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">>", index_cmd)))
 	{
 		if (!set_fds(parser_data, index_cmd, &fd_in, &fd_out))
 			return ;
