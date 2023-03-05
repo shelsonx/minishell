@@ -40,6 +40,7 @@ int	check_quotes(t_tokenizer *tokenizer)
 		}
 		add_char(tokenizer);
 		advance(tokenizer);
+		check_quotes(tokenizer);
 		return (true);
 	}
 	return (false);
