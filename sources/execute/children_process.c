@@ -27,10 +27,10 @@ pid_t	execute_child_process(t_data *data)
 		ft_close_fds(data->fds);
 		if (execve(data->args[0], data->args,
 				env) == -1)
-			{
-				free_children_main(data, env);
-				exit(EXIT_FAILURE);
-			}
+		{
+			free_children_main(data, env);
+			exit(EXIT_FAILURE);
+		}
 		ft_free_tab(env);
 	}
 	ft_free_tab(env);

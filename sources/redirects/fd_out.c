@@ -35,6 +35,7 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 	char	*num_str;
 	int		file_fd;
 	int		i;
+	char	*replace;
 
 	file_fd = -1;
 	i = -1;
@@ -45,7 +46,7 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 		redirection = ft_split(search, 127);
 		expander(redirection, parser_data->builtin_vars, parser_data->data);
 		remove_quotes(redirection);
-		char *replace = ft_replace_str(redirection[1], "\"", "");
+		replace = ft_replace_str(redirection[1], "\"", "");
 		free(redirection[1]);
 		redirection[1] = ft_strdup(replace);
 		free(replace);
@@ -58,12 +59,13 @@ int	get_fd_out(t_parser *parser_data, char *index_cmd)
 			*parser_data->data->exit_status = 1;
 			break ;
 		}
-		if (has_redirect(parser_data, "<", num_str) && parser_data->index_redirect >= 3)
+		if (has_redirect(parser_data, "<", num_str)
+			&& parser_data->index_redirect >= 3)
 		{
 			free(num_str);
 			ft_free_tab(redirection);
 			*parser_data->data->exit_status = 1;
-			break;
+			break ;
 		}
 		free(num_str);
 		ft_free_tab(redirection);

@@ -24,7 +24,6 @@ int	set_out(t_parser *parser_data, char *index_cmd, int *fd_out)
 
 int	set_fds(t_parser *parser_data, char *index_cmd, int *fd_in, int *fd_out)
 {
-
 	char	*search;
 	char	**redirection;
 
@@ -32,7 +31,8 @@ int	set_fds(t_parser *parser_data, char *index_cmd, int *fd_in, int *fd_out)
 	if (search)
 	{
 		redirection = ft_split(search, 127);
-		if (ft_strcmp(redirection[0], "<") == 0 || ft_strcmp(redirection[0], "<<") == 0)
+		if (ft_strcmp(redirection[0], "<") == 0
+			|| ft_strcmp(redirection[0], "<<") == 0)
 		{
 			if (!set_in(parser_data, index_cmd, fd_in))
 				return (FALSE);

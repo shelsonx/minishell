@@ -243,7 +243,8 @@ void			set_fds_first_cmd(t_data *data, int fd_in, int fd_out);
 //fds utils
 int				set_in(t_parser *parser_data, char *index_cmd, int *fd_in);
 int				set_out(t_parser *parser_data, char *index_cmd, int *fd_out);
-int				set_fds(t_parser *parser_data, char *index_cmd, int *fd_in, int *fd_out);
+int				set_fds(t_parser *parser_data, char *index_cmd,
+					int *fd_in, int *fd_out);
 
 //pipes
 int				**create_pipes(int amount);
@@ -308,7 +309,7 @@ int				get_amount_character(char **args, char character);
 void			remove_quotes(char **args);
 
 //quotes utils
-int  			contains_quotes(char *arg);
+int				contains_quotes(char *arg);
 void			remove_sides(char quote[], char **args, int x);
 
 //linked list functions
@@ -348,5 +349,5 @@ void			free_overflow_buckets(t_hashtable *table);
 int				get_exit_status(char *arg, t_builtin_vars *builtins);
 
 //sort queue
-int 			sort_queue(t_node **head, int count);
+int				sort_queue(t_node **head, int count);
 #endif /* MINISHELL */

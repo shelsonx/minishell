@@ -62,7 +62,8 @@ static void	check_exit(char **declar, int declar_len)
 		exit(status_exit);
 	}
 	value = ft_atoi(*(declar + 1));
-	if (value < -2147483648 || value > 2147483647 || ft_strcmp(declar[1], "-9223372036854775808") == 0)
+	if (value < -2147483648 || value > 2147483647
+		|| ft_strcmp(declar[1], "-9223372036854775808") == 0)
 	{
 		ft_free_tab(declar);
 		exit(0);
@@ -71,7 +72,7 @@ static void	check_exit(char **declar, int declar_len)
 	if (value == 0)
 	{
 		error_msg(*declar, 2);
-		value = 2; 
+		value = 2;
 	}
 	exit((unsigned char)value);
 }

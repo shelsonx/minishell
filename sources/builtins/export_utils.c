@@ -34,7 +34,7 @@ int	is_valid_id(char *args)
 	data = *get_data();
 	if (!ft_isunderscore(args[0]) && !ft_isalpha(args[0]))
 	{
-		tmp = ft_strjoin( "minishell: export: ", args);
+		tmp = ft_strjoin("minishell: export: ", args);
 		tmp2 = ft_strjoin(tmp, ": not a valid identifier");
 		ft_putendl_fd(tmp2, 2);
 		free(tmp);
@@ -49,7 +49,7 @@ int	is_valid_id(char *args)
 		{
 			if (!ft_isunderscore(args[i]) && !ft_isalnum(args[i]))
 			{
-				tmp = ft_strjoin( "minishell: export: ", args);
+				tmp = ft_strjoin("minishell: export: ", args);
 				tmp2 = ft_strjoin(tmp, ": not a valid identifier");
 				ft_putendl_fd(tmp2, 2);
 				free(tmp);

@@ -73,7 +73,7 @@ char	*get_exec_command(char *arg, t_builtin_vars *builtins)
 				msg_error("", "", "", 0);
 			ft_free_tab(paths);
 			exec_command = NULL;
-			return exec_command;
+			return (exec_command);
 		}
 		if (ft_strncmp("./", arg, 2) == 0)
 			exec_command = ft_substr(arg, 2, ft_strlen(arg));

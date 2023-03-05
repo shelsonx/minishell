@@ -22,8 +22,10 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	expander(data->pipeline, parser_data->builtin_vars, data);
 	remove_quotes(data->pipeline);
 	index_cmd = get_input_cmd(0);
-	if ((has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">", index_cmd)) ||
-		(has_redirect(parser_data, "<", index_cmd) && has_redirect(parser_data, ">>", index_cmd)))
+	if ((has_redirect(parser_data, "<", index_cmd)
+			&& has_redirect(parser_data, ">", index_cmd))
+		|| (has_redirect(parser_data, "<", index_cmd)
+			&& has_redirect(parser_data, ">>", index_cmd)))
 	{
 		if (!set_fds(parser_data, index_cmd, &fd_in, &fd_out))
 			return ;
@@ -31,7 +33,7 @@ void	exec_only_one_command(t_data *data, t_parser *parser_data)
 	else
 	{
 		if (!set_in(parser_data, index_cmd, &fd_in))
-				return ;
+			return ;
 		if (!set_out(parser_data, index_cmd, &fd_out))
 			return ;
 	}
@@ -102,6 +104,7 @@ int	execute(t_parser *parser_data)
 	static int	exit_status;
 	int			i;
 	int			status;
+	int			es;
 
 	status = -2;
 	data.fds = NULL;
@@ -117,11 +120,12 @@ int	execute(t_parser *parser_data)
 	if (total_commands > 0)
 		exit_program(&data);
 	i = -1;
-	int es;
+	es = 0;
 	while (i++ < (total_commands - total_builtins))
 	{
 		waitpid(-1, &status, 0);
-		if ( WIFEXITED(status) ) {
+		if (WIFEXITED(status))
+		{
 			es = WEXITSTATUS(status);
 			*parser_data->data->exit_status = es;
 		}

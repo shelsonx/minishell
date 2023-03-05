@@ -5,6 +5,7 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 	pid_t	child_pid;
 	int		status;
 	char	*input_cmd;
+	int		es;
 
 	data->fd_in = fd_in;
 	data->fd_out = fd_out;
@@ -30,13 +31,12 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 		if (data->args[0] == NULL || fd_in == INVALID_FD)
 			return ;
 		child_pid = execute_child_process(data);
-		//waitpid(child_pid, &status, 0);
 		if (waitpid(child_pid, &status, 0) == -1)
 			perror("minishell: ");
-		if ( WIFEXITED(status) ) {
-			const int es = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+		{
+			es = WEXITSTATUS(status);
 			*data->exit_status = es;
-			//dprintf(2, "exit status was %d\n", es);
 		}
 	}
 }

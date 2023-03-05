@@ -22,7 +22,8 @@ void	error_command_msg(char **args, char *input_cmd)
 	char	*tmp;
 	int		fd;
 
-	if (args[0] == NULL && !is_dir_2(input_cmd) && (ft_strcmp(input_cmd, "") != 0))
+	if (args[0] == NULL && !is_dir_2(input_cmd)
+		&& (ft_strcmp(input_cmd, "") != 0))
 	{
 		tmp = ft_strjoin("minishell: ", input_cmd);
 		if (input_cmd[0] == '.' || input_cmd[0] == '/')

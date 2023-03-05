@@ -65,7 +65,7 @@ static void	update(t_builtin_vars *builtins, char **args, int i)
 
 void	export(t_builtin_vars *builtins, char **args)
 {
-	int	i;
+	int		i;
 	t_data	*data;
 
 	data = *get_data();

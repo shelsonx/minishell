@@ -1,8 +1,10 @@
 #include "../../includes/minishell.h"
 
-int  contains_quotes(char *arg)
+int	contains_quotes(char *arg)
 {
-	int i = -1;
+	int		i;
+
+	i = -1;
 	while (arg[++i])
 		if (arg[i] == '\'' || arg[i] == '\"')
 			return (TRUE);
