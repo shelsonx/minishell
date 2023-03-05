@@ -61,4 +61,5 @@ void	add_env_path(t_builtin_vars *builtins, char *key, char *value)
 void	insert_args_in_export(t_builtin_vars *builtins, char *args)
 {
 	add_env_path(builtins, "1", args);
+	sort_queue(&builtins->env2, ft_size(builtins->env2));
 }

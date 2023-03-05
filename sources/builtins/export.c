@@ -60,6 +60,7 @@ static void	update(t_builtin_vars *builtins, char **args, int i)
 	position = get_position(builtins, args[i]);
 	del_pos(&builtins->env2, position);
 	add_env_path(builtins, "1", args[i]);
+	sort_queue(&builtins->env2, ft_size(builtins->env2));
 }
 
 void	export(t_builtin_vars *builtins, char **args)

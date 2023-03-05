@@ -37,6 +37,7 @@ void	init_env(t_builtin_vars *builtin_vars, char **envp)
 	builtin_vars->env2 = NULL;
 	while (envp[++i])
 		ft_add_back(&builtin_vars->env2, ft_new_env(i, envp[i]));
+	sort_queue(&builtin_vars->env2, ft_size(builtin_vars->env2));
 }
 
 void	ft_env(t_builtin_vars *builtin_vars)

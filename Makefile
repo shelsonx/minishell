@@ -27,7 +27,7 @@ SRC				= main.c\
 				  builtins.c linked_list_env_utils.c \
 				  fd_in.c fd_out.c linked_list_funcs.c overflow_buckets.c \
 				  redirects_utils.c builtins_utils.c exec_utils.c exit_status.c\
-				  simple_command.c redirection.c
+				  simple_command.c redirection.c sort_queue.c
 
 VPATH 			:= $(SRC_PATH)\
 				$(SRC_PATH)prompt\
