@@ -54,7 +54,24 @@ int	handler_builtins(t_data *data)
 	if (ft_strcmp(data->pipeline[0], "cd") == 0)
 		ft_cd(data);
 	if (ft_strcmp(data->pipeline[0], "export") == 0)
-		ft_export(data->builtin_vars, data->pipeline);
+	{
+		if (data->parser_data->index == 1)
+			ft_export(data->builtin_vars, data->pipeline);
+		else
+		{
+			pid_t	pid;
+		
+			pid = fork();
+			if (pid == 0)
+			{
+				dup2(data->fd_in, STDIN_FILENO);
+				dup2(data->fd_out, STDOUT_FILENO);
+				ft_close_fds(data->fds);
+				ft_export(data->builtin_vars, data->pipeline);
+				exit(EXIT_SUCCESS);
+			}
+		}
+	}
 	if (ft_strcmp(data->pipeline[0], "unset") == 0)
 		ft_unset(data->builtin_vars, data->pipeline);
 	if (ft_strcmp(data->pipeline[0], "pwd") == 0)
@@ -62,7 +79,19 @@ int	handler_builtins(t_data *data)
 	if (ft_strcmp(data->pipeline[0], "echo") == 0)
 		ft_echo(data->pipeline);
 	if (ft_strcmp(data->pipeline[0], "env") == 0)
-		ft_env(data->builtin_vars);
+	{
+		pid_t	pid;
+		
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(data->fd_in, STDIN_FILENO);
+			dup2(data->fd_out, STDOUT_FILENO);
+			ft_close_fds(data->fds);
+			ft_env(data->builtin_vars);
+			exit(EXIT_SUCCESS);
+		}
+	}
 	if (ft_strcmp(data->pipeline[0], "exit") == 0)
 	{
 		free_ft_exit(data);

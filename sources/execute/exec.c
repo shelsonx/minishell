@@ -134,5 +134,7 @@ int	execute(t_parser *parser_data)
 	}
 	if (status == 512)
 		*parser_data->data->exit_status = 1;
+	if (parser_data->index > 1 && ft_strcmp(parser_data->commands->value, "export") == 0)
+		*parser_data->data->exit_status = 1;
 	return (0);
 }
