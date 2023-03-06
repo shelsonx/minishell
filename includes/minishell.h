@@ -151,6 +151,12 @@ void			ft_unset(t_builtin_vars *builtins, char **args);
 int				get_position(t_builtin_vars *builtins, char *arg);
 void			del_pos(t_node **head, int position);
 
+//exec builtins
+int 			exec_export(t_data *data);
+int 			exec_env(t_data *data);
+int 			exec_cd(t_data *data);
+int 			exec_pwd(t_data *data);
+int 			exec_unset(t_data *data);
 //linked list env utils
 t_node			*ft_new_env(int index, char	*value);
 void			ft_free_nodes_env(t_node **lst);

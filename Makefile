@@ -16,7 +16,7 @@ SRC				= main.c\
 				  parser.c parser_utils.c\
 				  exec.c pipes.c paths.c command.c children_process.c \
 				  ht_utils.c ht_functions.c free_ht.c linkedlist_utils.c \
-				  here_doc.c\
+				  here_doc.c exec_builtins.c\
 				  utils_pipes.c\
 				  signals.c\
 				  exit_program.c exit_program_utils.c\
