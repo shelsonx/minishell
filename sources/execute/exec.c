@@ -100,41 +100,19 @@ int	execute(t_parser *parser_data)
 {
 	t_data		data;
 	int			total_commands;
-	int			total_builtins;
 	static int	exit_status;
-	int			i;
-	int			status;
-	int			es;
 
-	status = -2;
 	data.fds = NULL;
 	data.pipeline = NULL;
 	data.exit_status = &exit_status;
 	data.builtin_vars = parser_data->builtin_vars;
 	data.parser_data = parser_data;
 	total_commands = parser_data->index;
-	total_builtins = get_amount_builtins(parser_data);
 	parser_data->data = &data;
 	set_data(&data);
 	handler_cmds(&data, parser_data, total_commands);
 	if (total_commands > 0)
 		exit_program(&data);
-	i = -1;
-	es = 0;
-	while (i++ < (total_commands - total_builtins))
-	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status))
-		{
-			es = WEXITSTATUS(status);
-			*parser_data->data->exit_status = es;
-		}
-		if (status == 256)
-			*parser_data->data->exit_status = 1;
-	}
-	if (status == 512)
-		*parser_data->data->exit_status = 1;
-	if (parser_data->index > 1 && ft_strcmp(parser_data->commands->value, "export") == 0)
-		*parser_data->data->exit_status = 1;
+	wait_all_pids(parser_data, total_commands);
 	return (0);
 }

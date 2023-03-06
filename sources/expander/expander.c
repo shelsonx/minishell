@@ -75,8 +75,6 @@ static void	expander_special_parameter(char **args, t_data *data)
 {
 	int		x;
 	int		y;
-	char	*str_exit_status;
-	char	*old_pipeline;
 	char	*tmp;
 
 	x = 0;
@@ -88,13 +86,7 @@ static void	expander_special_parameter(char **args, t_data *data)
 		{
 			tmp = ft_strchr(args[x], '\'');
 			if (args[x][y] == '$' && args[x][y + 1] == '?' && tmp == NULL)
-			{
-				str_exit_status = ft_itoa(*data->exit_status);
-				old_pipeline = args[x];
-				args[x] = ft_replace_str(args[x], "$?", str_exit_status);
-				free(str_exit_status);
-				free(old_pipeline);
-			}
+				set_special_char(data, args, x);
 			y++;
 		}
 		x++;

@@ -208,6 +208,7 @@ void			exec_serveral_commands(t_data *data,
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
+void	wait_all_pids(t_parser *parser_data, int total_commands);
 
 //execute utils_2
 void			open_files(t_parser *parser_data);
@@ -329,6 +330,7 @@ void			remove_quotes(char **args);
 //quotes utils
 int				contains_quotes(char *arg);
 void			remove_sides(char quote[], char **args, int x);
+void			set_special_char(t_data *data, char **args, int x);
 
 //linked list functions
 t_node			*ft_last(t_node *lst);

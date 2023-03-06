@@ -44,3 +44,27 @@ void	error_command_msg(char **args, char *input_cmd)
 		free(msg);
 	}
 }
+
+void	wait_all_pids(t_parser *parser_data, int total_commands)
+{
+	int	i;
+	int	total_builtins;
+	int	status;
+
+	total_builtins = get_amount_builtins(parser_data);
+	i = -1;
+	status = -2;
+	while (i++ < (total_commands - total_builtins))
+	{
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			*parser_data->data->exit_status = WEXITSTATUS(status);
+		if (status == 256)
+			*parser_data->data->exit_status = 1;
+	}
+	if (status == 512)
+		*parser_data->data->exit_status = 1;
+	if (parser_data->index > 1
+		&& ft_strcmp(parser_data->commands->value, "export") == 0)
+		*parser_data->data->exit_status = 1;
+}
