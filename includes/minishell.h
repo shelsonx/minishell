@@ -265,6 +265,9 @@ void			error_command_msg(char **args, char *input_cmd);
 void			free_children(t_parser *parser_data, char **redirection);
 void			free_children_main(t_data *data, char **env);
 
+//exit_program_utils
+void			error_command_msg(char **args, char *input_cmd);
+
 //get token
 t_token			get_word(t_tokenizer *tokenizer);
 t_token			get_parenthesis(t_tokenizer *tokenizer);
