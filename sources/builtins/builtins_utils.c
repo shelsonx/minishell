@@ -31,3 +31,17 @@ void	free_ft_exit(t_data *data)
 	rl_clear_history();
 	ft_free_fds(data->fds);
 }
+
+void	trated_builtin(t_data *data, int fd_out, char **input_cmd, int last)
+{
+	if (fd_out == INVALID_FD)
+	{
+		*data->exit_status = 1;
+		return ;
+	}
+	free(*input_cmd);
+	handler_builtins(data);
+	if (last)
+		*data->exit_status = 0;
+	return ;
+}

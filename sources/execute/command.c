@@ -3,25 +3,14 @@
 void	exec_one_command(t_data *data, int fd_in, int fd_out)
 {
 	pid_t	child_pid;
-	int		status;
 	char	*input_cmd;
-	int		es;
 
 	data->fd_in = fd_in;
 	data->fd_out = fd_out;
 	input_cmd = ft_strdup(data->pipeline[0]);
 	data->fds = create_pipes(1);
 	if (is_builtins(input_cmd))
-	{
-		if (fd_out == INVALID_FD)
-		{
-			*data->exit_status = 1;
-			return ;
-		}
-		free(input_cmd);
-		handler_builtins(data);
-		return ;
-	}
+		return (trated_builtin(data, fd_out, &input_cmd, FALSE));
 	else
 	{
 		*data->exit_status = get_exit_status(input_cmd, data->builtin_vars);
@@ -31,13 +20,7 @@ void	exec_one_command(t_data *data, int fd_in, int fd_out)
 		if (data->args[0] == NULL || fd_in == INVALID_FD)
 			return ;
 		child_pid = execute_child_process(data);
-		if (waitpid(child_pid, &status, 0) == -1)
-			perror("minishell: ");
-		if (WIFEXITED(status))
-		{
-			es = WEXITSTATUS(status);
-			*data->exit_status = es;
-		}
+		wait_pid_one_command(data, child_pid);
 	}
 }
 
@@ -119,17 +102,7 @@ void	exec_last_command(t_data *data, int fd_in, int fd_out)
 		data->fd_out = fd_out;
 	input_cmd = ft_strdup(data->pipeline[0]);
 	if (is_builtins(input_cmd))
-	{
-		if (fd_out == INVALID_FD)
-		{
-			*data->exit_status = 1;
-			return ;
-		}
-		free(input_cmd);
-		handler_builtins(data);
-		*data->exit_status = 0;
-		return ;
-	}
+		return (trated_builtin(data, fd_out, &input_cmd, TRUE));
 	*data->exit_status = get_exit_status(input_cmd, data->builtin_vars);
 	data->args = create_args(data->pipeline, data->builtin_vars);
 	error_command_msg(data->args, input_cmd);

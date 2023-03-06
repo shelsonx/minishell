@@ -39,3 +39,18 @@ void	set_data(t_data *data)
 	data_save = get_data();
 	*data_save = data;
 }
+
+void	wait_pid_one_command(t_data *data, pid_t child_pid)
+{
+	int	res;
+	int	status;
+
+	status = -2;
+	if (waitpid(child_pid, &status, 0) == -1)
+		perror("minishell: ");
+	if (WIFEXITED(status))
+	{
+		res = WEXITSTATUS(status);
+		*data->exit_status = res;
+	}
+}

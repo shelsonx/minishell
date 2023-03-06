@@ -210,6 +210,7 @@ char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
 void			wait_all_pids(t_parser *parser_data, int total_commands);
+void			trated_builtin(t_data *data, int fd_out, char **input_cmd, int last);
 
 //execute utils_2
 void			open_files(t_parser *parser_data);
@@ -217,6 +218,7 @@ void			handler_cmds(t_data *data, t_parser *parser_data,
 					int total_commands);
 t_data			**get_data(void);
 void			set_data(t_data *data);
+void			wait_pid_one_command(t_data *data, pid_t child_pid);
 
 //prompt
 void			prompt(char **envp);
