@@ -1,45 +1,40 @@
 #include "../../includes/minishell.h"
 
-int	contains_equal(char *args)
+void	part_1_of_is_valid_id(t_data *data, char *args)
 {
-	int		i;
+	char	*tmp;
+	char	*tmp2;
 
-	i = 0;
-	while (args[i])
-	{
-		if (args[i] == '=')
-		{
-			return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
+	tmp = ft_strjoin("minishell: export: ", args);
+	tmp2 = ft_strjoin(tmp, ": not a valid identifier");
+	ft_putendl_fd(tmp2, 2);
+	free(tmp);
+	free(tmp2);
+	*data->exit_status = 1;
 }
 
-static char	ft_isunderscore(char c)
+void	part_2_of_is_valid_id(t_data *data, char *args)
 {
-	if (c == '_')
-		return (true);
-	else
-		return (false);
+	char	*tmp;
+	char	*tmp2;
+
+	tmp = ft_strjoin("minishell: export: ", args);
+	tmp2 = ft_strjoin(tmp, ": not a valid identifier");
+	ft_putendl_fd(tmp2, 2);
+	free(tmp);
+	free(tmp2);
+	*data->exit_status = 1;
 }
 
 int	is_valid_id(char *args)
 {
 	int		i;
 	t_data	*data;
-	char	*tmp;
-	char	*tmp2;
 
 	data = *get_data();
 	if (!ft_isunderscore(args[0]) && !ft_isalpha(args[0]))
 	{
-		tmp = ft_strjoin("minishell: export: ", args);
-		tmp2 = ft_strjoin(tmp, ": not a valid identifier");
-		ft_putendl_fd(tmp2, 2);
-		free(tmp);
-		free(tmp2);
-		*data->exit_status = 1;
+		part_1_of_is_valid_id(data, args);
 		return (FALSE);
 	}
 	else
@@ -49,12 +44,7 @@ int	is_valid_id(char *args)
 		{
 			if (!ft_isunderscore(args[i]) && !ft_isalnum(args[i]))
 			{
-				tmp = ft_strjoin("minishell: export: ", args);
-				tmp2 = ft_strjoin(tmp, ": not a valid identifier");
-				ft_putendl_fd(tmp2, 2);
-				free(tmp);
-				free(tmp2);
-				*data->exit_status = 1;
+				part_2_of_is_valid_id(data, args);
 				return (FALSE);
 			}
 			i++;

@@ -161,7 +161,6 @@ void			ft_export(t_builtin_vars *builtins, char **args);
 int				contains_equal(char *args);
 
 //export utils
-int				contains_equal(char *args);
 int				is_valid_id(char *args);
 int				env_exists(t_builtin_vars *builtins, char *args);
 
@@ -169,6 +168,14 @@ int				env_exists(t_builtin_vars *builtins, char *args);
 int				to_update(t_builtin_vars *builtins, char *args);
 void			add_env_path(t_builtin_vars *builtins, char *key, char *value);
 void			insert_args_in_export(t_builtin_vars *builtins, char *args);
+
+//export utils_3
+int				contains_equal(char *args);
+char			ft_isunderscore(char c);
+
+//exit_utils
+char			check_str_nb(char *declar);
+int				check_len(char **declar);
 
 //utils builtins
 int				get_amount_builtins(t_parser *parser_data);

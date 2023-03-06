@@ -1,28 +1,5 @@
 #include "../../includes/minishell.h"
 
-char	check_str_nb(char *declar)
-{
-	if (*declar == '+' || *declar == '-')
-		declar++;
-	while (*declar && (*declar >= '0' && *declar <= '9'))
-		declar++;
-	if (*declar == '\0')
-		return (1);
-	return (0);
-}
-
-int	check_len(char **declar)
-{
-	char	**len;
-
-	len = declar;
-	if (!declar)
-		return (0);
-	while (*len)
-		len++;
-	return (len - declar);
-}
-
 int	error_msg(char *declar, int status)
 {
 	ft_putstr_fd("minishell: exit: ", 2);
@@ -40,12 +17,8 @@ int	error_msg(char *declar, int status)
 	return (0);
 }
 
-static void	check_exit(char **declar, int declar_len)
+void	part_of_check_exit(char **declar, int status_exit, int declar_len)
 {
-	float	value;
-	int		status_exit;
-
-	status_exit = 0;
 	if (ft_strcmp(declar[1], "-9223372036854775809") == 0)
 	{
 		ft_free_tab(declar);
@@ -61,6 +34,15 @@ static void	check_exit(char **declar, int declar_len)
 		ft_free_tab(declar);
 		exit(status_exit);
 	}
+}
+
+static void	check_exit(char **declar, int declar_len)
+{
+	float	value;
+	int		status_exit;
+
+	status_exit = 0;
+	part_of_check_exit(declar, status_exit, declar_len);
 	value = ft_atoi(*(declar + 1));
 	if (value < -2147483648 || value > 2147483647
 		|| ft_strcmp(declar[1], "-9223372036854775808") == 0)
