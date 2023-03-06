@@ -152,11 +152,12 @@ int				get_position(t_builtin_vars *builtins, char *arg);
 void			del_pos(t_node **head, int position);
 
 //exec builtins
-int 			exec_export(t_data *data);
-int 			exec_env(t_data *data);
-int 			exec_cd(t_data *data);
-int 			exec_pwd(t_data *data);
-int 			exec_unset(t_data *data);
+int				exec_export(t_data *data);
+int				exec_env(t_data *data);
+int				exec_cd(t_data *data);
+int				exec_pwd(t_data *data);
+int				exec_unset(t_data *data);
+
 //linked list env utils
 t_node			*ft_new_env(int index, char	*value);
 void			ft_free_nodes_env(t_node **lst);
@@ -208,7 +209,7 @@ void			exec_serveral_commands(t_data *data,
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
-void	wait_all_pids(t_parser *parser_data, int total_commands);
+void			wait_all_pids(t_parser *parser_data, int total_commands);
 
 //execute utils_2
 void			open_files(t_parser *parser_data);
