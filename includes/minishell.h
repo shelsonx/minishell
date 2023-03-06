@@ -200,11 +200,13 @@ void			exec_serveral_commands(t_data *data,
 
 //execute utils
 char			*get_exec_command(char *arg, t_builtin_vars *builtins);
+int				**get_fd_close(void);
+void			set_fd_close(int *fd);
+
+//execute utils_2
 void			open_files(t_parser *parser_data);
 void			handler_cmds(t_data *data, t_parser *parser_data,
 					int total_commands);
-int				**get_fd_close(void);
-void			set_fd_close(int *fd);
 t_data			**get_data(void);
 void			set_data(t_data *data);
 
