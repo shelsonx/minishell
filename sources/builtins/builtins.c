@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 16:58:36 by progerio          #+#    #+#             */
+/*   Updated: 2023/03/07 16:58:39 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	**get_builtins_names(void)
@@ -64,10 +76,7 @@ int	handler_builtins(t_data *data)
 	if (ft_strcmp(data->pipeline[0], "env") == 0)
 		exec_env(data);
 	if (ft_strcmp(data->pipeline[0], "exit") == 0)
-	{
-		free_ft_exit(data);
 		ft_exit(data->pipeline);
-	}
 	restore_fd(data, &fd_in, &fd_out);
 	return (1);
 }

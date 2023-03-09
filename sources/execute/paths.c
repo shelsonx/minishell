@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   paths.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 16:56:52 by sjhony-x          #+#    #+#             */
+/*   Updated: 2023/03/08 16:49:13 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	**create_args(char **pipeline, t_builtin_vars *builtins)
@@ -35,7 +47,13 @@ char	**get_paths_cmds(char *env_path)
 	char	**paths;
 
 	sub_path = ft_substr(env_path, 5, ft_strlen(env_path));
-	paths = ft_split(sub_path, ':');
+	if (ft_strchr(sub_path, ':'))
+		paths = ft_split(sub_path, ':');
+	else
+	{
+		paths = ft_calloc(2, sizeof(char *));
+		paths[0] = ft_strdup(env_path);
+	}
 	free(sub_path);
 	return (paths);
 }

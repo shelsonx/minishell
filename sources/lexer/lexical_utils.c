@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexical_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 17:01:00 by progerio          #+#    #+#             */
+/*   Updated: 2023/03/08 16:49:51 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	add_char(t_tokenizer *tokenizer)
@@ -31,4 +43,11 @@ void	skip_space(t_tokenizer *tokenizer)
 int	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
+}
+
+int	trated_not_closed(t_tokenizer *tokenizer)
+{
+	ft_putendl_fd("Unclosed quotes!", 2);
+	tokenizer->token.type = TK_ERROR;
+	return (true);
 }

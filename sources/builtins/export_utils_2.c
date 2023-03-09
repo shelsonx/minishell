@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils_2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 16:59:19 by progerio          #+#    #+#             */
+/*   Updated: 2023/03/08 16:48:38 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	free_export_data(t_update_export *up_export)
 {
 	free(up_export->tmp1);
+	up_export->tmp1 = NULL;
 	free(up_export->tmp2);
+	up_export->tmp2 = NULL;
 	ft_free_tab(up_export->splitted_args);
 	ft_free_tab(up_export->splitted_ht_search);
 }

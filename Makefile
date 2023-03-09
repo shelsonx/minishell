@@ -61,6 +61,7 @@ re:				fclean all
 clean:
 				make -C $(LIBFT_PATH) clean
 				$(RM) $(OBJ) $(OBJDIR)
+				$(RM) $(OBJ_PATH)
 				@echo "$(YELLOW)object files deleted$(DEFAULT)"
 
 fclean:			clean

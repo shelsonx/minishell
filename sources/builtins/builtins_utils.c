@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 16:55:23 by progerio          #+#    #+#             */
+/*   Updated: 2023/03/08 16:47:45 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	get_amount_builtins(t_parser *parser_data)
@@ -41,7 +53,7 @@ void	trated_builtin(t_data *data, int fd_out, char **input_cmd, int last)
 	}
 	free(*input_cmd);
 	handler_builtins(data);
-	if (last)
+	if (last || data->parser_data->index == 1)
 		*data->exit_status = 0;
 	return ;
 }

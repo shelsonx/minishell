@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: progerio <progerio@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/07 16:56:47 by progerio          #+#    #+#             */
+/*   Updated: 2023/03/08 16:50:47 by progerio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libs/libft/libft.h"
@@ -183,6 +195,7 @@ char			ft_isunderscore(char c);
 //exit_utils
 char			check_str_nb(char *declar);
 int				check_len(char **declar);
+void			trated_exits(char **declar, int status_exit, float *value);
 
 //utils builtins
 int				get_amount_builtins(t_parser *parser_data);
@@ -199,7 +212,8 @@ char			**get_pipeline(t_data *data,
 int				execute(t_parser *parser_data);
 char			*get_input_cmd(int position);
 
-void			exec_only_one_command(t_data *data, t_parser *parser_data);
+void			exec_only_one_command(t_data *data,
+					t_parser *parser_data);
 void			exec_two_commands(t_data *data,
 					t_parser *parser_data, int total_commands);
 void			exec_serveral_commands(t_data *data,
@@ -210,7 +224,8 @@ char			*get_exec_command(char *arg, t_builtin_vars *builtins);
 int				**get_fd_close(void);
 void			set_fd_close(int *fd);
 void			wait_all_pids(t_parser *parser_data, int total_commands);
-void			trated_builtin(t_data *data, int fd_out, char **input_cmd, int last);
+void			trated_builtin(t_data *data, int fd_out,
+					char **input_cmd, int last);
 
 //execute utils_2
 void			open_files(t_parser *parser_data);
@@ -304,6 +319,7 @@ void			add_char(t_tokenizer *tokenizer);
 void			skip_space(t_tokenizer *tokenizer);
 void			advance(t_tokenizer *tokenizer);
 int				is_quote(char c);
+int				trated_not_closed(t_tokenizer *tokenizer);
 
 //parser
 void			parser(t_parser *parser);
@@ -326,6 +342,7 @@ void			expander(char **args, t_builtin_vars *builtin_vars,
 int				expand_simple_quotes(char **args, t_builtin_vars *builtin_vars);
 int				expand_double_quotes(char **args, t_builtin_vars *builtin_vars);
 int				get_amount_character(char **args, char character);
+void			free_lines_prompt(t_parser *parser_data);
 
 //quotes
 void			remove_quotes(char **args);
@@ -334,6 +351,7 @@ void			remove_quotes(char **args);
 int				contains_quotes(char *arg);
 void			remove_sides(char quote[], char **args, int x);
 void			set_special_char(t_data *data, char **args, int x);
+int				is_only_space(const char *characters);
 
 //linked list functions
 t_node			*ft_last(t_node *lst);
