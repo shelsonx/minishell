@@ -59,7 +59,8 @@ void	ft_env(t_builtin_vars *builtin_vars)
 	current = builtin_vars->env2;
 	while (current)
 	{
-		printf("%s\n", current->value);
+		if (contains_equal(current->value))
+			printf("%s\n", current->value);
 		current = current->next;
 	}
 }
